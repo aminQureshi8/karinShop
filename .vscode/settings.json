@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.tsx": "typescriptreact",
+    "*.js": "javascriptreact"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
