@@ -1,4 +1,5 @@
 import "./globals.css";
+import { NextTheme } from "./NextTheme";
 import Providers from "./redux/Providers";
 
 export default function RootLayout({
@@ -9,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body className="container mx-auto">
-        <Providers>{children}</Providers>
+        <Providers>
+          <NextTheme>{children}</NextTheme>
+        </Providers>
       </body>
     </html>
   );

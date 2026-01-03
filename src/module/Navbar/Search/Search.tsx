@@ -4,12 +4,12 @@ function Search() {
     <div className="relative">
       <input
         type="text"
-        className=" rounded-full border-2 p-2 border-gray-200"
+        className=" rounded-full border-2 p-2 border-gray-200 pr-12 focus:outline-none focus:border-blue-500"
         placeholder="جستجو در کارین..."
       />
-      <div className=" absolute top-1.5 right-2 ">
-        <button>
-          <CiSearch />
+      <div className=" absolute top-1 right-1 ">
+        <button className="bg-blue-500 text-white p-2 rounded-full">
+          <CiSearch size={20} />
         </button>
       </div>
     </div>
