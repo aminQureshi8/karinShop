@@ -8,7 +8,7 @@ const menuMobile = createSlice({
       state.isOpen = true;
     },
     closeMenu: (state) => {
-      state.isOpen = true;
+      state.isOpen = false;
     },
     toggleMenu: (state) => {
       state.isOpen = !state.isOpen;
