@@ -2,20 +2,27 @@ import React from "react";
 import Search from "./Search/Search";
 import Logo from "./Logo/Logo";
 import Buttons from "./Buttons/Buttons";
+import NavbarResponsive from "./NavbarResponsive";
 
 function Navbar() {
   return (
-    <div className="flex justify-between pt-3">
-      <div>
-        <Search />
+    <>
+      <div className="flex justify-between max-lg:hidden pt-3 font-danaMed">
+        <div>
+          <Search />
+        </div>
+        <div>
+          <Logo />
+        </div>
+        <div>
+          <Buttons />
+        </div>
       </div>
-      <div>
-        <Logo />
+
+      <div className="lg:hidden">
+        <NavbarResponsive/>
       </div>
-      <div>
-        <Buttons />
-      </div>
-    </div>
+    </>
   );
 }
 

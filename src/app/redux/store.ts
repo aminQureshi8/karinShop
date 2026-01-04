@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-
+import menuMobile from "./slices/MenuMobile/MenuMobile";
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    menuMobile,
+  },
 });
 
 export default store;

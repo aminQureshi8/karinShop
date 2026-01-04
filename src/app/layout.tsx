@@ -8,11 +8,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl">
-      <body className="container mx-auto">
-        <Providers>
-          <NextTheme>{children}</NextTheme>
-        </Providers>
+    <html lang="fa" dir="rtl" suppressHydrationWarning>
+      <body>
+        <NextTheme>
+          <Providers>{children}</Providers>
+        </NextTheme>
       </body>
     </html>
   );
