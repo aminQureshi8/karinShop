@@ -17,9 +17,7 @@ export default function ThemeChange() {
       <button
         className="size-9 bg-gray-300 animate-pulse dark:bg-gray-800  rounded-full p-2 flex items-center justify-center"
         aria-label="loading theme"
-      >
-     
-      </button>
+      ></button>
     );
   }
 

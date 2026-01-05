@@ -7,7 +7,7 @@ import NavbarResponsive from "./NavbarResponsive";
 function Navbar() {
   return (
     <>
-      <div className="flex justify-between max-lg:hidden pt-3 font-danaMed">
+      <div className="flex justify-between container mx-auto max-lg:hidden pt-3 font-danaMed">
         <div>
           <Search />
         </div>
