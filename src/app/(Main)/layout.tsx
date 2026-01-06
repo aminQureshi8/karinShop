@@ -1,8 +1,8 @@
-import ListMenu from "@/module/ListMenu/ListMenu";
-import MenuMobileJSX from "@/module/MenuMobile/MenuMobileJSX";
-import Navbar from "@/module/Navbar/Navbar";
-import SearchMobile from "@/module/SearchMobile/SearchMobile";
-import SearchMobileMenu from "@/module/SearchMobileMenu/SearchMobileMenu";
+import ListMenu from "@/components/module/ListMenu/ListMenu";
+import MenuMobileJSX from "@/components/module/MenuMobile/MenuMobileJSX";
+import Navbar from "@/components/module/Navbar/Navbar";
+import SearchMobile from "@/components/module/SearchMobile/SearchMobile";
+import SearchMobileMenu from "@/components/module/SearchMobileMenu/SearchMobileMenu";
 
 export default function RootLayout({
   children,
