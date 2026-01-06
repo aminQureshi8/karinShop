@@ -6,18 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoCartOutline } from "react-icons/io5";
 import { RiUserLine } from "react-icons/ri";
+import type { RootState } from "@/app/redux/store";
 
 export default function MenuMobileJSX() {
-  const isOpen = useSelector((state) => state.menuMobile.isOpen);
+  const isOpen = useSelector((state: RootState) => state.menuMobile.isOpen);
   const dispatch = useDispatch();
 
   return (
     <>
       <div
-        className={`fixed w-[320px] z-20 bg-white dark:bg-gray-800 inset-y-0 transition-all
-          ${isOpen ? "right-0" : "-right-[400px]"}`}
+        className={`fixed w-[250px] z-20 bg-white dark:bg-gray-800 inset-y-0 transition-all
+          ${isOpen ? "right-0" : "-right-[250px]"}`}
       >
-        <div className="p-3 font-danaMed">
+        <div className="p-3 font-danaMed text-sm">
           <div className="flex items-center justify-between border-b-2 border-gray-200 pb-3 dark:border-b-gray-700">
             <h2>کارین شاپ</h2>
             <IoCloseOutline size={19} onClick={() => dispatch(closeMenu())} />
