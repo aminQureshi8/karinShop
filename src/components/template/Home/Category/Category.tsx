@@ -4,7 +4,7 @@ import { BiCategory } from "react-icons/bi";
 
 export default function Category() {
   return (
-    <div className="mt-5">
+    <div className="mt-12">
       <TopCategory
         title="دسته بندی های محبوب"
         des="جدیدترین و بروزترین دسته بندی ها"
