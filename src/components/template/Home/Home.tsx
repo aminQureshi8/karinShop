@@ -1,5 +1,6 @@
 
 import Category from "./Category/Category";
+import NewProduct from "./NewProduct/NewProduct";
 import Offs from "./Offs/Offs";
 import SwiperBanner from "./SwiperBanner/SwiperBanner";
 
@@ -9,6 +10,7 @@ function HomeCompo() {
       <SwiperBanner/>
       <Category/>
       <Offs/>
+      <NewProduct/>
     </div>
   );
 }
