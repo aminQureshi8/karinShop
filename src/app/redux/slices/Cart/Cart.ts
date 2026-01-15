@@ -8,7 +8,6 @@ const cartSlice = createSlice({
   reducers: {
     toggleCart: (state, action) => {
       const item = action.payload;
-
       if (state.includes(item)) {
         state.splice(state.indexOf(item), 1);
       } else {
