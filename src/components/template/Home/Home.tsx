@@ -1,8 +1,10 @@
 
 import Banner from "./Banner/Banner";
+import Brand from "./Brand/Brand";
 import Category from "./Category/Category";
 import NewProduct from "./NewProduct/NewProduct";
 import Offs from "./Offs/Offs";
+import PopPro from "./PopPro/PopPro";
 import SwiperBanner from "./SwiperBanner/SwiperBanner";
 
 function HomeCompo() {
@@ -13,6 +15,8 @@ function HomeCompo() {
       <Offs/>
       <NewProduct/>
       <Banner/>
+      <PopPro/>
+      <Brand/>
     </div>
   );
 }
