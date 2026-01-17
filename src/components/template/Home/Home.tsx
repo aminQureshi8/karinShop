@@ -2,6 +2,7 @@
 import Banner from "./Banner/Banner";
 import Brand from "./Brand/Brand";
 import Category from "./Category/Category";
+import Hot from "./Hot/Hot";
 import NewProduct from "./NewProduct/NewProduct";
 import Offs from "./Offs/Offs";
 import PopPro from "./PopPro/PopPro";
@@ -17,6 +18,7 @@ function HomeCompo() {
       <Banner/>
       <PopPro/>
       <Brand/>
+      <Hot/>
     </div>
   );
 }
