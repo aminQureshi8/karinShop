@@ -4,7 +4,7 @@ import FooterTopBtn from "./FooterTopBtn";
 export default function Footer() {
   return (
     <div className="bg-slate-900 dark:bg-slate-800 rounded-xl p-5 mb-12">
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-5">
         <div>
           <h2 className="text-white">درباره کارین شاپ</h2>
           <p className="text-gray-300 mt-5 text-sm">
