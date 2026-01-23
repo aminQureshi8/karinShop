@@ -1,3 +1,4 @@
+import CartNavbar from "@/components/module/CartNavbar/CartNavbar";
 import ListMenu from "@/components/module/ListMenu/ListMenu";
 import MenuMobileJSX from "@/components/module/MenuMobile/MenuMobileJSX";
 import Navbar from "@/components/module/Navbar/Navbar";
@@ -16,6 +17,7 @@ export default function RootLayout({
       <Navbar />
       <ListMenu />
       <SearchMobile />
+      <CartNavbar/>
       {children}
     </>
   );

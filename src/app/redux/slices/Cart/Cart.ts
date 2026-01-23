@@ -6,7 +6,7 @@ export interface CartItem {
   price: number;
 }
 
-const initialState: CartItem[] = []; // ⬅️ خالی
+const initialState: CartItem[] = [];
 
 const cartSlice = createSlice({
   name: "cart",
