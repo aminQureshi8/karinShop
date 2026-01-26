@@ -23,7 +23,7 @@ export default function page() {
           <ThemeChange />
         </div>
         <h1 className="text-center text-lg font-semibold mb-4">کارین شاپ</h1>
-        <p className="pr-8 mb-4">ورود | ثبت نام</p>
+        <p className="pr-8 mb-4">کد ارسال شده را وارد کنید</p>
 
         <form className="px-8" onSubmit={handleSubmit(onSubmit)}>
           <label className="text-xs text-gray-400">
