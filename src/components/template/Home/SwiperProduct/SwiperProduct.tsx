@@ -29,22 +29,22 @@ export default function SwiperProduct() {
       <div className="relative">
         <Image width={200} height={200} src="/image/lap.png" alt="" />
 
-        <div className="absolute right-0 top-2">
+        <div className="absolute right-0 top-0">
           <div className="flex items-center gap-2">
             <div
               onClick={handleCartClick}
-              className={`border-2 rounded-full p-2 cursor-pointer flex items-center justify-center transition-all duration-300
+              className={`border-2 rounded-full dark:border-gray-700 p-2 cursor-pointer flex items-center justify-center transition-all duration-300
                 ${
                   isInCart
                     ? "border-red-400 bg-red-100 text-red-500"
                     : "border-gray-200 hover:bg-blue-100"
                 }`}
             >
-              {isInCart ? <RxCross2 size={18} /> : <SlBasket size={18} />}
+              {isInCart ? <RxCross2 size={13} /> : <SlBasket size={13} />}
             </div>
 
-            <div className="border-2 border-gray-200 rounded-full p-2 cursor-pointer">
-              <IoMdHeartEmpty size={18} />
+            <div className="border-2 dark:border-gray-700 border-gray-200 rounded-full p-2 cursor-pointer">
+              <IoMdHeartEmpty size={13} />
             </div>
           </div>
         </div>
