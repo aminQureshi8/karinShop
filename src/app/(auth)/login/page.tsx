@@ -12,8 +12,20 @@ export default function page() {
     formState: { errors },
   } = useForm({ mode: "all" });
 
-  const onSubmit = async () => {
-    router.push("/otp");
+  const onSubmit = async (data: any) => {
+    const { phoneOrEmail } = data;
+
+    const res = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ phoneOrEmail }),
+    });
+
+    const result = await res.json();
+
+    console.log(result);
   };
 
   return (
