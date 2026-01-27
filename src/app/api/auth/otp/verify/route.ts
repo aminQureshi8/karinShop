@@ -1,7 +1,7 @@
-import { NextRequest } from "next/server";
-import db from "../../../../../../config/db";
-import otpModel from "../../../../../../model/otp";
-import userModel from "../../../../../../model/user";
+import db from "@/config/db";
+import otpModel from "@/models/otp";
+import userModel from "@/models/user";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,14 +17,47 @@ export async function POST(req: NextRequest) {
     });
 
     if (isOtpExist) {
-      const now = new Date();
+      const now = Date.now();
 
-      if (isOtpExist.expTime > now.getTime()) {
+      if (isOtpExist.expTime > now) {
         const allUsers = await userModel.find({});
         const role = allUsers.length === 0 ? "ADMIN" : "USER";
 
-        
+        const isUserFind = await userModel.findOne({
+          $or: [{ email: identifier }, { phone: identifier }],
+        });
+
+        if (!isUserFind) {
+          await userModel.create({
+            email: identifier.includes("@") ? identifier : undefined,
+            phone:
+              identifier.startsWith("+98") || identifier.startsWith("09")
+                ? identifier
+                : undefined,
+            role,
+          });
+        }
+
+        await otpModel.deleteOne({ _id: isOtpExist._id });
+
+        return NextResponse.json({ message: "OTP is valid" }, { status: 200 });
+      } else {
+        return NextResponse.json(
+          { message: "Code is expired" },
+          { status: 410 },
+        );
       }
+    } else {
+      return NextResponse.json({ message: "Invalid OTP" }, { status: 400 });
     }
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json(
+      { message: "Unknown error occurred" },
+      { status: 500 },
+    );
+  }
 }
