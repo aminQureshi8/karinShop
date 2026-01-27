@@ -13,19 +13,19 @@ export default function page() {
   } = useForm({ mode: "all" });
 
   const onSubmit = async (data: any) => {
-    const { phoneOrEmail } = data;
+    const { identifier } = data;
 
-    const res = await fetch("/api/user", {
+    const res = await fetch("/api/auth/otp", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ phoneOrEmail }),
+      body: JSON.stringify({ identifier }),
     });
 
-    const result = await res.json();
-
-    console.log(result);
+    if (res.ok) {
+      router.push(`/otp?identifier=${identifier}`);
+    }
   };
 
   return (
@@ -43,7 +43,7 @@ export default function page() {
           </label>
           <input
             type="text"
-            {...register("phoneOrEmail", {
+            {...register("identifier", {
               required: "این فیلد الزامی است",
               pattern: {
                 value:
@@ -53,15 +53,15 @@ export default function page() {
             })}
             className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
           />
-          {errors.phoneOrEmail && (
+          {errors.identifier && (
             <span className="text-red-500 text-xs mt-2 block">
-              {errors.phoneOrEmail.message as string}
+              {errors.identifier.message as string}
             </span>
           )}
 
           <button
             type="submit"
-            disabled={errors.phoneOrEmail ? true : false}
+            disabled={errors.identifier ? true : false}
             className="bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-400 cursor-pointer text-white w-full rounded-lg py-2 mt-5 "
           >
             ورود
