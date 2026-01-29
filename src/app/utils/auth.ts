@@ -10,7 +10,7 @@ export const generateAccessToken = (data: {
   phone: string;
 }) => sign(data, process.env.JWT_SECRET!, { expiresIn: "60s" });
 
-export const generateRefreshToken = (data: { email: string }) =>
+export const generateRefreshToken = (data: { email: string; phone: string }) =>
   sign(data, process.env.JWT_SECRET_REFRESH!, { expiresIn: "15d" });
 
 const verifyAccessToken = (token: string) => {
@@ -31,7 +31,10 @@ const refreshToken = async () => {
 
   if (!refreshTokenValue) throw new Error("No refresh token");
 
-  const payload = verify(refreshTokenValue, process.env.JWT_SECRET_REFRESH!);
+  const payload = verify(
+    refreshTokenValue,
+    process.env.JWT_SECRET_REFRESH!,
+  ) as { email: string; phone: string };
 
   await db();
 
