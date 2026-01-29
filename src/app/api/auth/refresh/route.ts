@@ -2,17 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { verify, sign } from "jsonwebtoken";
 import db from "@/config/db";
 import userModel from "@/models/user";
-// import { auth } from "@/auth";
 
 export async function POST(req: NextRequest) {
   try {
     await db();
     const refreshToken = req.cookies.get("refresh-token")?.value;
-    const nextAuth = req.cookies.get("authjs.session-token")?.value;
-
-    if (nextAuth) {
-      return NextResponse.json({ ok: true, source: "nextauth" });
-    }
 
     if (!refreshToken)
       return NextResponse.json({ error: "No token" }, { status: 401 });
@@ -43,6 +37,8 @@ export async function POST(req: NextRequest) {
       path: "/",
       maxAge: 60,
     });
+
+    console.log(response);
 
     return response;
   } catch {

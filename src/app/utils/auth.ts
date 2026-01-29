@@ -8,7 +8,10 @@ export const generateAccessToken = (data: {
   email: string;
   role: string;
   phone: string;
-}) => sign(data, process.env.JWT_SECRET!, { expiresIn: "60s" });
+}) => {
+  console.log("✅ NEW ACCESS TOKEN GENERATED", Date.now());
+  return sign(data, process.env.JWT_SECRET!, { expiresIn: "60s" });
+};
 
 export const generateRefreshToken = (data: { email: string; phone: string }) =>
   sign(data, process.env.JWT_SECRET_REFRESH!, { expiresIn: "15d" });
@@ -62,4 +65,50 @@ const refreshToken = async () => {
   });
 
   return { newAccessToken, response, user };
+};
+
+export const authUser = async () => {
+  try {
+    await db();
+
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    if (!token) return { user: null, response: null };
+
+    let payload;
+
+    try {
+      payload = verifyAccessToken(token);
+      if (!payload) throw new Error("Invalid token");
+    } catch (error: any) {
+      if (error.name === "TokenExpiredError") {
+        const { newAccessToken, response, user } = await refreshToken();
+
+        console.log(newAccessToken);
+        
+
+        payload = verifyAccessToken(newAccessToken);
+
+        return {
+          user: JSON.parse(JSON.stringify(user)),
+          response,
+        };
+      }
+      return { user: null, response: null };
+    }
+
+    const user = await userModel.findOne(
+      { email: payload.email },
+      { password: 0, refreshToken: 0 },
+    );
+
+    return {
+      user: user ? JSON.parse(JSON.stringify(user)) : null,
+      response: null,
+    };
+  } catch (error) {
+    console.error("Auth error:", error);
+    return { user: null, response: null };
+  }
 };

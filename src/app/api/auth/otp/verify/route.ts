@@ -50,6 +50,9 @@ export async function POST(req: NextRequest) {
           phone: user.phone,
         });
 
+        user.refreshToken = refreshToken;
+        await user.save();
+
         const headers = new Headers();
         headers.append(
           "Set-Cookie",

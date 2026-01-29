@@ -11,9 +11,11 @@ export default function AuthRefresh() {
     const checkTokenExpired = () => {
       const tokenExpired = (
         document.querySelector(
-          'meta[name="x-token-expired"]'
+          'meta[name="x-token-expired"]',
         ) as HTMLMetaElement
       )?.content;
+
+      console.log(tokenExpired);
 
       if (tokenExpired === "true") {
         refreshToken();
@@ -25,13 +27,14 @@ export default function AuthRefresh() {
           method: "POST",
         });
 
+        console.log(response);
+
         if (!response.ok) {
           router.push("/login");
         } else {
           router.refresh();
         }
       } catch (error) {
-      
         router.push("/login");
       }
     };
