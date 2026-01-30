@@ -3,9 +3,11 @@
 import ThemeChange from "@/components/module/Navbar/Buttons/ThemeChange";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { BeatLoader } from "react-spinners";
 
 export default function Page() {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -43,17 +45,27 @@ export default function Page() {
   const onSubmit = async (data: any) => {
     const otpCode = data.otp.join("");
 
-    const res = await fetch("/api/auth/otp/verify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ otpCode, identifier }),
-    });
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/auth/otp/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ otpCode, identifier }),
+      });
 
-    const result = await res.json();
+      const result = await res.json();
 
-    console.log(result);
+      console.log(result);
+
+      if (res.ok) {
+        router.push("/");
+      }
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -89,7 +101,7 @@ export default function Page() {
             disabled={otpValues.join("").length !== 6}
             className="bg-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed text-white w-full rounded-lg py-2"
           >
-            تایید کد
+            {isLoading ? <BeatLoader size={8} color="white" /> : "تایید"}
           </button>
         </form>
 
