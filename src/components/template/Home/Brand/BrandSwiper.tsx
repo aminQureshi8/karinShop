@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import SwiperSlideBrand from "@/components/module/Home/SwiperSlideBrand/SwiperSlideBrand";
 
-export default function BrandSwiper() {
+export default function BrandSwiper({ brands }: { brands: any }) {
   return (
     <div className="w-full  overflow-hidden mt-5 mb-5">
       <Swiper
@@ -19,9 +19,11 @@ export default function BrandSwiper() {
         }}
         className="mySwiper !h-[210px]"
       >
-        <SwiperSlide>
-          <SwiperSlideBrand />
-        </SwiperSlide>
+        {brands.map((brand: any) => (
+          <SwiperSlide key={brand._id}>
+            <SwiperSlideBrand {...brand} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

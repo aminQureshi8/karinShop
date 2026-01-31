@@ -16,7 +16,7 @@ export const generateAccessToken = (data: {
 export const generateRefreshToken = (data: { email: string; phone: string }) =>
   sign(data, process.env.JWT_SECRET_REFRESH!, { expiresIn: "15d" });
 
-const verifyAccessToken = (token: string) => {
+export const verifyAccessToken = (token: string) => {
   try {
     return verify(token, process.env.JWT_SECRET!) as {
       email: string;
@@ -86,7 +86,6 @@ export const authUser = async () => {
         const { newAccessToken, response, user } = await refreshToken();
 
         console.log(newAccessToken);
-        
 
         payload = verifyAccessToken(newAccessToken);
 
@@ -111,4 +110,56 @@ export const authUser = async () => {
     console.error("Auth error:", error);
     return { user: null, response: null };
   }
+};
+
+export const authAdmin = async () => {
+  try {
+    const authResult = await authUser();
+
+    // اگر response وجود داشت یعنی تازه refresh شده → باید response رو هم برگردونیم
+    if (authResult.response) {
+      // در این حالت user از refreshToken آمده
+      const user = authResult.user;
+
+      if (!user || (user.role !== "admin" && user.role !== "superadmin")) {
+        return { user: null, response: authResult.response };
+      }
+
+      return { user, response: authResult.response };
+    }
+
+    // حالت عادی (توکن معتبر بود یا اصلاً توکن نبود)
+    const user = authResult.user;
+
+    if (!user) {
+      return { user: null, response: null };
+    }
+
+    if (user.role !== "admin" && user.role !== "superadmin") {
+      return { user: null, response: null };
+    }
+
+    return { user, response: null };
+  } catch (error) {
+    console.error("Auth admin error:", error);
+    return { user: null, response: null };
+  }
+};
+
+export const authRouteHandler = (header) => {
+  try {
+    const { email, role } = verifyAccessToken(header);
+
+    console.log(role);
+
+    if (role !== "ADMIN") {
+      return false;
+    }
+
+  return true;
+
+  } catch (error) {
+    return false
+  }
+
 };
