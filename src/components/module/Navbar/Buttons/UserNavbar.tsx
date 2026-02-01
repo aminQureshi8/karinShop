@@ -1,6 +1,7 @@
 import { authUser } from "@/app/utils/auth";
 import Link from "next/link";
 import { RiUserLine } from "react-icons/ri";
+import Logout from "./Logout";
 export default async function UserNavbar() {
   const { user } = await authUser();
   console.log(user);
@@ -14,7 +15,7 @@ export default async function UserNavbar() {
             حساب کاربری
           </button>
 
-          <div className="absolute top-full invisible opacity-0 group-hover:opacity-100 group-hover:visible right-0 mt-2 w-48 bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-10 transition-all duration-300">
+          <div className="absolute text-sm top-full invisible opacity-0 group-hover:opacity-100 group-hover:visible right-0 mt-2 w-48 bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-10 transition-all duration-300">
             <Link
               href="/profile"
               className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700"
@@ -27,7 +28,13 @@ export default async function UserNavbar() {
             >
               سفارشات من
             </Link>
+
+            <div
+              className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700"
+            >
+              <Logout />
             </div>
+          </div>
         </div>
       ) : (
         <Link href="/auth">
