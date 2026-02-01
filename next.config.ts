@@ -8,9 +8,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "185.204.197.79",
-        pathname: "/Brand/**",
+        hostname: "localhost",
+        port: "3000",
+        pathname: "/uploads/**",
       },
+      { protocol: "https", hostname: "res.cloudinary.com" },
     ],
   },
 };

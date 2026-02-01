@@ -14,7 +14,7 @@ export default function SwiperSlideBrand({
     <div className="bg-white dark:bg-slate-800 rounded-xl px-4">
       <Image
         alt={title}
-        src="http://185.204.197.79/Brand/apple.png"
+        src={imageUrl}
         width={150}
         height={150}
         className="!h-[100px]"
