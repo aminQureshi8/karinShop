@@ -12,12 +12,12 @@ export default function RootLayout({
       <Navbar />
       <ListMenu />
 
-      <div className="container mx-auto">
+      <div className="container mx-auto font-danaMed">
         <div className="grid grid-cols-12 gap-5  mt-5">
           <div className="col-span-3">
             <SideBar />
           </div>
-          <div className="col-span-7">{children}</div>
+          <div className="col-span-9">{children}</div>
         </div>
       </div>
     </>

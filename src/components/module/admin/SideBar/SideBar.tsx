@@ -35,7 +35,7 @@ export default function SideBar() {
         <div className="flex flex-col gap-5 mt-3 dark:text-gray-300">
           <div>
             <Link href="/admin/dashboard">
-              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 dark:hover:bg-slate-700 rounded-lg">
+              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <RxDashboard size={20} />
                 <span className="text-sm">داشبورد</span>
               </div>
@@ -43,7 +43,7 @@ export default function SideBar() {
           </div>
           <div>
             <Link href="/admin/dashboard">
-              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 dark:hover:bg-slate-700 rounded-lg">
+              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <BsBasket size={20} />
                 <span className="text-sm">محصولات</span>
               </div>
@@ -51,7 +51,7 @@ export default function SideBar() {
           </div>
           <div>
             <Link href="/admin/dashboard">
-              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 dark:hover:bg-slate-700 rounded-lg">
+              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <RxDashboard size={20} />
                 <span className="text-sm">سفارشات</span>
               </div>
@@ -59,7 +59,7 @@ export default function SideBar() {
           </div>
           <div>
             <Link href="/admin/dashboard">
-              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 dark:hover:bg-slate-700 rounded-lg">
+              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <FaUser size={20} />
                 <span className="text-sm">کاربران</span>
               </div>
@@ -67,7 +67,7 @@ export default function SideBar() {
           </div>
           <div>
             <Link href="/admin/dashboard">
-              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 dark:hover:bg-slate-700 rounded-lg">
+              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <RiDiscountPercentLine size={20} />
                 <span className="text-sm">تخفیفات</span>
               </div>
@@ -75,7 +75,7 @@ export default function SideBar() {
           </div>
           <div>
             <Link href="/admin/dashboard">
-              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 dark:hover:bg-slate-700 rounded-lg">
+              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <MdOutlineCategory size={20} />
                 <span className="text-sm">دسته بندی</span>
               </div>
