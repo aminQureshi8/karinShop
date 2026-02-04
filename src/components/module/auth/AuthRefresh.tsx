@@ -30,12 +30,12 @@ export default function AuthRefresh() {
         console.log(response);
 
         if (!response.ok) {
-          router.push("/login");
+          router.push("/auth");
         } else {
           router.refresh();
         }
       } catch (error) {
-        router.push("/login");
+        router.push("/auth");
       }
     };
 
