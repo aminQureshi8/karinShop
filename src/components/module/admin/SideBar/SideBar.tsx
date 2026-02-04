@@ -34,7 +34,7 @@ export default function SideBar() {
         </div>
         <div className="flex flex-col gap-5 mt-3 dark:text-gray-300">
           <div>
-            <Link href="/admin/dashboard">
+            <Link href="/admin/">
               <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <RxDashboard size={20} />
                 <span className="text-sm">داشبورد</span>
@@ -78,6 +78,14 @@ export default function SideBar() {
               <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <MdOutlineCategory size={20} />
                 <span className="text-sm">دسته بندی</span>
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="/admin/brand">
+              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
+                <MdOutlineCategory size={20} />
+                <span className="text-sm">برند ها</span>
               </div>
             </Link>
           </div>
