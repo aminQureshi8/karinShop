@@ -1,5 +1,6 @@
 "use client";
 import Table from "@/components/module/Table/Table";
+import Brand from "@/types/Brand/Brand.type";
 import Image from "next/image";
 
 

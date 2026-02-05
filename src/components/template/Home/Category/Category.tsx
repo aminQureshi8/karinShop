@@ -19,7 +19,7 @@ export default async function Category() {
 
       <div className="grid grid-cols-7 gap-3 mt-5">
         {categories.map((cat) => (
-          <div>
+          <div key={cat._id}>
             <div className="flex justify-center">
               <Image
                 src={cat.imageUrl}
