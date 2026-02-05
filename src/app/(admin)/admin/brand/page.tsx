@@ -1,5 +1,4 @@
-import FormBrand from "@/components/template/admin/Brand/Form/FormBrand";
-import TableBrand from "@/components/template/admin/Brand/Table/TableBrand";
+import BrandContainer from "@/components/template/admin/Brand/BrandContainer/BrandContainer";
 import db from "@/config/db";
 import brandModel from "@/models/brand";
 
@@ -10,12 +9,7 @@ export default async function page() {
 
   return (
     <div>
-      <div>
-        <FormBrand />
-      </div>
-      <div className="mt-5">
-        <TableBrand brands={brands} />
-      </div>
+      <BrandContainer brands={JSON.parse(JSON.stringify(brands))} />
     </div>
   );
 }
