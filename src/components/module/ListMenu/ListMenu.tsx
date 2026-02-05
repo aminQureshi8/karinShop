@@ -3,13 +3,16 @@ import { IoLocationOutline } from "react-icons/io5";
 import { memo } from "react";
 import { CiMobile1 } from "react-icons/ci";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import Link from "next/link";
 const ListMenu = memo(() => {
   return (
     <div className="container mx-auto">
       <div className="bg-black max-lg:hidden text-white  dark:text-gray-300 dark:bg-slate-700 text-sm  font-danaMed rounded-full mt-5 p-5">
         <div className="flex justify-between items-center">
           <ul className="flex items-center gap-5 *:cursor-pointer ">
-            <li className="transition-all hover:text-blue-500">صحفه اصلی</li>
+            <Link href="/">
+              <li className="transition-all hover:text-blue-500">صحفه اصلی</li>
+            </Link>
             <li className="relative group">
               <div className="transition-all flex items-center gap-2 hover:text-blue-500">
                 <p>دسته بندی ها</p>

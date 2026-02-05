@@ -54,7 +54,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(brand, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ message: error.message.error });
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
 

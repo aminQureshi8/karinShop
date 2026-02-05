@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import toast from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
 
 interface IFormInput {
@@ -15,6 +16,7 @@ export default function FormBrand() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IFormInput>({ mode: "all" });
 
@@ -37,15 +39,14 @@ export default function FormBrand() {
 
       console.log(result);
 
-      if (!res.ok) {
-        console.error("Failed to create brand");
-        // You might want to show an error to the user here
-      } else {
+      if (res.ok) {
         console.log("Brand created successfully");
-        // Optionally reset the form or redirect
+        toast.success("برند با موفقیعت ایجاد شد");
+        reset();
       }
     } catch (error) {
       console.error("An error occurred:", error);
+      toast.error("خطا در ایجاد برند");
     } finally {
       setIsLoading(false);
     }
