@@ -71,7 +71,6 @@ export async function GET(req: NextRequest) {
 
     const brands = await brandModel
       .find()
-      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(3);
 

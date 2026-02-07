@@ -47,7 +47,7 @@ export default function TableBrand({
 
       if (res.ok) {
         toast.success("با موفقعیت حذف شد");
-        getBrands();
+        getBrands(currentPage);
       }
     } catch (error) {}
   };
