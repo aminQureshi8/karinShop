@@ -9,7 +9,7 @@ interface IFormInput {
   image: FileList;
 }
 
-export default function FormBrand({  getBrands }: { setBrandState: any }) {
+export default function FormBrand({ getBrands }: { getBrands: any }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -18,8 +18,6 @@ export default function FormBrand({  getBrands }: { setBrandState: any }) {
     reset,
     formState: { errors },
   } = useForm<IFormInput>({ mode: "all" });
-
-
 
   const createBrand: SubmitHandler<IFormInput> = async (data) => {
     try {

@@ -4,14 +4,34 @@ import Brand from "@/types/Brand/Brand.type";
 import Image from "next/image";
 import BrandType from "@/types/Brand/Brand.type";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import Pagination from "@/components/module/Pagination/Pagination";
 export default function TableBrand({
   children,
   brands,
   getBrands,
+  totalPageState,
+  setBrandState,
+  intialBrand,
 }: {
   children?: React.ReactNode;
   brands: Brand[];
+  getBrands: any;
+  totalPageState: number;
+  setBrandState: any;
+  intialBrand: any;
 }) {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  useEffect(() => {
+    if (currentPage === 1) {
+      setBrandState(intialBrand);
+      return;
+    }
+
+    getBrands(currentPage);
+  }, [currentPage, intialBrand, setBrandState]);
+
   const removeBrand = async (id: string) => {
     console.log("ID که داریم می‌فرستیم:", id);
     if (!id) {
@@ -88,6 +108,14 @@ export default function TableBrand({
           ))}
         </tbody>
       </Table>
+
+      {totalPageState > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPageState}
+        />
+      )}
     </div>
   );
 }

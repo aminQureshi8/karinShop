@@ -61,12 +61,23 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     await db();
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get("page") || "1");
 
-    const brands = await brandModel.find({}, "-__v").lean();
+    const skip = (page - 1) * 3;
 
-    return NextResponse.json(brands);
+    const brands = await brandModel
+      .find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(3);
+
+    const totalBrands = await brandModel.countDocuments({});
+    const totalPages = Math.ceil(totalBrands / 3);
+
+    return NextResponse.json({ brands, totalPages }, { status: 200 });
   } catch (error) {}
 }

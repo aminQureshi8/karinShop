@@ -19,10 +19,12 @@ export async function DELETE(
     }
 
     await db();
-
     await brandModel.findOneAndDelete({ _id: id });
 
-    return NextResponse.json({ message: id }, { status: 200 });
+    return NextResponse.json(
+      { message: "Brand deleted successfully" },
+      { status: 200 },
+    );
   } catch (error) {
     return NextResponse.json(
       { message: "Internal Server Error" },
