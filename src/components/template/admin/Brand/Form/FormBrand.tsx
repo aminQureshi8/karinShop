@@ -1,6 +1,4 @@
 "use client";
-
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -11,7 +9,7 @@ interface IFormInput {
   image: FileList;
 }
 
-export default function FormBrand({ setBrandState }: { setBrandState: any }) {
+export default function FormBrand({  getBrands }: { setBrandState: any }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -21,16 +19,7 @@ export default function FormBrand({ setBrandState }: { setBrandState: any }) {
     formState: { errors },
   } = useForm<IFormInput>({ mode: "all" });
 
-  const getBrands = async () => {
-    const res = await fetch("/api/brand");
-    const result = await res.json();
 
-    if (res.ok) {
-      setBrandState(result);
-    }
-
-    console.log(result);
-  };
 
   const createBrand: SubmitHandler<IFormInput> = async (data) => {
     try {

@@ -21,7 +21,7 @@ export default function RootLayout({
               reverseOrder={false}
               toastOptions={{
                 className:
-                  "!font-danaMed bg-white dark:bg-gray-800 text-black dark:text-white",
+                  "!font-danaMed bg-white !dark:bg-gray-800 !text-black !dark:text-white",
                 duration: 3000,
                 style: {
                   fontSize: "14px",

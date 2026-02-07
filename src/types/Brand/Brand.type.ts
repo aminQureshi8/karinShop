@@ -1,4 +1,4 @@
-type Brand = {
+type BrandType = {
   _id: string;
   title: string;
   imageUrl: string;
@@ -6,4 +6,4 @@ type Brand = {
   updatedAt: string;
 };
 
-export default Brand
+export default BrandType;

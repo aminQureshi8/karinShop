@@ -116,9 +116,7 @@ export const authAdmin = async () => {
   try {
     const authResult = await authUser();
 
-    // اگر response وجود داشت یعنی تازه refresh شده → باید response رو هم برگردونیم
     if (authResult.response) {
-      // در این حالت user از refreshToken آمده
       const user = authResult.user;
 
       if (!user || (user.role !== "admin" && user.role !== "superadmin")) {
@@ -128,7 +126,6 @@ export const authAdmin = async () => {
       return { user, response: authResult.response };
     }
 
-    // حالت عادی (توکن معتبر بود یا اصلاً توکن نبود)
     const user = authResult.user;
 
     if (!user) {
@@ -156,10 +153,8 @@ export const authRouteHandler = (header) => {
       return false;
     }
 
-  return true;
-
+    return true;
   } catch (error) {
-    return false
+    return false;
   }
-
 };
