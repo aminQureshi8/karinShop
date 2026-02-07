@@ -6,6 +6,8 @@ import BrandType from "@/types/Brand/Brand.type";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Pagination from "@/components/module/Pagination/Pagination";
+import { MdDelete } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 export default function TableBrand({
   children,
   brands,
@@ -33,12 +35,6 @@ export default function TableBrand({
   }, [currentPage, intialBrand, setBrandState]);
 
   const removeBrand = async (id: string) => {
-    console.log("ID که داریم می‌فرستیم:", id);
-    if (!id) {
-      console.error("ID وجود ندارد!");
-      return;
-    }
-
     try {
       const res = await fetch(`/api/brand/${id}`, {
         method: "DELETE",
@@ -95,12 +91,12 @@ export default function TableBrand({
                 <div className="flex items-center gap-5">
                   <button
                     onClick={() => removeBrand(brand._id)}
-                    className="bg-red-500 text-white p-1 rounded-lg cursor-pointer"
+                    className="bg-red-500 text-white size-8 flex justify-center items-center rounded-lg cursor-pointer"
                   >
-                    حذف
+                    <MdDelete size={23} className="text-white" />
                   </button>
                   <button className="bg-blue-500 text-white p-1 rounded-lg cursor-pointer">
-                    ویرایش
+                    <MdEdit size={23} className="text-white" />
                   </button>
                 </div>
               </td>
