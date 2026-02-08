@@ -59,6 +59,9 @@ importers:
       ssh2-sftp-client:
         specifier: ^12.0.1
         version: 12.0.1
+      sweetalert2:
+        specifier: ^11.26.18
+        version: 11.26.18
       swiper:
         specifier: ^12.0.3
         version: 12.0.3
@@ -888,6 +891,9 @@ packages:
       babel-plugin-macros:
         optional: true
 
+  sweetalert2@11.26.18:
+    resolution: {integrity: sha512-3O5feBqV+hTIOwCRKGuZGHosjiuBAKP/vpBl6vKFZeVYfCUGdXqXuuidn6YXHan3f6e62UdmnjwJBt8UtDVBhg==}
+
   swiper@12.0.3:
     resolution: {integrity: sha512-BHd6U1VPEIksrXlyXjMmRWO0onmdNPaTAFduzqR3pgjvi7KfmUCAm/0cj49u2D7B0zNjMw02TSeXfinC1hDCXg==}
     engines: {node: '>= 4.7.0'}
@@ -1631,6 +1637,8 @@ snapshots:
     dependencies:
       client-only: 0.0.1
       react: 19.2.3
+
+  sweetalert2@11.26.18: {}
 
   swiper@12.0.3: {}
 

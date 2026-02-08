@@ -65,3 +65,11 @@
   object-fit: cover;
 }
 
+.swal2-popup {
+  @apply !font-danaMed bg-white dark:bg-gray-800 dark:text-white;
+}
+
+.swal2-title,
+.swal2-content {
+  @apply !font-danaMed;
+}

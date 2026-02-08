@@ -3,11 +3,12 @@ import Table from "@/components/module/Table/Table";
 import Brand from "@/types/Brand/Brand.type";
 import Image from "next/image";
 import BrandType from "@/types/Brand/Brand.type";
-import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Pagination from "@/components/module/Pagination/Pagination";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
+import Swal from "sweetalert2";
+import SwalFire from "@/app/utils/swal";
 export default function TableBrand({
   children,
   brands,
@@ -35,17 +36,37 @@ export default function TableBrand({
   }, [currentPage, intialBrand, setBrandState]);
 
   const removeBrand = async (id: string) => {
-    try {
-      const res = await fetch(`/api/brand/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+    const result = await SwalFire(
+      "آیا مطمئن هستید؟",
+      "warning",
+      true,
+      "انصراف",
+      "بله، حذف کن!",
+    );
 
-      if (res.ok) {
-        toast.success("با موفقعیت حذف شد");
-        getBrands(currentPage);
-      }
-    } catch (error) {}
+    if (result.isConfirmed) {
+      try {
+        const res = await fetch(`/api/brand/${id}`, {
+          method: "DELETE",
+          credentials: "include",
+        });
+
+        if (res.ok) {
+          getBrands(currentPage);
+          SwalFire(
+            "با موفقیت انجام شد!",
+            "success",
+            false,
+            "",
+            "باشه",
+            "#3085d6",
+            undefined,
+            5000,
+            true,
+          );
+        }
+      } catch (error) {}
+    }
   };
   return (
     <div>
