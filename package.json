@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
     "@reduxjs/toolkit": "^2.11.2",
     "basic-ftp": "^5.1.0",
     "cloudinary": "^2.9.0",
