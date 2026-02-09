@@ -25,7 +25,7 @@ export default function TableBrand({
   intialBrand: any;
 }) {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (currentPage === 1) {
@@ -71,21 +71,27 @@ export default function TableBrand({
   };
   return (
     <>
-      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        j
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="ویرایش برند"
+      >
         <>
-          <h2 className="text-lg font-bold mb-4">ویرایش برند</h2>
-
           <div className="space-y-4">
-            <input
-              // defaultValue={brand.title}
-              className="w-full border rounded p-2"
-              placeholder="نام برند"
-            />
-
-            <button className="w-full bg-brand text-white rounded p-2">
-              ذخیره تغییرات
-            </button>
+            <div>
+              <input
+                // defaultValue={brand.title}
+                className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                placeholder="نام برند"
+              />
+            </div>
+            <div>
+              <input
+                // defaultValue={brand.title}
+                className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                placeholder="نام برند"
+              />
+            </div>
           </div>
         </>
       </Modal>
@@ -138,7 +144,7 @@ export default function TableBrand({
                       <MdDelete size={23} className="text-white" />
                     </button>
                     <button
-                      onClick={() => setIsModalOpen(true)}
+                      onClick={() => setIsOpen(true)}
                       className="bg-blue-500 text-white p-1 rounded-lg cursor-pointer"
                     >
                       <MdEdit size={23} className="text-white" />
