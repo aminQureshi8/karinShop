@@ -22,9 +22,6 @@ export default function BrandContainer({
     if (res.ok) {
       setBrandState(result.brands);
       setTotalPageState(result.totalPages);
-
-      console.log(result.brands);
-      
     }
   }, []);
 

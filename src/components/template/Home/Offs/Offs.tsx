@@ -130,7 +130,7 @@ export default function Offs() {
         </SwiperSlide>
 
         {products.map((product) => (
-          <SwiperSlide key={product.id} className="!w-64 !h-full">
+          <SwiperSlide  className="!w-64 !h-full">
             <div className="bg-white  dark:bg-slate-800 dark:text-white rounded-xl p-3 h-full flex flex-col justify-between">
               <img
                 src={product.img}

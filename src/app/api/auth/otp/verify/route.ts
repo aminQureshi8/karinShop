@@ -1,10 +1,15 @@
+
+
 import { generateAccessToken, generateRefreshToken } from "@/app/utils/auth";
 import db from "@/config/db";
 import otpModel from "@/models/otp";
 import userModel from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
+
+
 export async function POST(req: NextRequest) {
+   
   try {
     await db();
 
@@ -16,6 +21,9 @@ export async function POST(req: NextRequest) {
       identifier,
       code: otpCode,
     });
+
+   
+    
 
     if (isOtpExist) {
       const now = Date.now();
@@ -89,3 +97,5 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+

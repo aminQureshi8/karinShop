@@ -1,4 +1,5 @@
 import { IoMdClose } from "react-icons/io";
+import { BeatLoader } from "react-spinners";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -6,8 +7,9 @@ interface ModalProps {
   children: React.ReactNode;
   acceptLabel?: string;
   declineLabel?: string;
-  onAccept?: (id: string) => void;
+  onAccept?: any
   isApproved?: boolean;
+  isLoading: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -19,6 +21,7 @@ const Modal: React.FC<ModalProps> = ({
   declineLabel = "Decline",
   onAccept,
   isApproved = false,
+  isLoading,
 }) => {
   return (
     <div
@@ -58,7 +61,11 @@ const Modal: React.FC<ModalProps> = ({
               onClick={() => onAccept?.("")}
               className=" bg-blue-500  disabled:cursor-not-allowed disabled:opacity-60 text-white rounded-xl cursor-pointer transition-all hover:bg-blue-600 bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
             >
-              {acceptLabel}
+              {isLoading ? (
+                <BeatLoader size={10} color="white" />
+              ) : (
+                acceptLabel
+              )}
             </button>
             <button
               data-modal-hide="static-modal"
