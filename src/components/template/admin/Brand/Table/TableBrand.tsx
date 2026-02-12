@@ -35,11 +35,9 @@ export default function TableBrand({
   const [editBrandObject, setEditBrandObject] = useState<Brand | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm<IFormInput>({ mode: "all" });
+  const { register, handleSubmit, reset } = useForm<IFormInput>({
+    mode: "all",
+  });
 
   useEffect(() => {
     if (editBrandObject) {
@@ -108,6 +106,21 @@ export default function TableBrand({
         body: formData,
       });
 
+      if (res.status === 403) {
+        SwalFire(
+          "شما دسترسی لازم را ندارید!",
+          "error",
+          false,
+          "",
+          "باشه",
+          "#3085d6",
+          undefined,
+          5000,
+          true,
+        );
+        return;
+      }
+
       if (res.ok) {
         setIsOpen(false);
         getBrands(currentPage);
@@ -139,6 +152,10 @@ export default function TableBrand({
         isLoading={isLoading}
         acceptLabel="تغییر"
         declineLabel="لغو"
+        onDecline={() => {
+          setIsOpen(false);
+          setEditBrandObject(null);
+        }}
       >
         <>
           <div className="space-y-4">
@@ -152,7 +169,7 @@ export default function TableBrand({
             <div>
               <input
                 type="file"
-                {...register("image" , { required: "پر کردن فیلد الزامی است" })}
+                {...register("image", { required: "پر کردن فیلد الزامی است" })}
                 className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                 placeholder="نام برند"
               />

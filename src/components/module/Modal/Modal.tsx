@@ -7,9 +7,10 @@ interface ModalProps {
   children: React.ReactNode;
   acceptLabel?: string;
   declineLabel?: string;
-  onAccept?: any
+  onAccept?: any;
   isApproved?: boolean;
   isLoading: boolean;
+  onDecline?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -22,6 +23,7 @@ const Modal: React.FC<ModalProps> = ({
   onAccept,
   isApproved = false,
   isLoading,
+  onDecline,
 }) => {
   return (
     <div
@@ -61,17 +63,12 @@ const Modal: React.FC<ModalProps> = ({
               onClick={() => onAccept?.("")}
               className=" bg-blue-500  disabled:cursor-not-allowed disabled:opacity-60 text-white rounded-xl cursor-pointer transition-all hover:bg-blue-600 bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
             >
-              {isLoading ? (
-                <BeatLoader size={10} color="white" />
-              ) : (
-                acceptLabel
-              )}
+              {isLoading ? <BeatLoader size={10} color="white" /> : acceptLabel}
             </button>
             <button
               data-modal-hide="static-modal"
               type="button"
-              onClick={() => onAccept?.("")}
-              disabled={!isApproved}
+              onClick={() => onDecline?.()}
               className="text-body disabled:cursor-not-allowed bg-red-500 disabled:opacity-60 text-white rounded-xl cursor-pointer bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
             >
               {declineLabel}

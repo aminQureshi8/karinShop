@@ -67,10 +67,25 @@ export default function TableCategory({
 
     if (result.isConfirmed) {
       try {
-        const res = await fetch(`/api/brand/${id}`, {
+        const res = await fetch(`/api/category/${id}`, {
           method: "DELETE",
           credentials: "include",
         });
+
+        if (res.status === 403) {
+          SwalFire(
+            "شما دسترسی لازم را ندارید!",
+            "error",
+            false,
+            "",
+            "باشه",
+            "#3085d6",
+            undefined,
+            5000,
+            true,
+          );
+          return;
+        }
 
         if (res.ok) {
           getCategories(currentPage);
@@ -92,7 +107,7 @@ export default function TableCategory({
     }
   };
 
-  const editBrand = async (data: IFormInput) => {
+  const editCategory = async (data: IFormInput) => {
     const formData = new FormData();
     formData.append("title", data.title);
     if (data.image[0]) {
@@ -135,10 +150,14 @@ export default function TableCategory({
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         title="ویرایش برند"
-        onAccept={handleSubmit(editBrand)}
+        onAccept={handleSubmit(editCategory)}
         isLoading={isLoading}
         acceptLabel="تغییر"
         declineLabel="لغو"
+        onDecline={() => {
+          setIsOpen(false)
+          setEditCategoryObject(null)
+        }}
       >
         <>
           <div className="space-y-4">
@@ -166,10 +185,10 @@ export default function TableCategory({
           <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default  border-gray-400 bg-gray-50 dark:bg-gray-700">
             <tr>
               <th scope="col" className="px-6 py-3 font-medium">
-                عکس برند
+                عکس دسته بندی
               </th>
               <th scope="col" className="px-6 py-3 font-medium">
-                نام برند
+                نام دسته بندی
               </th>
               <th scope="col" className="px-6 py-3 font-medium">
                 تاریخ ایجاد
