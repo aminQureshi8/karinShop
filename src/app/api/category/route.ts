@@ -13,7 +13,8 @@ cloudinary.config({
 
 export async function POST(req: NextRequest) {
   try {
-    const isAdmin = authRouteHandler(req.headers.get("Authorization"));
+    const token = req.cookies.get("token")?.value;
+    const isAdmin = authRouteHandler(token);
 
     if (!isAdmin) {
       return NextResponse.json({ message: "Access denied" }, { status: 403 });
@@ -60,4 +61,21 @@ export async function POST(req: NextRequest) {
       { status: 500 },
     );
   }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    await db();
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get("page") || "1");
+
+    const skip = (page - 1) * 3;
+
+    const categories = await categoryModel.find().skip(skip).limit(3);
+
+    const totalCategories = await categoryModel.countDocuments({});
+    const totalPages = Math.ceil(totalCategories / 3);
+
+    return NextResponse.json({ categories, totalPages }, { status: 200 });
+  } catch (error) {}
 }
