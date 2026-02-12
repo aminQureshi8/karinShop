@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
@@ -6,7 +8,9 @@ import { BsBasket } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { MdOutlineCategory } from "react-icons/md";
 import { RiDiscountPercentLine } from "react-icons/ri";
+import { MdKeyboardArrowDown } from "react-icons/md";
 export default function SideBar() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="bg-white rounded-lg dark:bg-slate-800">
       <div className="p-3">
@@ -42,12 +46,32 @@ export default function SideBar() {
             </Link>
           </div>
           <div>
-            <Link href="/admin/dashboard">
-              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
-                <BsBasket size={20} />
+            <div
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg cursor-pointer"
+            >
+              <BsBasket size={20} />
+              <div className="flex items-center justify-between w-full pl-3">
                 <span className="text-sm">محصولات</span>
+                <MdKeyboardArrowDown className={` transition-all ${isOpen && "rotate-180"}`} />
               </div>
-            </Link>
+            </div>
+            {isOpen && (
+              <div className="flex flex-col gap-2 mt-2 mr-8">
+                <Link
+                  href="/admin/product"
+                  className="text-sm hover:text-blue-500 transition-all"
+                >
+                  لیست محصولات
+                </Link>
+                <Link
+                  href="/admin/product/add"
+                  className="text-sm hover:text-blue-500 transition-all"
+                >
+                  ایجاد محصولات جدید
+                </Link>
+              </div>
+            )}
           </div>
           <div>
             <Link href="/admin/dashboard">
