@@ -53,19 +53,15 @@ export default function SideBar() {
               <BsBasket size={20} />
               <div className="flex items-center justify-between w-full pl-3">
                 <span className="text-sm">محصولات</span>
-                <MdKeyboardArrowDown className={` transition-all ${isOpen && "rotate-180"}`} />
+                <MdKeyboardArrowDown
+                  className={` transition-all ${isOpen && "rotate-180"}`}
+                />
               </div>
             </div>
             {isOpen && (
               <div className="flex flex-col gap-2 mt-2 mr-8">
                 <Link
-                  href="/admin/product"
-                  className="text-sm hover:text-blue-500 transition-all"
-                >
-                  لیست محصولات
-                </Link>
-                <Link
-                  href="/admin/product/add"
+                  href="/admin/product/createProduct"
                   className="text-sm hover:text-blue-500 transition-all"
                 >
                   ایجاد محصولات جدید
