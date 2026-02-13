@@ -5,6 +5,12 @@ const category = new mongoose.Schema({
   imageUrl: { type: String },
 });
 
+category.virtual("subCategory", {
+  ref: "subCategory",
+  localField: "_id",
+  foreignField: "category",
+});
+
 const categoryModel =
   mongoose.models.category || mongoose.model("category", category);
 
