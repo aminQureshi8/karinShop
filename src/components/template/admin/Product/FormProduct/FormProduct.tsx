@@ -3,205 +3,176 @@
 import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import MobileFilter from "../FormFIlterComponent/MobileFilter/MobileFilter";
+import LapTopFilter from "../FormFIlterComponent/LapTopFilter/LapTopFilter";
 
 interface IFormInput {
   title: string;
   slug: string;
-  image: FileList;
-  category: any;
-  brand: any;
-  subCategory: any;
+  category: string;
+  subCategory?: string;
+  brand: string;
 }
 
 export default function FormProduct({
   brands,
   categories,
 }: {
-  brands: any;
-  categories: any;
+  brands: any[];
+  categories: any[];
 }) {
   const [subCategories, setSubCategories] = useState<any[]>([]);
+
   const {
     register,
     handleSubmit,
-    reset,
     control,
     formState: { errors },
-  } = useForm<IFormInput>({ mode: "all" });
+    setValue,
+  } = useForm<IFormInput>({
+    mode: "all",
+  });
 
   const watchedCategory = useWatch({
     control,
     name: "category",
   });
 
+  const watchedSubCategory = useWatch({
+    control,
+    name: "subCategory",
+  });
+
   useEffect(() => {
-    // اگر دسته‌بندی انتخاب نشده → لیست خالی کن
-    if (!watchedCategory) {
+    if (!watchedCategory || watchedCategory === "-1") {
       setSubCategories([]);
       return;
     }
 
-    // فقط برای تست – بعداً شرط رو بردارید یا منطقی کنید
-    // if (watchedCategory !== "698db26caf96f57e857dd2900") return;
-
     const fetchSubCategories = async () => {
       try {
-        console.log("درخواست subcategory برای دسته:", watchedCategory);
-
         const res = await fetch(`/api/category/subCategory/${watchedCategory}`);
 
-        if (!res.ok) {
-          console.log("پاسخ ناموفق:", res.status);
-          return;
-        }
+        if (!res.ok) return;
 
         const data = await res.json();
-        console.log("داده دریافتی:", data); // ← اینجا باید ببینید
-
         setSubCategories(data?.subCategories || data || []);
       } catch (err) {
-        console.error("خطا در گرفتن زیرمجموعه‌ها:", err);
+        console.error(err);
       }
     };
 
     fetchSubCategories();
   }, [watchedCategory]);
 
-  const watchedSubCategory = useWatch({
-    control,
-    name: "subCategory",
-  });
+  useEffect(() => {
+    if (!watchedCategory || watchedCategory === "-1") {
+      setSubCategories([]);
+      setValue("subCategory", undefined);
+    }
+  }, [watchedCategory, setValue]);
 
-  const watchedBrand = useWatch({
-    control,
-    name: "brand",
-  });
+  const onSubmit = (data: IFormInput) => {
+    console.log("FORM DATA 👉", data);
+  };
 
   return (
     <div className="font-danaMed">
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-3 gap-5">
           <div>
-            <label htmlFor="">نام محصول</label>
+            <label>نام محصول</label>
             <input
               type="text"
               {...register("title", { required: "این فیلد الزامی است" })}
-              id="title"
-              placeholder="مثال: گوشی موبایل اپل مدل iPhone 16 دو سیم کارت ظرفیت 128 گیگابایت و رم 8"
+              placeholder="مثال: iPhone 16"
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
+
           <div>
-            <label htmlFor="">اسلاگ محصول</label>
+            <label>اسلاگ محصول</label>
             <input
               type="text"
               {...register("slug", { required: "این فیلد الزامی است" })}
-              id="slug"
-              placeholder="مثال: iphone-16-128gb"
+              placeholder="iphone-16"
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
+
           <div>
-            <label htmlFor="category">دسته بندی محصول</label>
+            <label>دسته بندی محصول</label>
             <select
-              id="category"
-              {...register("category", { required: "دسته بندی الزامی هست" })}
+              {...register("category", {
+                validate: (v) => v !== "-1" || "دسته بندی الزامی است",
+              })}
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             >
-              <option value="">انتخاب دسته بندی</option>
-              {categories.map((category: any) => (
-                <option key={category._id} value={category._id}>
-                  {category.title}
+              <option value="-1">انتخاب دسته بندی</option>
+              {categories.map((c) => (
+                <option key={c._id} value={c._id}>
+                  {c.title}
                 </option>
               ))}
             </select>
           </div>
+
+          {subCategories.length > 0 && (
+            <div>
+              <label>زیرمجموعه</label>
+              <select
+                {...register("subCategory", {
+                  required: "زیرمجموعه الزامی است",
+                })}
+                className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              >
+                <option value="">انتخاب زیرمجموعه</option>
+                {subCategories.map((sub) => (
+                  <option key={sub._id} value={sub._id}>
+                    {sub.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {watchedSubCategory === "698edaa869ad5da18d4114d1" && (
+            <MobileFilter
+              control={control}
+              register={register}
+              errors={errors}
+            />
+          )}
+
+          {watchedSubCategory === "698f0bd7961ffa9510fae56d" && (
+            <LapTopFilter
+              control={control}
+              register={register}
+              errors={errors}
+            />
+          )}
+
           <div>
-            {subCategories.length > 0 && (
-              <div>
-                <label htmlFor="subCategory">زیرمجموعه</label>
-                <select
-                  {...register("subCategory", {
-                    required: "این فیلد االزمی است",
-                  })}
-                  className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                >
-                  <option value="">انتخاب زیرمجموعه</option>
-                  {subCategories.map((sub) => (
-                    <option key={sub._id} value={sub._id}>
-                      {sub.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-          </div>
-          <div>
-            <label htmlFor="brand">برند محصول</label>
+            <label>برند محصول</label>
             <select
-              id="brand"
-              {...register("brand", { required: "دسته بندی الزامی هست" })}
+              {...register("brand", { required: "برند الزامی است" })}
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             >
               <option value="">انتخاب برند</option>
-              {brands.map((category: any) => (
-                <option key={category._id} value={category._id}>
-                  {category.title}
+              {brands.map((b) => (
+                <option key={b._id} value={b._id}>
+                  {b.title}
                 </option>
               ))}
             </select>
           </div>
-          <div>
-            <label htmlFor="">نام محصول</label>
-            <input
-              type="text"
-              {...register("title", { required: "این فیلد الزامی است" })}
-              id="title"
-              placeholder="asus"
-              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
-          </div>
-          <div>
-            <label htmlFor="">نام محصول</label>
-            <input
-              type="text"
-              {...register("title", { required: "این فیلد الزامی است" })}
-              id="title"
-              placeholder="asus"
-              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
-          </div>
-          <div>
-            <label htmlFor="">نام محصول</label>
-            <input
-              type="text"
-              {...register("title", { required: "این فیلد الزامی است" })}
-              id="title"
-              placeholder="asus"
-              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
-          </div>
-          <div>
-            <label htmlFor="">نام محصول</label>
-            <input
-              type="text"
-              {...register("title", { required: "این فیلد الزامی است" })}
-              id="title"
-              placeholder="asus"
-              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
-          </div>
-          <div>
-            <label htmlFor="">نام محصول</label>
-            <input
-              type="text"
-              {...register("title", { required: "این فیلد الزامی است" })}
-              id="title"
-              placeholder="asus"
-              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
-          </div>
         </div>
+
+        <button
+          type="submit"
+          className="mt-6 px-6 py-2 rounded-lg bg-blue-600 text-white"
+        >
+          ثبت محصول
+        </button>
       </form>
     </div>
   );

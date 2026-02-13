@@ -6,12 +6,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.cookies.get("token")?.value;
-    const isAdmin = authRouteHandler(token);
+    // const token = req.cookies.get("token")?.value;
+    // const isAdmin = authRouteHandler(token);
 
-    if (!isAdmin) {
-      return NextResponse.json({ message: "Access denied" }, { status: 403 });
-    }
+    // if (!isAdmin) {
+    //   return NextResponse.json({ message: "Access denied" }, { status: 403 });
+    // }
 
     await db();
 

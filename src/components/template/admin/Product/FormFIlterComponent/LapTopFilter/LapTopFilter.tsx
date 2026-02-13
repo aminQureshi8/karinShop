@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function MobileFilter({ register, errors, control }: any) {
+export default function LapTopFilter({ register, errors, control }: any) {
   return (
     <div className="col-span-3">
       <div className="p-6 bg-green-50 dark:bg-green-950 lg:col-span-3 font-danaMed rounded-xl border border-green-200">
