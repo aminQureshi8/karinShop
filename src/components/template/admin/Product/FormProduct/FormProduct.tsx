@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import MobileFilter from "../FormFIlterComponent/MobileFilter/MobileFilter";
 import LapTopFilter from "../FormFIlterComponent/LapTopFilter/LapTopFilter";
+import ColorSelector from "../FormFIlterComponent/ColorSelector/ColorSelector";
 
 interface IFormInput {
   title: string;
@@ -11,16 +12,44 @@ interface IFormInput {
   category: string;
   subCategory?: string;
   brand: string;
+  count?: number;
+  price: string;
+  colors: string[];
+  images: File[];
+  model?: string;
+  storage?: string;
+  ram?: string;
+  screenSize?: string;
+  refreshRate?: string;
+  simCount?: string;
+  battery?: number;
+  camera?: string;
+  os?: string;
+  network?: string;
+}
+
+interface Category {
+  _id: string;
+  title: string;
+  subCategories?: Category[];
+}
+
+interface Brand {
+  _id: string;
+  title: string;
 }
 
 export default function FormProduct({
   brands,
   categories,
 }: {
-  brands: any[];
-  categories: any[];
+  brands: Brand[];
+  categories: Category[];
 }) {
-  const [subCategories, setSubCategories] = useState<any[]>([]);
+  const [subCategories, setSubCategories] = useState<Category[]>([]);
+  const [rawPrice, setRawPrice] = useState<number>(0);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const {
     register,
@@ -70,6 +99,16 @@ export default function FormProduct({
       setValue("subCategory", undefined);
     }
   }, [watchedCategory, setValue]);
+
+  const removeImage = (index: number) => {
+    const newPreviews = imagePreviews.filter((_, i) => index !== i);
+    const newFiles = selectedFiles.filter((_, i) => index !== i);
+
+    setImagePreviews(newPreviews);
+    setSelectedFiles(newFiles);
+
+    setValue("images", newFiles, { shouldValidate: true });
+  };
 
   const onSubmit = (data: IFormInput) => {
     console.log("FORM DATA 👉", data);
@@ -164,6 +203,129 @@ export default function FormProduct({
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="relative">
+            <label>قیمت محصول</label>
+            <input
+              type="text"
+              {...register("price", {
+                required: "قیمت الزامی است",
+                pattern: {
+                  value: /^\d{1,3}(,\d{3})*$/,
+                  message: "قیمت باید فقط عدد و جداکننده کاما باشد",
+                },
+                validate: (value) => {
+                  const numericValue = Number(value.replace(/,/g, ""));
+                  if (numericValue < 0) return "قیمت نمی‌تواند منفی باشد";
+                  if (numericValue > 500000000)
+                    return "حداکثر قیمت مجاز ۵۰۰ میلیون تومان است";
+                  return true;
+                },
+              })}
+              onChange={(e) => {
+                const rawValue = e.target.value.replace(/\D/g, "");
+                const formatted = rawValue.replace(
+                  /\B(?=(\d{3})+(?!\d))/g,
+                  ",",
+                );
+                e.target.value = formatted;
+                setRawPrice(+rawValue);
+              }}
+              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              placeholder="مثلاً 1,200,000"
+            />
+
+            <div className="absolute left-3 top-13 transform -translate-y-1/2 text-xs text-gray-500">
+              تومان
+            </div>
+          </div>
+
+          <div>
+            <ColorSelector
+              register={register}
+              setValue={setValue}
+              errors={errors}
+            />
+          </div>
+
+          <div className="font-danaMed flex flex-col">
+            <label className="text-sm" htmlFor="">
+              عکس‌های محصول
+            </label>
+
+            <input
+              type="file"
+              accept="image/png, image/jpeg, image/jpg, image/webp"
+              multiple
+              {...register("images", {
+                required: "انتخاب حداقل یک تصویر الزامی است",
+                validate: {
+                  fileType: (files) => {
+                    if (!files || files.length === 0)
+                      return "لطفاً حداقل یک عکس انتخاب کنید";
+                    const validTypes = [
+                      "image/jpeg",
+                      "image/png",
+                      "image/webp",
+                    ];
+                    for (const file of files) {
+                      if (!validTypes.includes(file.type)) {
+                        return "فرمت تصویر باید PNG، JPG یا WEBP باشد";
+                      }
+                    }
+                    return true;
+                  },
+                  fileSize: (files) => {
+                    for (const file of files) {
+                      if (file.size > 2 * 1024 * 1024) {
+                        return "حجم هر تصویر نباید بیشتر از ۲ مگابایت باشد";
+                      }
+                    }
+                    return true;
+                  },
+                },
+              })}
+              onChange={(e) => {
+                const files = Array.from(e.target.files || []);
+                setSelectedFiles(files);
+
+                const previews = files.map((file) => URL.createObjectURL(file));
+                setImagePreviews(previews);
+
+                // sync با react-hook-form
+                setValue("images", files, { shouldValidate: true });
+              }}
+              className={`border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm ${
+                errors.images ? "border-red-400" : ""
+              }`}
+            />
+
+            {errors.images && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.images.message as string}
+              </p>
+            )}
+          </div>
+
+          <div className="col-span-3">
+            {imagePreviews.length > 0 && (
+              <div className="mt-4 grid grid-cols-3 gap-3">
+                {imagePreviews.map((src, index) => (
+                  <div
+                    key={index}
+                    className="relative w-full h-28 rounded-lg overflow-hidden border dark:border-gray-700"
+                    onClick={() => removeImage(index)}
+                  >
+                    <img
+                      src={src}
+                      alt={`preview-${index}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
