@@ -5,6 +5,7 @@ import { useForm, useWatch } from "react-hook-form";
 import MobileFilter from "../FormFIlterComponent/MobileFilter/MobileFilter";
 import LapTopFilter from "../FormFIlterComponent/LapTopFilter/LapTopFilter";
 import ColorSelector from "../FormFIlterComponent/ColorSelector/ColorSelector";
+import Editor from "../Editor/Editor";
 
 interface IFormInput {
   title: string;
@@ -249,7 +250,7 @@ export default function FormProduct({
             />
           </div>
 
-          <div className="font-danaMed flex flex-col">
+          <div className="flex flex-col">
             <label className="text-sm" htmlFor="">
               عکس‌های محصول
             </label>
@@ -293,10 +294,9 @@ export default function FormProduct({
                 const previews = files.map((file) => URL.createObjectURL(file));
                 setImagePreviews(previews);
 
-                // sync با react-hook-form
                 setValue("images", files, { shouldValidate: true });
               }}
-              className={`border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm ${
+              className={`border-2 bg-gray-200  dark:bg-black/60 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 dark:border-gray-700 px-3 py-2 text-sm ${
                 errors.images ? "border-red-400" : ""
               }`}
             />
@@ -307,6 +307,7 @@ export default function FormProduct({
               </p>
             )}
           </div>
+
 
           <div className="col-span-3">
             {imagePreviews.length > 0 && (
@@ -326,6 +327,11 @@ export default function FormProduct({
                 ))}
               </div>
             )}
+          </div>
+
+          <div className="col-span-3">
+            <label  htmlFor="">توضیحات محصول</label>
+            <Editor />
           </div>
         </div>
 
