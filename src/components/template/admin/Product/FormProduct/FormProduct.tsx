@@ -6,28 +6,9 @@ import MobileFilter from "../FormFIlterComponent/MobileFilter/MobileFilter";
 import LapTopFilter from "../FormFIlterComponent/LapTopFilter/LapTopFilter";
 import ColorSelector from "../FormFIlterComponent/ColorSelector/ColorSelector";
 import Editor from "../Editor/Editor";
-
-interface IFormInput {
-  title: string;
-  slug: string;
-  category: string;
-  subCategory?: string;
-  brand: string;
-  count?: number;
-  price: string;
-  colors: string[];
-  images: File[];
-  model?: string;
-  storage?: string;
-  ram?: string;
-  screenSize?: string;
-  refreshRate?: string;
-  simCount?: string;
-  battery?: number;
-  camera?: string;
-  os?: string;
-  network?: string;
-}
+import { getFeatures } from "@/app/utils/productCategory";
+import IFormInput from "@/types/Product/Product.type";
+import { Controller } from "react-hook-form";
 
 interface Category {
   _id: string;
@@ -111,8 +92,11 @@ export default function FormProduct({
     setValue("images", newFiles, { shouldValidate: true });
   };
 
-  const onSubmit = (data: IFormInput) => {
-    console.log("FORM DATA 👉", data);
+  const onSubmit = (data: any) => {
+    const formData = new FormData();
+    const features = getFeatures(data, data.subCategory);
+
+    console.log(features);
   };
 
   return (
@@ -255,30 +239,30 @@ export default function FormProduct({
               عکس‌های محصول
             </label>
 
-            <input
-              type="file"
-              accept="image/png, image/jpeg, image/jpg, image/webp"
-              multiple
-              {...register("images", {
+            <Controller
+              name="images"
+              control={control}
+              rules={{
                 required: "انتخاب حداقل یک تصویر الزامی است",
                 validate: {
-                  fileType: (files) => {
+                  fileType: (files: FileList) => {
                     if (!files || files.length === 0)
                       return "لطفاً حداقل یک عکس انتخاب کنید";
+
                     const validTypes = [
                       "image/jpeg",
                       "image/png",
                       "image/webp",
                     ];
-                    for (const file of files) {
+                    for (const file of Array.from(files)) {
                       if (!validTypes.includes(file.type)) {
                         return "فرمت تصویر باید PNG، JPG یا WEBP باشد";
                       }
                     }
                     return true;
                   },
-                  fileSize: (files) => {
-                    for (const file of files) {
+                  fileSize: (files: FileList) => {
+                    for (const file of Array.from(files)) {
                       if (file.size > 2 * 1024 * 1024) {
                         return "حجم هر تصویر نباید بیشتر از ۲ مگابایت باشد";
                       }
@@ -286,19 +270,29 @@ export default function FormProduct({
                     return true;
                   },
                 },
-              })}
-              onChange={(e) => {
-                const files = Array.from(e.target.files || []);
-                setSelectedFiles(files);
-
-                const previews = files.map((file) => URL.createObjectURL(file));
-                setImagePreviews(previews);
-
-                setValue("images", files, { shouldValidate: true });
               }}
-              className={`border-2 bg-gray-200  dark:bg-black/60 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 dark:border-gray-700 px-3 py-2 text-sm ${
-                errors.images ? "border-red-400" : ""
-              }`}
+              render={({ field }) => (
+                <input
+                  type="file"
+                  multiple
+                  accept="image/png, image/jpeg, image/jpg, image/webp"
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    if (!files) return;
+
+                    field.onChange(files); // ✅ مهم‌ترین خط
+
+                    const filesArray = Array.from(files);
+                    setSelectedFiles(filesArray);
+                    setImagePreviews(
+                      filesArray.map((f) => URL.createObjectURL(f)),
+                    );
+                  }}
+                  className={`border-2 bg-gray-200 dark:bg-black/60 rounded-xl mt-2 px-3 py-2 text-sm ${
+                    errors.images ? "border-red-400" : ""
+                  }`}
+                />
+              )}
             />
 
             {errors.images && (
@@ -307,7 +301,6 @@ export default function FormProduct({
               </p>
             )}
           </div>
-
 
           <div className="col-span-3">
             {imagePreviews.length > 0 && (
@@ -330,7 +323,7 @@ export default function FormProduct({
           </div>
 
           <div className="col-span-3">
-            <label  htmlFor="">توضیحات محصول</label>
+            <label htmlFor="">توضیحات محصول</label>
             <Editor />
           </div>
         </div>

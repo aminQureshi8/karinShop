@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { memo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
@@ -9,7 +9,7 @@ import { FaUser } from "react-icons/fa";
 import { MdOutlineCategory } from "react-icons/md";
 import { RiDiscountPercentLine } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
-export default function SideBar() {
+const SideBar = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="bg-white rounded-lg dark:bg-slate-800">
@@ -113,4 +113,6 @@ export default function SideBar() {
       </div>
     </div>
   );
-}
+});
+
+export default SideBar;
