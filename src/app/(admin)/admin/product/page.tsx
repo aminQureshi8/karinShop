@@ -1,10 +1,12 @@
 import ProductContainer from "@/components/template/admin/Product/ProductContainer";
-import React from "react";
+import { memo } from "react";
 
-export default function page() {
+const page = memo(() => {
   return (
     <div>
       <ProductContainer />
     </div>
   );
-}
+});
+
+export default page;

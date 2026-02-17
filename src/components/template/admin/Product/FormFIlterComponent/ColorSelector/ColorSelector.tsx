@@ -2,7 +2,7 @@
 
 import React, { useState, MouseEvent, useEffect, memo } from "react";
 import { IoIosClose } from "react-icons/io";
-import { UseFormRegister, UseFormSetValue, FieldErrors } from "react-hook-form";
+
 
 interface FormValues {
   colors?: string[];

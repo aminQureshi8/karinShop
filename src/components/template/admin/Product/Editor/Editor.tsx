@@ -11,11 +11,11 @@ type Props = {
   onChange?: (data: string) => void
 }
 
-export default function Editor({ value = '', onChange }: Props) {
+export default function Editor({ value = '', onChange  }: Props) {
   const [editorLoaded, setEditorLoaded] = useState(false)
 
   useEffect(() => {
-    // فقط یک بار لود می‌شه
+    
     import('@ckeditor/ckeditor5-build-classic')
       .then(module => {
         ClassicEditor = module.default
@@ -40,8 +40,9 @@ export default function Editor({ value = '', onChange }: Props) {
         editor={ClassicEditor}
         data={value}
         config={{
+
           licenseKey: 'GPL',
-          // language: 'fa',               // اگر فارسی می‌خوای
+          language: 'fa',               
           // placeholder: 'متن خود را اینجا بنویسید...',
           // toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'],
         }}

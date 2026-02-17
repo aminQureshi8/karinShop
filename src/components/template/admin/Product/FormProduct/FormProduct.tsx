@@ -92,11 +92,40 @@ export default function FormProduct({
     setValue("images", newFiles, { shouldValidate: true });
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     const formData = new FormData();
     const features = getFeatures(data, data.subCategory);
 
-    console.log(features);
+    console.log(data);
+
+    formData.append("title", data.title || "");
+    formData.append("slug", data.slug || "");
+    formData.append("price", rawPrice.toString());
+    formData.append("category", data.category || "");
+    formData.append("subCategory", data.subCategory || "");
+    formData.append("longDescription", data.longDescription || "");
+    formData.append("shortDescription", data.shortDescription || "");
+    formData.append("colors", JSON.stringify(data.colors || []));
+    formData.append("tags", JSON.stringify(data.tags || []));
+    formData.append("features", JSON.stringify(features));
+    formData.append("brand", data.brand || "");
+
+
+    if (data.images?.length > 0) {
+      Array.from(data.images).forEach((file) => {
+        formData.append("images", file as File);
+      });
+    }
+
+    const res = await fetch("/api/admin/product", {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    });
+
+    const result = await res.json();
+
+    console.log(result);
   };
 
   return (
@@ -114,7 +143,7 @@ export default function FormProduct({
           </div>
 
           <div>
-            <label>اسلاگ محصول</label>
+            <label className="text-sm">اسلاگ محصول</label>
             <input
               type="text"
               {...register("slug", { required: "این فیلد الزامی است" })}
@@ -124,7 +153,7 @@ export default function FormProduct({
           </div>
 
           <div>
-            <label>دسته بندی محصول</label>
+            <label className="text-sm">دسته بندی محصول</label>
             <select
               {...register("category", {
                 validate: (v) => v !== "-1" || "دسته بندی الزامی است",
@@ -142,7 +171,7 @@ export default function FormProduct({
 
           {subCategories.length > 0 && (
             <div>
-              <label>زیرمجموعه</label>
+              <label className="text-sm">زیرمجموعه</label>
               <select
                 {...register("subCategory", {
                   required: "زیرمجموعه الزامی است",
@@ -176,7 +205,7 @@ export default function FormProduct({
           )}
 
           <div>
-            <label>برند محصول</label>
+            <label className="text-sm">برند محصول</label>
             <select
               {...register("brand", { required: "برند الزامی است" })}
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
@@ -191,7 +220,7 @@ export default function FormProduct({
           </div>
 
           <div className="relative">
-            <label>قیمت محصول</label>
+            <label className="text-sm">قیمت محصول</label>
             <input
               type="text"
               {...register("price", {
@@ -245,7 +274,7 @@ export default function FormProduct({
               rules={{
                 required: "انتخاب حداقل یک تصویر الزامی است",
                 validate: {
-                  fileType: (files: FileList) => {
+                  fileType: (files: File[]) => {
                     if (!files || files.length === 0)
                       return "لطفاً حداقل یک عکس انتخاب کنید";
 
@@ -254,15 +283,16 @@ export default function FormProduct({
                       "image/png",
                       "image/webp",
                     ];
-                    for (const file of Array.from(files)) {
+
+                    for (const file of files) {
                       if (!validTypes.includes(file.type)) {
                         return "فرمت تصویر باید PNG، JPG یا WEBP باشد";
                       }
                     }
                     return true;
                   },
-                  fileSize: (files: FileList) => {
-                    for (const file of Array.from(files)) {
+                  fileSize: (files: File[]) => {
+                    for (const file of files) {
                       if (file.size > 2 * 1024 * 1024) {
                         return "حجم هر تصویر نباید بیشتر از ۲ مگابایت باشد";
                       }
@@ -275,14 +305,14 @@ export default function FormProduct({
                 <input
                   type="file"
                   multiple
-                  accept="image/png, image/jpeg, image/jpg, image/webp"
+                  accept="image/png, image/jpeg, image/webp"
                   onChange={(e) => {
                     const files = e.target.files;
                     if (!files) return;
 
-                    field.onChange(files); // ✅ مهم‌ترین خط
-
                     const filesArray = Array.from(files);
+
+                    field.onChange(filesArray);
                     setSelectedFiles(filesArray);
                     setImagePreviews(
                       filesArray.map((f) => URL.createObjectURL(f)),
@@ -323,8 +353,25 @@ export default function FormProduct({
           </div>
 
           <div className="col-span-3">
-            <label htmlFor="">توضیحات محصول</label>
-            <Editor />
+            <label className="text-sm" htmlFor="longDescription">
+              توضیحات محصول
+            </label>
+            <Controller
+              name="longDescription"
+              control={control}
+              rules={{
+                required: "توضیحات محصول الزامی است",
+              }}
+              render={({ field }) => (
+                <Editor value={field.value} onChange={field.onChange} />
+              )}
+            />
+
+            {errors.longDescription && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.longDescription.message}
+              </p>
+            )}
           </div>
         </div>
 
