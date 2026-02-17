@@ -9,6 +9,7 @@ import Editor from "../Editor/Editor";
 import { getFeatures } from "@/app/utils/productCategory";
 import IFormInput from "@/types/Product/Product.type";
 import { Controller } from "react-hook-form";
+import SwalFire from "@/app/utils/swal";
 
 interface Category {
   _id: string;
@@ -39,6 +40,7 @@ export default function FormProduct({
     control,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<IFormInput>({
     mode: "all",
   });
@@ -110,7 +112,6 @@ export default function FormProduct({
     formData.append("features", JSON.stringify(features));
     formData.append("brand", data.brand || "");
 
-
     if (data.images?.length > 0) {
       Array.from(data.images).forEach((file) => {
         formData.append("images", file as File);
@@ -122,6 +123,11 @@ export default function FormProduct({
       body: formData,
       credentials: "include",
     });
+
+    if (res.ok) {
+      reset();
+      SwalFire("محصول با موفقعیت ثبت شد", "success", true, "باشه");
+    }
 
     const result = await res.json();
 
