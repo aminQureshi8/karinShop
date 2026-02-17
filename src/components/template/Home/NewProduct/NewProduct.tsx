@@ -1,7 +1,15 @@
 import TopCategory from "@/components/module/Home/TopCategory/TopCategory";
 import { CiMobile3 } from "react-icons/ci";
 import SwiperProductContainer from "../SwiperProduct/SwiperProductContainer";
-export default function NewProduct() {
+import db from "@/config/db";
+import productModel from "@/models/product";
+export default async function NewProduct() {
+  await db();
+
+  const products = await productModel
+    .find({}, "title price imageUrls slug")
+    .limit(10)
+    .lean();
   return (
     <div className="mt-12">
       <TopCategory
@@ -9,7 +17,7 @@ export default function NewProduct() {
         des="جدیدترین و بروزترین محصولات"
         icon={<CiMobile3 size={22} />}
       />
-      <SwiperProductContainer/>
+      <SwiperProductContainer products={JSON.parse(JSON.stringify(products))} />
     </div>
   );
 }

@@ -4,9 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import SwiperProduct from "./SwiperProduct";
 
-function SwiperProductContainer() {
+function SwiperProductContainer({ products }: any) {
   return (
-    <div className="w-full  overflow-hidden mt-5 mb-5">
+    <div className="w-full overflow-hidden mt-5 mb-5">
       <Swiper
         slidesPerView={4.5}
         spaceBetween={20}
@@ -20,9 +20,11 @@ function SwiperProductContainer() {
         }}
         className="mySwiper !h-[410px]"
       >
-        <SwiperSlide>
-          <SwiperProduct />
-        </SwiperSlide>
+        {products?.map((product: any) => (
+          <SwiperSlide>
+            <SwiperProduct product={product} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

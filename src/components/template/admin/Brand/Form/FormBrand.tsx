@@ -42,7 +42,7 @@ export default function FormBrand({ getBrands }: { getBrands: any }) {
         console.log("Brand created successfully");
         toast.success("برند با موفقیعت ایجاد شد");
         reset();
-        getBrands();
+        getBrands(1);
       }
     } catch (error) {
       console.error("An error occurred:", error);

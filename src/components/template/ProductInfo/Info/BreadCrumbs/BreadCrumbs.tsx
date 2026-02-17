@@ -3,7 +3,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 
 export default function BreadCrumbs() {
   return (
-    <div className="flex items-center gap-2 ">
+    <div className="flex items-center gap-2">
       <div className="flex items-center gap-2">
         <BiHome />
         <p>صحفه اصلی</p>

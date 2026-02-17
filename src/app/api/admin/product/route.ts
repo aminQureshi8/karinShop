@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
         cloudinary.uploader
           .upload_stream(
             {
-              folder: "digimarket/products",
+              folder: "kadtinShop/products",
             },
             (error, result) => {
               if (error) reject(error);
