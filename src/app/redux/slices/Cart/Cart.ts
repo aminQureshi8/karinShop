@@ -4,6 +4,7 @@ export interface CartItem {
   id: number;
   title: string;
   price: number;
+  color: string
 }
 
 const initialState: CartItem[] = [];

@@ -1,6 +1,7 @@
 import Buttons from "./Buttons/Buttons";
+import ColorPick from "./Color/ColorPick";
 
-export default function InformationProduct() {
+export default function InformationProduct({colors} : any) {
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -14,14 +15,16 @@ export default function InformationProduct() {
         </div>
       </div>
 
-      <div>
+      <div className="mt-3 flex flex-col gap-2">
         <h1>
           گوشی موبایل اپل مدل iPhone 16 دو سیم کارت ظرفیت 128 گیگابایت و رم 8
         </h1>
-        <h2>
+        <h2 className="text-xs">
           Apple iPhone 16 CH Dual SIM Storage 128GB And RAM 8GB Mobile Phone
         </h2>
       </div>
+
+      <ColorPick colors={colors} />
 
       <div>
         <p>ویژگی</p>

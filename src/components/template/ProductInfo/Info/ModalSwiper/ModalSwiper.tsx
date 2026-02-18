@@ -44,7 +44,13 @@ export default function ModalSwiper({
           <div className="py-6">
             <Swiper
               modules={[Thumbs]}
-              thumbs={{ swiper: thumbsSwiper }}
+              thumbs={{
+                swiper:
+                  thumbsSwiper && !thumbsSwiper.destroyed
+                    ? thumbsSwiper
+                    : null,
+              }}
+
               slidesPerView={1}
               centeredSlides
               className="w-full"
@@ -79,7 +85,7 @@ export default function ModalSwiper({
                   key={index}
                   className="!w-20 !h-28 cursor-pointer"
                 >
-                  <div className="relative h-full w-full overflow-hidden rounded-md border">
+                  <div className="relative h-full w-full overflow-hidden rounded-md border dark:border-gray-700">
                     <Image
                       src={img}
                       alt=""
