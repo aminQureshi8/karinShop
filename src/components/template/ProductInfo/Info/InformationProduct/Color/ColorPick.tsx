@@ -4,9 +4,12 @@ import { useEffect } from "react"
 
 export default function ColorPick({ colors }: any) {
 
+    console.log(colors[0].split("[").join("").split("]").join(""));
+
+
 
     useEffect(() => {
-        localStorage.setItem("color", colors[0])
+        localStorage.setItem("color", colors[0].split("[").join("").split("]").join(""))
     }, [])
 
 

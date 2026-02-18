@@ -1,7 +1,9 @@
 import Buttons from "./Buttons/Buttons";
 import ColorPick from "./Color/ColorPick";
 
-export default function InformationProduct({colors} : any) {
+export default function InformationProduct({ colors, features }: any) {
+  console.log(features);
+
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -30,10 +32,13 @@ export default function InformationProduct({colors} : any) {
         <p>ویژگی</p>
 
         <div className="grid grid-cols-3 gap-3 mt-2">
-          <div className="dark:bg-black bg-gray-500 rounded-lg p-2">
-            <p className="text-sm text-gray-500">رزولوشن دوربین اصلی</p>
-            <p className="mt-2">48 مگاپیسکیل</p>
-          </div>
+          {
+            features.slice(0, 6).map((feature: any, index: number) => <div key={index} className="bg-gray-100 dark:bg-black  rounded-lg p-2">
+              <p className="text-sm text-gray-500">{feature.name}</p>
+              <p className="mt-2 ss02">{feature.value}</p>
+            </div>)
+          }
+
         </div>
       </div>
     </div>
