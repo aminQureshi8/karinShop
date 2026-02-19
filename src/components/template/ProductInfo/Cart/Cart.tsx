@@ -30,33 +30,46 @@ export default function Cart({ price, count, id, title }: { price: number, count
         <p className="text-xl">{price.toLocaleString("fa-IR")} <span className="text-base">تومان</span></p>
       </div>
 
-      <div className="flex items-center justify-between border rounded-lg p-2 dark:border-gray-600 mt-5">
-        <div className="cursor-pointer" onClick={() => setCounter(pre => {
-          if (pre >= count) return pre
-          return pre + 1
-        })}>
-          <GoPlus className="text-green-500" size={20} />
+      {
+        !isInCart && <div className="flex items-center justify-between border rounded-lg p-2 dark:border-gray-600 mt-5">
+          <div className="cursor-pointer" onClick={() => setCounter(pre => {
+            if (pre >= count) return pre
+            return pre + 1
+          })}>
+            <GoPlus className="text-green-500" size={20} />
+          </div>
+          <div className="select-none ss02">{counter}</div>
+          <div className="cursor-pointer" onClick={() => setCounter(pre => {
+            if (pre === 1) return pre
+            return pre - 1
+          })}>
+            <FiMinus className="text-red-500" size={20} />
+          </div>
         </div>
-        <div className="select-none ss02">{counter}</div>
-        <div className="cursor-pointer" onClick={() => setCounter(pre => {
-          if (pre === 1) return pre
-          return pre - 1
-        })}>
-          <FiMinus className="text-red-500" size={20} />
-        </div>
-      </div>
+      }
+
 
       <div className="bg-gray-900 rounded-lg p-2 flex items-center justify-between mt-5">
         <p>مجموع خرید:</p>
         <p>{totalPrice.toLocaleString("fa-IR")} <span className="text-base">تومان</span></p>
       </div>
 
-      <div className="mt-5">
-        <button onClick={() => handleCartClick()} className="flex items-center justify-center gap-2 cursor-pointer bg-blue-500 w-full p-2 rounded-lg">
-          <p>افزودن به سبد</p>
-          <BsBasketFill size={20} />
-        </button>
-      </div>
+      {
+        isInCart ? <div className="mt-5">
+          <button className="flex items-center justify-center gap-2 cursor-pointer bg-blue-500 w-full p-2 rounded-lg">
+            <p>مشاهده سبد خرید</p>
+            <BsBasketFill size={19} />
+          </button>
+          <button className="bg-red-500 w-full mt-5  hover:bg-red-600 text-white px-3 py-2 rounded-lg" onClick={() => handleCartClick()}>حذف از سبد</button>
+        </div>
+          : <div className="mt-5">
+            <button onClick={() => handleCartClick()} className="flex items-center justify-center gap-2 cursor-pointer bg-blue-500 w-full p-2 rounded-lg">
+              <p>افزودن به سبد</p>
+              <BsBasketFill size={19} />
+            </button>
+          </div>
+      }
+
     </div>
   )
 }
