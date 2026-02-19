@@ -1,15 +1,39 @@
 "use client"
 
+import SwalFire from "@/app/utils/swal";
 import Table from "@/components/module/Table/Table";
 import Image from "next/image";
 import { MdDelete, MdEdit } from "react-icons/md";
 
-export default function TableProduct({ products }: any) {
-  const removePro = (id: string) => { }
+export default function TableProduct({ products, getProducts }: any) {
+  const removePro = async (id: string) => {
+
+    const result = await SwalFire(
+      "آیا مطمئن هستید؟",
+      "warning",
+      true,
+      "انصراف",
+      "بله، حذف کن!",
+    );
+
+    if (result.isConfirmed) {
+      const res = await fetch(`/api/admin/product/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      })
+
+      if (res.status === 204) {
+        getProducts(1)
+      }
+    }
+
+
+
+
+
+  }
   return (
     <>
-
-
       <div>
         <Table>
           <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default  border-gray-400 bg-gray-50 dark:bg-gray-700">

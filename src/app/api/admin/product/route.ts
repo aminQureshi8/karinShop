@@ -83,3 +83,30 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function GET(req: NextRequest) {
+  try {
+    const page = req.nextUrl.searchParams.get("page") || 1;
+    const limit = 5;
+    const skip = (Number(page) - 1) * limit;
+
+    const products = await productModel.find({}).skip(skip).limit(limit).lean();
+
+    const totalProducts = await productModel.countDocuments({});
+    const totalPage = Math.ceil(totalProducts / limit);
+
+    return NextResponse.json({
+      products,
+      totalPage,
+      currentPage: Number(page),
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
+      },
+      { status: 500 },
+    );
+  }
+}
