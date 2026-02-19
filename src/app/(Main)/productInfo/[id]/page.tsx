@@ -22,12 +22,12 @@ export default async function Page({
 
   return (
     <div className="container mx-auto mt-10 font-danaMed">
-      <div className="grid grid-cols-12">
+      <div className="grid grid-cols-12 gap-5">
         <div className="max-md:col-span-12 col-span-9">
           <Info images={product?.imageUrls} colors={product.colors} features={JSON.parse(product.features)} />
         </div>
         <div className="max-md:col-span-12 col-span-3">
-          <Cart />
+          <Cart price={product.price} />
         </div>
       </div>
     </div>
