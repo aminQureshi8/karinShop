@@ -3,8 +3,27 @@ import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 import { BsBasketFill } from "react-icons/bs";
 import { useState } from "react";
-export default function Cart({ price }: { price: number }) {
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
+import { toggleCart } from "@/app/redux/slices/Cart/Cart";
+
+export default function Cart({ price, count, id, title }: { price: number, count: number, id: string, title: string }) {
   const [counter, setCounter] = useState(1)
+  const totalPrice = price * counter
+
+  const dispatch = useDispatch();
+  const cart = useSelector((state: RootState) => state.cart);
+
+  const isInCart = cart.some((item) => item.id === id);
+
+  console.log(isInCart);
+
+
+  const handleCartClick = () => {
+    dispatch(toggleCart({ id, title, price, color: '' }))
+  }
+
+
   return (
     <div className="dark:bg-gray-800 mt-16 rounded-lg shadow-md bg-white p-3">
       <div>
@@ -12,7 +31,10 @@ export default function Cart({ price }: { price: number }) {
       </div>
 
       <div className="flex items-center justify-between border rounded-lg p-2 dark:border-gray-600 mt-5">
-        <div className="cursor-pointer" onClick={() => setCounter(pre => pre + 1)}>
+        <div className="cursor-pointer" onClick={() => setCounter(pre => {
+          if (pre >= count) return pre
+          return pre + 1
+        })}>
           <GoPlus className="text-green-500" size={20} />
         </div>
         <div className="select-none ss02">{counter}</div>
@@ -26,11 +48,11 @@ export default function Cart({ price }: { price: number }) {
 
       <div className="bg-gray-900 rounded-lg p-2 flex items-center justify-between mt-5">
         <p>مجموع خرید:</p>
-        <p>{(price * counter).toLocaleString("fa-IR")} <span className="text-base">تومان</span></p>
+        <p>{totalPrice.toLocaleString("fa-IR")} <span className="text-base">تومان</span></p>
       </div>
 
       <div className="mt-5">
-        <button className="flex items-center justify-center gap-2 cursor-pointer bg-blue-500 w-full p-2 rounded-lg">
+        <button onClick={() => handleCartClick()} className="flex items-center justify-center gap-2 cursor-pointer bg-blue-500 w-full p-2 rounded-lg">
           <p>افزودن به سبد</p>
           <BsBasketFill size={20} />
         </button>

@@ -27,7 +27,7 @@ export default async function Page({
           <Info images={product?.imageUrls} colors={product.colors} features={JSON.parse(product.features)} />
         </div>
         <div className="max-md:col-span-12 col-span-3">
-          <Cart price={product.price} />
+          <Cart price={product.price} count={product.count} id={product._id} title={product.title} />
         </div>
       </div>
     </div>
