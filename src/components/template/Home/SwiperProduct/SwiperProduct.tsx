@@ -37,8 +37,8 @@ export default function SwiperProduct({ product }: any) {
               onClick={handleCartClick}
               className={`border-2 rounded-full dark:border-gray-700 p-2 cursor-pointer flex items-center justify-center transition-all duration-300
                 ${isInCart
-                  ? "border-red-400 bg-red-100 text-red-500"
-                  : "border-gray-200 hover:bg-blue-100"
+                  ? "border-red-400 bg-red-100 dark:bg-red-800 text-red-500"
+                  : "border-gray-200 hover:bg-blue-100 dark:hover:bg-blue-500"
                 }`}
             >
               {isInCart ? <RxCross2 size={13} /> : <SlBasket size={13} />}

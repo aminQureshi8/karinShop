@@ -3,6 +3,7 @@
 import SwalFire from "@/app/utils/swal";
 import Table from "@/components/module/Table/Table";
 import Image from "next/image";
+import Link from "next/link";
 import { MdDelete, MdEdit } from "react-icons/md";
 
 export default function TableProduct({ products, getProducts }: any) {
@@ -26,10 +27,6 @@ export default function TableProduct({ products, getProducts }: any) {
         getProducts(1)
       }
     }
-
-
-
-
 
   }
   return (
@@ -74,9 +71,13 @@ export default function TableProduct({ products, getProducts }: any) {
                     />
                   </div>
                 </th>
-                <td className="px-6 py-4">{pro.title}</td>
+                <td className="px-6 py-4">
+                  <Link href={`/productInfo/${pro._id}`}>
+                    {pro.title}
+                  </Link>
+                </td>
                 <td className="px-6 py-4">{pro.price.toLocaleString("fa-IR")}</td>
-                <td className="px-6 py-4">{pro.count}</td>
+                <td className="px-6 py-4 ss02">{pro.count}</td>
 
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-5">

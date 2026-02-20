@@ -8,6 +8,9 @@ export async function POST(req: NextRequest) {
     await db();
     const refreshToken = req.cookies.get("refresh-token")?.value;
 
+    console.log(refreshToken);
+    
+
     if (!refreshToken)
       return NextResponse.json({ error: "No token" }, { status: 401 });
 
