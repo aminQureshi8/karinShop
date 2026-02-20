@@ -12,6 +12,7 @@ const product = new mongoose.Schema({
   tags: [{ type: String }],
   features: [{ type: String }],
   imageUrls: [{ type: String }],
+  description: { type: String, required: true },
 });
 
 const productModel =

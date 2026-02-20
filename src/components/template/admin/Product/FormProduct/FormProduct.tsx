@@ -105,8 +105,7 @@ export default function FormProduct({
     formData.append("price", rawPrice.toString());
     formData.append("category", data.category || "");
     formData.append("subCategory", data.subCategory || "");
-    formData.append("longDescription", data.longDescription || "");
-    formData.append("shortDescription", data.shortDescription || "");
+    formData.append("description", data.description || "");
     formData.append("colors", JSON.stringify(data.colors || []));
     formData.append("tags", JSON.stringify(data.tags || []));
     formData.append("features", JSON.stringify(features));
@@ -359,11 +358,11 @@ export default function FormProduct({
           </div>
 
           <div className="col-span-3">
-            <label className="text-sm" htmlFor="longDescription">
+            <label className="text-sm" htmlFor="description">
               توضیحات محصول
             </label>
             <Controller
-              name="longDescription"
+              name="description"
               control={control}
               rules={{
                 required: "توضیحات محصول الزامی است",
@@ -373,9 +372,9 @@ export default function FormProduct({
               )}
             />
 
-            {errors.longDescription && (
+            {errors.description && (
               <p className="text-red-500 text-xs mt-2">
-                {errors.longDescription.message}
+                {errors.description.message}
               </p>
             )}
           </div>

@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
     const tags = formData.get("tags") as string;
     const features = formData.get("features") as string;
     const images = formData.getAll("images") as File[];
+    const description = formData.get("description") as string;
 
     const imageUrls: string[] = [];
 
@@ -67,6 +68,7 @@ export async function POST(req: NextRequest) {
       tags,
       features,
       imageUrls,
+      description,
     });
 
     return NextResponse.json(
