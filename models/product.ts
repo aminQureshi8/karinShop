@@ -10,7 +10,12 @@ const product = new mongoose.Schema({
   brand: { type: String, required: true },
   colors: [{ type: String }],
   tags: [{ type: String }],
-  features: [{ type: String }],
+  features: [
+    {
+      name: String,
+      value: String,
+    },
+  ],
   imageUrls: [{ type: String }],
   description: { type: String, required: true },
 });

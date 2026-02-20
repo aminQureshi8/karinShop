@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
       brand,
       colors,
       tags,
-      features,
+      features : JSON.parse(features),
       imageUrls,
       description,
     });

@@ -15,7 +15,9 @@ export default async function Page({
 
   await db();
 
-  const product = await productModel.findById(id).lean();
+  const product = await productModel
+    .findById(id, { features: { $slice: 6 } })
+    .lean();
 
   console.log(product);
 
@@ -26,7 +28,7 @@ export default async function Page({
           <Info
             images={product?.imageUrls}
             colors={product.colors}
-            features={JSON.parse(product.features)}
+            features={product.features}
           />
         </div>
         <div className="max-md:col-span-12 col-span-3">
@@ -42,7 +44,8 @@ export default async function Page({
       <div className="mt-10">
         <ContainerFeCoIN
           description={product.description}
-          features={JSON.parse(product.features)}
+          features={product.features}
+           id={product._id.toString()}
         />
       </div>
     </div>
