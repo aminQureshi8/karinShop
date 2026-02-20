@@ -4,7 +4,10 @@ export interface CartItem {
   id: string;
   title: string;
   price: number;
-  color: string
+  color: string;
+  imageUrls: string;
+  count:number
+  mainCount: number
 }
 
 const initialState: CartItem[] = [];
@@ -14,9 +17,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     toggleCart: (state, action: PayloadAction<CartItem>) => {
-      const index = state.findIndex(
-        (item) => item.id === action.payload.id
-      );
+      const index = state.findIndex((item) => item.id === action.payload.id);
 
       if (index !== -1) {
         state.splice(index, 1);

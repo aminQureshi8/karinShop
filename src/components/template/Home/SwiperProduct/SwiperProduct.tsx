@@ -16,7 +16,7 @@ export default function SwiperProduct({ product }: any) {
   const isInCart = cart.some((item) => item.id === product._id);
 
   const handleCartClick = () => {
-    dispatch(toggleCart({ price: product.price, id: product._id, title: product.title, color: '' }));
+    dispatch(toggleCart({ price: product.price, id: product._id, title: product.title, color: '', imageUrls: product.imageUrls[0], count: 1, mainCount: product.count }));
   };
 
   return (

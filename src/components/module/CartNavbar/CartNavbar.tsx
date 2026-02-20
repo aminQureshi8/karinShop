@@ -1,31 +1,53 @@
 "use client";
-import { toggleCart } from "@/app/redux/slices/CartComputer/CartComputer";
+import { toggleCartComputer } from "@/app/redux/slices/CartComputer/CartComputer";
 import { RootState } from "@/app/redux/store";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 
-const mockCartItems = [
-  {
-    id: 1,
-    name: "محصول نمونه اول",
-    price: 565000,
-    quantity: 1,
-    imageUrl: "/image/5 (2).webp",
-  },
-];
-
 export default function CartNavbar() {
+  const [carts, setCarts] = useState([]);
   const isOpen = useSelector((state: RootState) => state.cartComputer.isOpen);
   const dispatch = useDispatch();
 
-  const totalAmount = 1130000;
-  const itemCount = mockCartItems.length;
+  useEffect(() => {
+    const getLocalStorageCart = JSON.parse(
+      localStorage.getItem("cart") || "[]",
+    );
+    setCarts(getLocalStorageCart);
+  }, [isOpen]);
+
+  const addCount = (id: number, mainCount: number) => {
+    setCarts((prev: any) => {
+      const updated = prev.map((item: any) =>
+        item.id === id && item.count < mainCount
+          ? { ...item, count: item.count + 1 }
+          : item,
+      );
+      localStorage.setItem("cart", JSON.stringify(updated));
+
+      return updated;
+    });
+  };
+
+  const minusCount = (id: number, mainCount: number) => {
+    setCarts((prev: any) => {
+      const updated = prev.map((item: any) =>
+        item.id === id && item.count > 1
+          ? { ...item, count: item.count - 1 }
+          : item,
+      );
+      localStorage.setItem("cart", JSON.stringify(updated));
+
+      return updated;
+    });
+  };
 
   return (
     <>
       <div
-        onClick={() => dispatch(toggleCart())}
+        onClick={() => dispatch(toggleCartComputer())}
         className={`fixed inset-0 ${
           isOpen ? "fixed" : "hidden"
         } bg-black/60 z-40`}
@@ -38,19 +60,19 @@ export default function CartNavbar() {
         <div className="p-4 h-full flex flex-col">
           {" "}
           <div className="flex items-center justify-between border-b border-gray-200 pb-3 mb-4 sticky top-0 z-10">
-            <h2 className="text-lg font-bold">سبد خرید ({itemCount})</h2>
+            <h2 className="text-lg font-bold">سبد خرید ({carts.length})</h2>
             <button
               aria-label="بستن سبد خرید"
               className="text-gray-600 cursor-pointer transition-colors hover:text-gray-900 p-1 rounded-full hover:bg-gray-100"
-              onClick={() => dispatch(toggleCart())}
+              onClick={() => dispatch(toggleCartComputer())}
             >
               <IoCloseOutline size={24} />
             </button>
           </div>
           <div className="flex-grow space-y-4 overflow-y-auto pr-2">
             {" "}
-            {mockCartItems.length > 0 ? (
-              mockCartItems.map((item) => (
+            {carts.length > 0 ? (
+              carts.map((item: any) => (
                 <div
                   key={item.id}
                   className="flex items-start border-b border-gray-100 pb-3 last:border-b-0"
@@ -59,26 +81,32 @@ export default function CartNavbar() {
                     <Image
                       width={80}
                       height={80}
-                      src={item.imageUrl}
-                      alt={item.name}
+                      src={item.imageUrls}
+                      alt={item.title}
                       className="rounded-lg object-cover"
                     />
                   </div>
 
                   <div className="flex-grow min-w-0 space-y-2">
                     <p className="text-sm font-medium dark:text-white  line-clamp-2 text-gray-800">
-                      گوشی موبایل اپل مدل iPhone 13 CH دو سیم‌ کارت ظرفیت 256
-                      گیگابایت و رم 4 گیگابایت - نات اکتیو
+                      {item.title}
                     </p>
 
                     <div className="text-sm font-bold text-blue-600 flex items-center justify-between">
                       <div className="border-2 dark:border-gray-700 border-gray-200 rounded-xl flex items-center gap-5 px-2 py-2 text-xs">
-                        <div>-</div>
-                        <div>2</div>
-                        <div>+</div>
+                        <div
+                          onClick={() => minusCount(item.id, item.mainCount)}
+                        >
+                          -
+                        </div>
+                        <div>{item.count}</div>
+                        <div onClick={() => addCount(item.id, item.mainCount)}>
+                          +
+                        </div>
                       </div>
                       <p>
-                        {item.price.toLocaleString("fa-IR")} <span>تومان</span>
+                        {(item.price * item.count).toLocaleString("fa-IR")}{" "}
+                        <span>تومان</span>
                       </p>
                     </div>
                   </div>
@@ -97,7 +125,14 @@ export default function CartNavbar() {
                   مبلغ قابل پرداخت:
                 </p>
                 <p className="text-blue-700 dark:text-blue-500">
-                  {totalAmount.toLocaleString("fa-IR")} <span>تومان</span>
+                  {carts
+                    .reduce(
+                      (total: any, item: any) =>
+                        total + item.price * item.count,
+                      0,
+                    )
+                    .toLocaleString("fa-IR")}
+                  <span>تومان</span>
                 </p>
               </div>
             </div>

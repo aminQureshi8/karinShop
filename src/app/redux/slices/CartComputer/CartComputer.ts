@@ -10,11 +10,11 @@ const cartComputer = createSlice({
     closeCart: (state) => {
       state.isOpen = false;
     },
-    toggleCart: (state) => {
+    toggleCartComputer: (state) => {
       state.isOpen = !state.isOpen;
     },
   },
 });
 
-export const { openCart, closeCart, toggleCart } = cartComputer.actions;
+export const { openCart, closeCart, toggleCartComputer } = cartComputer.actions;
 export default cartComputer.reducer;
