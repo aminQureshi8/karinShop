@@ -26,16 +26,24 @@ export async function GET(
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
-    const topFeatures = Array.isArray(product.features)
-      ? product.features.slice(0, parseInt(6 + 2))
-      : [];
+    const total = Array.isArray(product.features) ? product.features.length : 0;
+
+    const limit = 6;
+    const pageNumber = Number(page);
+    const start = (pageNumber - 1) * limit;
+    const end = pageNumber * limit;
+
+    const topFeatures = product.features.slice(start, end);
 
     return NextResponse.json({
       features: topFeatures,
       page,
-      featuresLength: topFeatures.length,
+      total,
     });
   } catch (error) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
