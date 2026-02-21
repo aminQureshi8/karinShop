@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   try {
     await db();
 
-    const { title, isApprove, isOk, comment, user, product } = await req.json();
+    const { title, isApprove, isOk, user, product, comment } = await req.json();
 
     console.log(title, isApprove, isOk, comment, user, product);
 

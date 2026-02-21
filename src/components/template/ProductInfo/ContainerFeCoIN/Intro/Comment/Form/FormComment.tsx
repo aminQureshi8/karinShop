@@ -1,7 +1,14 @@
 "use client";
+import SwalFire from "@/app/utils/swal";
 import React, { useState } from "react";
 
-export default function FormComment({ userID, id }) {
+export default function FormComment({
+  userID,
+  id,
+}: {
+  userID: string;
+  id: string;
+}) {
   const [isOk, setIsOk] = useState<null | boolean>(null);
   const [comment, setComment] = useState("");
   const [title, setTitle] = useState("");
@@ -19,7 +26,25 @@ export default function FormComment({ userID, id }) {
       body: JSON.stringify({ title, comment, isOk, user: userID, product: id }),
     });
 
-    console.log(res);
+    if (res.ok) {
+      const swal = await SwalFire(
+        "دیدگاه با موفقعیت اضافه شد",
+        "success",
+        false,
+        undefined,
+        "باشه",
+        undefined,
+        undefined,
+        3000,
+        true,
+      );
+
+      if (swal.isConfirmed) {
+        setComment("");
+        setIsOk(null);
+        setTitle("");
+      }
+    }
   };
 
   return (

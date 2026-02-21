@@ -18,13 +18,18 @@ export default async function Page({
 
   const product = await productModel
     .findById(id, { features: { $slice: 6 } })
-    .lean();
+    .populate({
+      path: "comments",
+      match: { isApproved: true },
+      populate: {
+        path: "user",
+      },
+    })
+    .lean({ virtuals: true });
 
   console.log(product);
 
   const user = await authUser();
-
-  console.log(user);
 
   return (
     <div className="container mx-auto mt-10 font-danaMed">
@@ -52,6 +57,7 @@ export default async function Page({
           features={product.features}
           id={product._id.toString()}
           userID={user.user._id?.toString()}
+          comments={product.comments}
         />
       </div>
     </div>
