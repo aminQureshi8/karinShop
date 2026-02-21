@@ -20,6 +20,12 @@ const product = new mongoose.Schema({
   description: { type: String, required: true },
 });
 
+product.virtual("comments", {
+  foreignField: "product",
+  localField: "_id",
+  ref: "comment",
+});
+
 const productModel =
   mongoose.models.product || mongoose.model("product", product);
 

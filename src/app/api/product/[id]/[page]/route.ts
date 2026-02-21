@@ -11,16 +11,12 @@ export async function GET(
     const id = resolvedParams.id;
     const page = resolvedParams.page;
 
-    console.log(page);
-
     await db();
 
     const product = await productModel
       .findOne({ _id: id })
       .select("features")
       .lean();
-
-    console.log("product", product);
 
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
@@ -34,6 +30,10 @@ export async function GET(
     const end = pageNumber * limit;
 
     const topFeatures = product.features.slice(start, end);
+
+
+    //* 0 ... 6
+    //* 6 ... 12
 
     return NextResponse.json({
       features: topFeatures,
