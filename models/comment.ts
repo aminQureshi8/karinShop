@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const comment = new mongoose.Schema(
   {
     title: { type: String, required: true },
-    user: { type: mongoose.Types.ObjectId, ref: "user", required: true },
+    user: { type: Schema.Types.ObjectId, ref: "user", required: true },
     product: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "product",
       required: true,
     },

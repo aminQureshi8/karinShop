@@ -1,11 +1,11 @@
 import Comments from "./Comments/Comments";
 import FormComment from "./Form/FormComment";
 
-export default function CommentContainer() {
+export default function CommentContainer({ userID, id }) {
   return (
     <div className="grid grid-cols-12 gap-5">
       <div className="col-span-4">
-        <FormComment />
+        <FormComment userID={userID} id={id} />
       </div>
       <div className="col-span-8">
         <Comments />

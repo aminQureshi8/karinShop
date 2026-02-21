@@ -1,3 +1,4 @@
+import { authUser } from "@/app/utils/auth";
 import Cart from "@/components/template/ProductInfo/Cart/Cart";
 import ContainerFeCoIN from "@/components/template/ProductInfo/ContainerFeCoIN/ContainerFeCoIN";
 import Info from "@/components/template/ProductInfo/Info/Info";
@@ -20,6 +21,10 @@ export default async function Page({
     .lean();
 
   console.log(product);
+
+  const user = await authUser();
+
+  console.log(user);
 
   return (
     <div className="container mx-auto mt-10 font-danaMed">
@@ -45,7 +50,8 @@ export default async function Page({
         <ContainerFeCoIN
           description={product.description}
           features={product.features}
-           id={product._id.toString()}
+          id={product._id.toString()}
+          userID={user.user._id?.toString()}
         />
       </div>
     </div>

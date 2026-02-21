@@ -5,7 +5,7 @@ import Intro from "./Intro/Intro";
 import Features from "./Intro/Features";
 import CommentContainer from "./Intro/Comment/CommentContainer";
 
-export default function ContainerFeCoIN({ description, id, features }) {
+export default function ContainerFeCoIN({ description, id, features, userID }) {
   const [section, setSection] = useState("INTRO");
   return (
     <div className="rounded-lg shadow-md bg-white dark:bg-gray-800 p-3">
@@ -39,7 +39,7 @@ export default function ContainerFeCoIN({ description, id, features }) {
       <div className="mt-5">
         {section === "INTRO" && <Intro description={description} />}
         {section === "FEATU" && <Features id={id} features={features} />}
-        {section === "COMME" && <CommentContainer />}
+        {section === "COMME" && <CommentContainer userID={userID} id={id} />}
       </div>
     </div>
   );
