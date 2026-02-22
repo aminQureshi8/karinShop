@@ -21,13 +21,16 @@ export default async function Page({
     .populate({
       path: "comments",
       match: { isApproved: true },
+      options: {
+        limit: 5,
+        sort: { createdAt: -1 },
+      },
       populate: {
         path: "user",
+        select: "username avatar",
       },
     })
     .lean({ virtuals: true });
-
-  console.log(product);
 
   const user = await authUser();
 
@@ -54,10 +57,10 @@ export default async function Page({
       <div className="mt-10">
         <ContainerFeCoIN
           description={product.description}
-          features={product.features}
+          features={JSON.parse(JSON.stringify(product.features))}
           id={product._id.toString()}
           userID={user.user._id?.toString()}
-          comments={product.comments}
+          comments={JSON.parse(JSON.stringify(product.comments))}
         />
       </div>
     </div>

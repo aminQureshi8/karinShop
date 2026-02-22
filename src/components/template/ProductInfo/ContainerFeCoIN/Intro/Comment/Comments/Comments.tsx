@@ -1,14 +1,38 @@
-import React from "react";
+"use client";
 
-export default function Comments({ comments }: { comments: any }) {
+import { useState } from "react";
+
+export default function Comments({
+  comments,
+  id,
+}: {
+  comments: any;
+  id: string;
+}) {
+  const [commentState, setCommentState] = useState([...comments]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(Infinity);
+
+  const getComments = async () => {
+    const res = await fetch(`/api/comments/${id}/${page + 1}`);
+    const result = await res.json();
+
+    console.log(result);
+
+    if (!res.ok) return;
+
+    setCommentState((prev: any) => [...prev, ...result.comments]);
+    setTotal(result.total);
+    setPage((prev) => prev + 1);
+  };
   return (
     <div className="d divide-y-2 space-y-4 divide-gray-200 dark:divide-gray-700">
-      {comments.map((com: any) => (
-        <div className="flex flex-col gap-3 pb-4">
+      {commentState.map((com: any) => (
+        <div key={com._id} className="flex flex-col gap-3 pb-4">
           <h2>{com.title}</h2>
           <div>
             <div>
-              {com.isApproved ? (
+              {com.isOk ? (
                 <div className="text-green-500">پیشنهاد می شود</div>
               ) : (
                 <div className="text-red-500">پیشنهاد نمی شود</div>
@@ -24,6 +48,12 @@ export default function Comments({ comments }: { comments: any }) {
           </div>
         </div>
       ))}
+
+      {commentState.length < total && (
+        <button onClick={getComments} className="text-blue-500 cursor-pointer">
+          مشاهده بیشتر
+        </button>
+      )}
     </div>
   );
 }

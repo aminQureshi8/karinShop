@@ -16,7 +16,7 @@ export default function CommentContainer({
         <FormComment userID={userID} id={id} />
       </div>
       <div className="col-span-8">
-        <Comments comments={comments} />
+        <Comments comments={comments} id={id} />
       </div>
     </div>
   );
