@@ -30,7 +30,7 @@ export async function GET(
 
     const total = Array.isArray(product.comments) ? product.comments.length : 0;
 
-    const limit = 4;
+    const limit = 3;
     const pageNumber = Number(page);
     const start = (pageNumber - 1) * limit;
     const end = pageNumber * limit;

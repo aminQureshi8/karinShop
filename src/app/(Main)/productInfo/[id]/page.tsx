@@ -1,4 +1,5 @@
 import { authUser } from "@/app/utils/auth";
+import Footer from "@/components/module/Footer/Footer";
 import Cart from "@/components/template/ProductInfo/Cart/Cart";
 import ContainerFeCoIN from "@/components/template/ProductInfo/ContainerFeCoIN/ContainerFeCoIN";
 import Info from "@/components/template/ProductInfo/Info/Info";
@@ -22,7 +23,7 @@ export default async function Page({
       path: "comments",
       match: { isApproved: true },
       options: {
-        limit: 5,
+        limit: 3,
         sort: { createdAt: -1 },
       },
       populate: {
@@ -59,9 +60,13 @@ export default async function Page({
           description={product.description}
           features={JSON.parse(JSON.stringify(product.features))}
           id={product._id.toString()}
-          userID={user.user._id?.toString()}
+          userID={user.user?._id?.toString()}
           comments={JSON.parse(JSON.stringify(product.comments))}
         />
+      </div>
+
+      <div className="mt-10">
+        <Footer/>
       </div>
     </div>
   );
