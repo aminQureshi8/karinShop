@@ -3,6 +3,7 @@ import Footer from "@/components/module/Footer/Footer";
 import Cart from "@/components/template/ProductInfo/Cart/Cart";
 import ContainerFeCoIN from "@/components/template/ProductInfo/ContainerFeCoIN/ContainerFeCoIN";
 import Info from "@/components/template/ProductInfo/Info/Info";
+import Related from "@/components/template/ProductInfo/RelatedProduct/Related";
 import db from "@/config/db";
 import productModel from "@/models/product";
 
@@ -64,9 +65,14 @@ export default async function Page({
           comments={JSON.parse(JSON.stringify(product.comments))}
         />
       </div>
-
       <div className="mt-10">
-        <Footer/>
+        <Related
+          tags={JSON.parse(JSON.stringify(product.tags))}
+          id={product._id.toString()}
+        />
+      </div>
+      <div className="mt-10">
+        <Footer />
       </div>
     </div>
   );
