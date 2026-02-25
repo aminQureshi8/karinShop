@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import SwalFire from "@/app/utils/swal";
 import Table from "@/components/module/Table/Table";
@@ -7,8 +7,16 @@ import Link from "next/link";
 import { MdDelete, MdEdit } from "react-icons/md";
 
 export default function TableProduct({ products, getProducts }: any) {
-  const removePro = async (id: string) => {
+  // useEffect(() => {
+  //   if (currentPage === 1) {
+  //     setBrandState(intialBrand);
+  //     return;
+  //   }
 
+  //   getBrands(currentPage);
+  // }, [currentPage, intialBrand, setBrandState, getBrands]);
+
+  const removePro = async (id: string) => {
     const result = await SwalFire(
       "آیا مطمئن هستید؟",
       "warning",
@@ -21,14 +29,17 @@ export default function TableProduct({ products, getProducts }: any) {
       const res = await fetch(`/api/admin/product/${id}`, {
         method: "DELETE",
         credentials: "include",
-      })
+      });
 
-      if (res.status === 204) {
-        getProducts(1)
+      const result = await res.json();
+
+      console.log(result);
+
+      if (res.ok) {
+        getProducts(1);
       }
     }
-
-  }
+  };
   return (
     <>
       <div>
@@ -36,7 +47,7 @@ export default function TableProduct({ products, getProducts }: any) {
           <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default  border-gray-400 bg-gray-50 dark:bg-gray-700">
             <tr>
               <th scope="col" className="px-6 py-3 font-medium">
-                عکس  محصول
+                عکس محصول
               </th>
               <th scope="col" className="px-6 py-3 font-medium">
                 اسم محصول
@@ -72,11 +83,11 @@ export default function TableProduct({ products, getProducts }: any) {
                   </div>
                 </th>
                 <td className="px-6 py-4">
-                  <Link href={`/productInfo/${pro._id}`}>
-                    {pro.title}
-                  </Link>
+                  <Link href={`/productInfo/${pro._id}`}>{pro.title}</Link>
                 </td>
-                <td className="px-6 py-4">{pro.price.toLocaleString("fa-IR")}</td>
+                <td className="px-6 py-4">
+                  {pro.price.toLocaleString("fa-IR")}
+                </td>
                 <td className="px-6 py-4 ss02">{pro.count}</td>
 
                 <td className="px-6 py-4">
@@ -111,7 +122,6 @@ export default function TableProduct({ products, getProducts }: any) {
           />
         )} */}
       </div>
-
     </>
-  )
+  );
 }

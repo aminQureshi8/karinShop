@@ -23,16 +23,13 @@ export async function DELETE(
 
     return NextResponse.json(
       { message: "Product deleted successfully" },
-      { status: 204 },
+      { status: 200 },
     );
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 500 });
     }
 
-    return NextResponse.json(
-      { message: "Unknown error occurred" },
-      { status: 500 },
-    );
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }

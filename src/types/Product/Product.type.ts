@@ -19,6 +19,7 @@ interface IFormInput {
   os?: string;
   network?: string;
   subCategoryFeatures?: { name: string; value: string }[];
+  description: string;
 }
 
 export default IFormInput;

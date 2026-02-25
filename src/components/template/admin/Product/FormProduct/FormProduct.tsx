@@ -10,6 +10,8 @@ import { getFeatures } from "@/app/utils/productCategory";
 import IFormInput from "@/types/Product/Product.type";
 import { Controller } from "react-hook-form";
 import SwalFire from "@/app/utils/swal";
+import Tag from "../Tag/Tag";
+import { BeatLoader } from "react-spinners";
 
 interface Category {
   _id: string;
@@ -33,6 +35,7 @@ export default function FormProduct({
   const [rawPrice, setRawPrice] = useState<number>(0);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -95,48 +98,59 @@ export default function FormProduct({
   };
 
   const onSubmit = async (data: any) => {
-    const formData = new FormData();
-    const features = getFeatures(data, data.subCategory);
+    try {
+      setIsLoading(true);
+      const formData = new FormData();
+      const features = getFeatures(data, data.subCategory);
 
-    console.log(data);
+      console.log(data);
 
-    formData.append("title", data.title || "");
-    formData.append("slug", data.slug || "");
-    formData.append("price", rawPrice.toString());
-    formData.append("category", data.category || "");
-    formData.append("subCategory", data.subCategory || "");
-    formData.append("description", data.description || "");
-    formData.append("colors", JSON.stringify(data.colors || []));
-    formData.append("tags", JSON.stringify(data.tags || []));
-    formData.append("features", JSON.stringify(features));
-    formData.append("brand", data.brand || "");
+      formData.append("title", data.title || "");
+      formData.append("slug", data.slug || "");
+      formData.append("price", rawPrice.toString());
+      formData.append("category", data.category || "");
+      formData.append("subCategory", data.subCategory || "");
+      formData.append("description", data.description || "");
+      formData.append("colors", JSON.stringify(data.colors || []));
+      formData.append("tags", JSON.stringify(data.tags || []));
+      formData.append("features", JSON.stringify(features));
+      formData.append("brand", data.brand || "");
 
-    if (data.images?.length > 0) {
-      Array.from(data.images).forEach((file) => {
-        formData.append("images", file as File);
+      if (data.images?.length > 0) {
+        Array.from(data.images).forEach((file) => {
+          formData.append("images", file as File);
+        });
+      }
+
+      const res = await fetch("/api/admin/product", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
       });
+
+      if (res.ok) {
+        reset();
+        SwalFire(
+          "محصول با موفقعیت ثبت شد",
+          "success",
+          false,
+          undefined,
+          "باشه",
+          "blue",
+        );
+      }
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+      setImagePreviews([]);
+      setSelectedFiles([]);
     }
-
-    const res = await fetch("/api/admin/product", {
-      method: "POST",
-      body: formData,
-      credentials: "include",
-    });
-
-    if (res.ok) {
-      reset();
-      SwalFire("محصول با موفقعیت ثبت شد", "success", true, "باشه");
-    }
-
-    const result = await res.json();
-
-    console.log(result);
   };
 
   return (
     <div className="font-danaMed">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-3 items-center gap-5">
           <div>
             <label>نام محصول</label>
             <input
@@ -323,7 +337,7 @@ export default function FormProduct({
                       filesArray.map((f) => URL.createObjectURL(f)),
                     );
                   }}
-                  className={`border-2 bg-gray-200 dark:bg-black/60 rounded-xl mt-2 px-3 py-2 text-sm ${
+                  className={` bg-gray-200 dark:border-gray-700 dark:bg-black/60 rounded-xl mt-2 px-3 py-2 text-sm ${
                     errors.images ? "border-red-400" : ""
                   }`}
                 />
@@ -336,6 +350,8 @@ export default function FormProduct({
               </p>
             )}
           </div>
+
+          <Tag register={register} errors={errors} setValue={setValue} />
 
           <div className="col-span-3">
             {imagePreviews.length > 0 && (
@@ -384,7 +400,7 @@ export default function FormProduct({
           type="submit"
           className="mt-6 px-6 py-2 rounded-lg bg-blue-600 text-white"
         >
-          ثبت محصول
+          {isLoading ? <BeatLoader color="white" size={13} /> : "ثبت محصول"}
         </button>
       </form>
     </div>
