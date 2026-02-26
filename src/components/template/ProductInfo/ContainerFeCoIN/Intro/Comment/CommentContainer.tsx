@@ -12,10 +12,10 @@ export default function CommentContainer({
 }) {
   return (
     <div className="grid grid-cols-12 gap-5">
-      <div className="col-span-4">
+      <div className="max-sm:col-span-12 col-span-4">
         <FormComment userID={userID} id={id} />
       </div>
-      <div className="col-span-8">
+      <div className="max-sm:col-span-12 col-span-8">
         <Comments comments={comments} id={id} />
       </div>
     </div>

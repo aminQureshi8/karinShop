@@ -17,7 +17,7 @@ export default function Intro({ description }: { description: string }) {
         }}
       />
 
-      {/* Fade پایین متن */}
+     
       {!open && (
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-19 bg-gradient-to-t from-transparent to-gray-50 dark:from-transparent dark:to-gray-800 " />
       )}
