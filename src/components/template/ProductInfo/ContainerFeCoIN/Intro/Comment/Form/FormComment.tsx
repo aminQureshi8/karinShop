@@ -70,14 +70,14 @@ export default function FormComment({
               <button
                 type="button"
                 onClick={() => setIsOk(true)}
-                className={`text-green-500 ${isOk ? "bg-green-500 text-white" : "bg-white"} text-sm rounded-lg w-full  shadow-md dark:bg-gray-700 px-5 py-2 cursor-pointer`}
+                className={`text-green-500 ${isOk ? "bg-green-500 text-white dark:bg-green-900" : "bg-white dark:bg-gray-700"} text-sm rounded-lg w-full  shadow-md dark:bg-gray-700 px-5 py-2 cursor-pointer`}
               >
                 میکنم
               </button>
               <button
                 type="button"
                 onClick={() => setIsOk(false)}
-                className={`text-red-500 ${!isOk ? "bg-red-500 text-white" : "bg-white"} text-sm rounded-lg w-full  shadow-md dark:bg-gray-700 px-5 py-2 cursor-pointer`}
+                className={`text-red-500 ${!isOk ? "bg-red-500 text-white dark:bg-red-900" : "bg-white dark:bg-gray-700"} text-sm rounded-lg w-full  shadow-md  px-5 py-2 cursor-pointer`}
               >
                 نمیکنم
               </button>
