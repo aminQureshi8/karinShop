@@ -6,6 +6,7 @@ const user = new mongoose.Schema(
     email: { type: String },
     phone: { type: String },
     role: { type: String, enum: ["ADMIN", "USER"], default: "USER" },
+    userName: { type: String },
     refreshToken: { type: String },
   },
   { timestamps: true },
