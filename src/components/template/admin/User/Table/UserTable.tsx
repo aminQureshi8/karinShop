@@ -1,6 +1,7 @@
 "use client";
 
 import Modal from "@/components/module/Modal/Modal";
+import Pagination from "@/components/module/Pagination/Pagination";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,7 +19,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { MoreHorizontalIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface IFormInput {
@@ -29,15 +30,31 @@ interface IFormInput {
 export default function UserTable({
   users,
   getUser,
+  totalPageState,
+  intialUsers,
+  setUserState,
 }: {
   users: any;
   getUser: any;
+  totalPageState: number;
+  intialUsers: any;
+  setUserState: any;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [editUserObject, setEditUserObject] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { register, handleSubmit, reset } = useForm({
+  useEffect(() => {
+    getUser(currentPage);
+  }, [currentPage, getUser]);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     mode: "all",
   });
   const removeUser = async (id: string) => {
@@ -53,21 +70,33 @@ export default function UserTable({
       }
     } catch (error) {}
   };
-  const editUser = async (data) => {
+  const editUser = async (data: any) => {
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("userName", data.userName);
-    const res = await fetch(`/api/admin/user/${editUserObject?._id}`, {
-      method: "PUT",
-      credentials: "include",
-      body: formData,
-    });
 
-    console.log(res);
+    try {
+      setIsLoading(true);
+      const res = await fetch(`/api/admin/user/${editUserObject?._id}`, {
+        method: "PUT",
+        credentials: "include",
+        body: formData,
+      });
 
-    const result = await res.json();
+      console.log(res);
 
-    console.log(result);
+      if (res.ok) {
+        getUser(1);
+        setIsOpen(false);
+      }
+
+      const result = await res.json();
+
+      console.log(result);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -94,6 +123,12 @@ export default function UserTable({
                 className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                 placeholder="ویرایش کاربر"
               />
+
+              {errors.email && (
+                <span className="text-red-500 text-xs mt-2 block">
+                  {errors.email.message as string}
+                </span>
+              )}
             </div>
             <div>
               <input
@@ -101,6 +136,7 @@ export default function UserTable({
                 {...register("userName", {
                   required: "پر کردن فیلد الزامی است",
                 })}
+                defaultValue={editUserObject?.userName}
                 className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               />
             </div>
@@ -114,6 +150,8 @@ export default function UserTable({
               <TableHead className="text-right font-bold">شماره</TableHead>
               <TableHead className="text-right font-bold">ایمیل</TableHead>
               <TableHead className="text-right font-bold">نام کاربری</TableHead>
+              <TableHead className="text-right font-bold">نقش</TableHead>
+
               <TableHead className="text-right font-bold">
                 تاریخ ایجاد
               </TableHead>
@@ -122,10 +160,17 @@ export default function UserTable({
           </TableHeader>
           <TableBody>
             {users.map((user: any, index: any) => (
-              <TableRow className="transition-colors hover:bg-muted/40">
-                <TableCell className="font-medium">{index + 1}</TableCell>
+              <TableRow
+                key={user._id}
+                className="transition-colors hover:bg-muted/40"
+              >
+                <TableCell className="font-medium ss02">
+                  {(currentPage - 1) * 5 + index + 1}
+                </TableCell>
                 <TableCell className="font-medium">{user.email}</TableCell>
                 <TableCell>{user.userName}</TableCell>
+                <TableCell>{user.role}</TableCell>
+
                 <TableCell>
                   {new Date(user.createdAt).toLocaleDateString("fa-IR")}
                 </TableCell>
@@ -166,6 +211,14 @@ export default function UserTable({
           </TableBody>
         </Table>
       </div>
+
+      {totalPageState > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPageState}
+        />
+      )}
     </>
   );
 }
