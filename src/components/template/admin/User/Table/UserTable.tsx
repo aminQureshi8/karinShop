@@ -63,7 +63,6 @@ export default function UserTable({
         method: "DELETE",
       });
 
-      console.log(res);
 
       if (res.ok) {
         getUser(1);

@@ -57,7 +57,6 @@ export default function Page() {
 
       const result = await res.json();
 
-      console.log(result);
 
       if (res.ok) {
         router.push("/");

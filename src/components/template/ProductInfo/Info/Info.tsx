@@ -11,8 +11,7 @@ export default function Info({ images, colors, features }: any) {
       </div>
 
       <div className="mt-10 rounded-lg shadow-md bg-white dark:bg-gray-800 pl-3 pt-3 pb-3">
-
-        <div className="grid grid-cols-12">
+        <div className="grid grid-cols-12 gap-5">
           <div className="max-sm:col-span-12 col-span-4">
             <Gallery images={images} />
           </div>
@@ -21,18 +20,15 @@ export default function Info({ images, colors, features }: any) {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 pr-3 mt-5 gap-3">
+        <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 grid-cols-4 pr-3 mt-5 gap-3">
           <Badge />
           <Badge />
 
           <Badge />
 
           <Badge />
-
         </div>
       </div>
-
-
     </div>
   );
 }

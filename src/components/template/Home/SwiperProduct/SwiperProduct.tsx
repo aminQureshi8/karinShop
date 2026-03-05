@@ -8,15 +8,45 @@ import { SlBasket } from "react-icons/sl";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
+import { toggleWhish } from "@/app/redux/slices/Whish/Whish";
 
 export default function SwiperProduct({ product }: any) {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
+  const whish = useSelector((state: RootState) => state.whish);
 
   const isInCart = cart.some((item) => item.id === product._id);
+  // Corrected: Provide an empty array as a fallback
+  const isInWhish = whish?.some((item) => item.id === product._id);
+
+  console.log(whish);
 
   const handleCartClick = () => {
-    dispatch(toggleCart({ price: product.price, id: product._id, title: product.title, color: '', imageUrls: product.imageUrls[0], count: 1, mainCount: product.count }));
+    dispatch(
+      toggleCart({
+        price: product.price,
+        id: product._id,
+        title: product.title,
+        color: "",
+        imageUrls: product.imageUrls[0],
+        count: 1,
+        mainCount: product.count,
+      }),
+    );
+  };
+
+  const handleWhishClick = () => {
+    dispatch(
+      toggleWhish({
+        price: product.price,
+        id: product._id,
+        title: product.title,
+        color: "",
+        imageUrls: product.imageUrls[0],
+        count: 1,
+        mainCount: product.count,
+      }),
+    );
   };
 
   return (
@@ -36,16 +66,29 @@ export default function SwiperProduct({ product }: any) {
             <div
               onClick={handleCartClick}
               className={`border-2 rounded-full dark:border-gray-700 p-2 cursor-pointer flex items-center justify-center transition-all duration-300
-                ${isInCart
-                  ? "border-red-400 bg-red-100 dark:bg-red-800 text-red-500"
-                  : "border-gray-200 hover:bg-blue-100 dark:hover:bg-blue-500"
+                ${
+                  isInCart
+                    ? "border-red-400 bg-red-100 dark:bg-red-800 text-red-500"
+                    : "border-gray-200 hover:bg-blue-100 dark:hover:bg-blue-500"
                 }`}
             >
               {isInCart ? <RxCross2 size={13} /> : <SlBasket size={13} />}
             </div>
 
-            <div className="border-2 dark:border-gray-700 border-gray-200 rounded-full p-2 cursor-pointer">
-              <IoMdHeartEmpty size={13} />
+            <div
+              onClick={handleWhishClick}
+              className={`border-2 rounded-full dark:border-gray-700 p-2 cursor-pointer flex items-center justify-center transition-all duration-300
+                ${
+                  isInWhish
+                    ? "border-red-400 bg-red-100 dark:bg-red-800 text-red-500"
+                    : "border-gray-200 hover:bg-blue-100 dark:hover:bg-blue-500"
+                }`}
+            >
+              {isInWhish ? (
+                <RxCross2 size={13} />
+              ) : (
+                <IoMdHeartEmpty size={13} />
+              )}
             </div>
           </div>
         </div>

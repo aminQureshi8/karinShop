@@ -41,7 +41,6 @@ export async function POST(req: NextRequest) {
       maxAge: 60,
     });
 
-    console.log(response);
 
     return response;
   } catch {

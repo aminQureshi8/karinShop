@@ -13,8 +13,6 @@ export default function FormComment({
   const [comment, setComment] = useState("");
   const [title, setTitle] = useState("");
 
-  console.log(userID);
-
   const addComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

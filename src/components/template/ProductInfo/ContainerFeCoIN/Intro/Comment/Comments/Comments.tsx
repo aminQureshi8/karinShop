@@ -17,7 +17,6 @@ export default function Comments({
     const res = await fetch(`/api/comments/${id}/${page + 1}`);
     const result = await res.json();
 
-    console.log(result);
 
     if (!res.ok) return;
 

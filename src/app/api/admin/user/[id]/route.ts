@@ -32,7 +32,6 @@ export async function PUT(
     const email = formData.get("email") as string;
     const userName = formData.get("userName") as string;
 
-    console.log(email, userName);
 
     const updatedUser = await userModel.findByIdAndUpdate(
       id,

@@ -29,7 +29,6 @@ export default function Cart({
 
   const isInCart = cart.some((item) => item.id === id);
 
-  console.log(isInCart);
 
   const handleCartClick = () => {
     dispatch(
@@ -46,7 +45,7 @@ export default function Cart({
   };
 
   return (
-    <div className="dark:bg-gray-800 mt-16 rounded-lg shadow-md bg-white p-3">
+    <div className="dark:bg-gray-800  lg:mt-16 rounded-lg shadow-md bg-white p-3">
       <div>
         <p className="text-xl">
           {price.toLocaleString("fa-IR")}{" "}

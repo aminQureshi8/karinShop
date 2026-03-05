@@ -31,14 +31,16 @@ export default function InformationProduct({ colors, features }: any) {
       <div>
         <p>ویژگی</p>
 
-        <div className="grid grid-cols-3 gap-3 mt-2">
-          {
-            features.slice(0, 6).map((feature: any, index: number) => <div key={index} className="bg-gray-100 dark:bg-black  rounded-lg p-2">
-              <p className="text-sm text-gray-500">{feature.name}</p>
+        <div className="grid max-sm:grid-cols-2 grid-cols-3 gap-3 mt-2">
+          {features.slice(0, 6).map((feature: any, index: number) => (
+            <div
+              key={index}
+              className="bg-gray-100 dark:bg-black  rounded-lg p-2"
+            >
+              <p className="text-sm  text-gray-500">{feature.name}</p>
               <p className="mt-2 ss02">{feature.value}</p>
-            </div>)
-          }
-
+            </div>
+          ))}
         </div>
       </div>
     </div>
