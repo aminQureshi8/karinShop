@@ -34,6 +34,8 @@ export default async function Page({
     })
     .lean({ virtuals: true });
 
+  console.log(product);
+
   const user = await authUser();
 
   return (
@@ -58,7 +60,7 @@ export default async function Page({
       </div>
       <div className="mt-10">
         <ContainerFeCoIN
-          description={product.description}
+          description={product.description.toString()}
           features={JSON.parse(JSON.stringify(product.features))}
           id={product._id.toString()}
           userID={user.user?._id?.toString()}

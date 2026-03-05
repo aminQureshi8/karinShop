@@ -19,7 +19,7 @@ export default function ColorPick({ colors }: any) {
         <p>ابی</p>
       </div>
 
-      <div onClick={() => {}}>
+      <div className="mt-2" onClick={() => {}}>
         {colors.map((color: any, index: number) => (
           <div
             key={index}

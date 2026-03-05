@@ -10,6 +10,12 @@
   --font-danaLight: "Dana-Light";
 }
 
+/* @layer components {
+  .swal-popup {
+    @apply text-sm sm:text-base;
+  }
+} */
+
 @utility ss02 {
   -moz-font-feature-settings: "ss02";
   -webkit-font-feature-settings: "ss02";
@@ -68,7 +74,7 @@
 }
 
 .swal2-popup {
-  @apply !font-danaMed bg-white dark:bg-gray-800 dark:text-white;
+  @apply !font-danaMed bg-white !text-xs dark:bg-gray-800 dark:text-white;
 }
 
 .swal2-title,

@@ -25,7 +25,7 @@ export default function Features({
   return (
     <div>
       {feaState.map((feature: any, index: number) => (
-        <div key={index} className="mb-3 flex items-center justify-around divide-y-2 space-y-2 pb-2">
+        <div key={index} className="mb-3 flex items-center justify-around pb-2">
           <h4 className="font-bold mb-2">{feature.name}</h4>
           <p>{feature.value}</p>
         </div>

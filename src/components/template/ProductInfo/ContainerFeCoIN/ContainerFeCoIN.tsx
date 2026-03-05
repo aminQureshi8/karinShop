@@ -19,11 +19,10 @@ const ContainerFeCoIN = memo(
     userID: string;
     comments: any;
   }) => {
-    // تغییر از default function به const با تابع پیکانی
     const [section, setSection] = useState("INTRO");
     return (
       <div className="rounded-lg shadow-md bg-white dark:bg-gray-800 p-3">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center max-sm:text-sm gap-3">
           <div>
             <button
               onClick={() => setSection("INTRO")}

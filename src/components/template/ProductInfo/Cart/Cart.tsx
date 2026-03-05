@@ -82,10 +82,10 @@ export default function Cart({
       )}
 
       <div className="bg-gray-100 dark:bg-gray-900  rounded-lg p-2 flex items-center justify-between mt-5">
-        <p>مجموع خرید:</p>
-        <p>
+        <p className="text-sm">مجموع خرید:</p>
+        <p className="max-xl:text-sm">
           {totalPrice.toLocaleString("fa-IR")}{" "}
-          <span className="text-base">تومان</span>
+          <span className="text-base max-xl:text-sm">تومان</span>
         </p>
       </div>
 
@@ -109,10 +109,10 @@ export default function Cart({
         <div className="mt-5">
           <button
             onClick={() => handleCartClick()}
-            className="flex items-center text-white justify-center gap-2 cursor-pointer bg-blue-500 w-full p-2 rounded-lg"
+            className="flex max-xl:text-sm items-center text-white justify-center gap-2 cursor-pointer bg-blue-500 w-full p-2 rounded-lg"
           >
             <p>افزودن به سبد</p>
-            <BsBasketFill size={19} />
+            <BsBasketFill className="size-4" />
           </button>
         </div>
       )}

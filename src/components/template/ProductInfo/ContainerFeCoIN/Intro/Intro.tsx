@@ -9,7 +9,7 @@ export default function Intro({ description }: { description: string }) {
   return (
     <div className="relative">
       <div
-        className={`leading-8  transition-all ${
+        className={`leading-8 max-sm:text-sm transition-all ${
           open ? "max-h-none" : "max-h-[160px] overflow-hidden"
         }`}
         dangerouslySetInnerHTML={{
