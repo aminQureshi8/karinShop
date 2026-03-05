@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { BiDislike, BiLike } from "react-icons/bi";
 import { FaRegSadTear } from "react-icons/fa";
 export default function Comments({
   comments,
@@ -16,7 +17,6 @@ export default function Comments({
   const getComments = async () => {
     const res = await fetch(`/api/comments/${id}/${page + 1}`);
     const result = await res.json();
-
 
     if (!res.ok) return;
 
@@ -50,9 +50,16 @@ export default function Comments({
               <div>
                 <p>{com.comment}</p>
               </div>
-              <div>
-                <p></p>
+              <div className="flex items-center justify-between">
                 <p>{com.createdAt.toString().slice(10, 30)}</p>
+                <div className="flex items-center gap-3">
+                  <div className="border rounded-lg p-2 cursor-pointer">
+                    <BiDislike size={19} />
+                  </div>
+                  <div className="border rounded-lg p-2 cursor-pointer">
+                    <BiLike size={19} />
+                  </div>
+                </div>
               </div>
             </div>
           ))}
