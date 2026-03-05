@@ -13,6 +13,7 @@ export default function Comments({
   const [commentState, setCommentState] = useState([...comments]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(Infinity);
+  const [isOk, setIsOk] = useState(true);
 
   const getComments = async () => {
     const res = await fetch(`/api/comments/${id}/${page + 1}`);
@@ -21,9 +22,28 @@ export default function Comments({
     if (!res.ok) return;
 
     setCommentState((prev: any) => [...prev, ...result.comments]);
+
     setTotal(result.total);
     setPage((prev) => prev + 1);
   };
+
+  const rateUser = async (id: string) => {
+    const res = await fetch(`/api/comments/${id}?isLike=${isOk}`, {
+      method: "PATCH",
+      credentials: "include",
+    });
+
+    console.log(res);
+
+    if (res.ok) {
+      setCommentState((pre) =>
+        pre.map((c) =>
+          c._id === id ? { ...c, likesCount: isOk && c.likesCount + 1 } : c,
+        ),
+      );
+    }
+  };
+
   return (
     <>
       {commentState.length === 0 ? (
@@ -53,11 +73,26 @@ export default function Comments({
               <div className="flex items-center justify-between">
                 <p>{com.createdAt.toString().slice(10, 30)}</p>
                 <div className="flex items-center gap-3">
-                  <div className="border rounded-lg p-2 cursor-pointer">
+                  <div
+                    className="border rounded-lg p-2 cursor-pointer"
+                    onClick={() => {
+                      setIsOk(false);
+                      rateUser(com._id);
+                    }}
+                  >
                     <BiDislike size={19} />
                   </div>
-                  <div className="border rounded-lg p-2 cursor-pointer">
-                    <BiLike size={19} />
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="border rounded-lg p-2 cursor-pointer"
+                      onClick={() => {
+                        setIsOk(true);
+                        rateUser(com._id);
+                      }}
+                    >
+                      <BiLike size={19} />
+                    </div>
+                    <p>{com.likesCount}</p>
                   </div>
                 </div>
               </div>

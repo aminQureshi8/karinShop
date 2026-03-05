@@ -7,6 +7,14 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string; page: string }> },
 ) {
   try {
+    const token = req.cookies.get("token")?.value;
+
+    if (!token) {
+      return NextResponse.json({ message: "Access Denied" }, { status: 402 });
+    }
+
+    console.log(token);
+
     await db();
 
     const resolvedProblems = await params;
@@ -16,7 +24,7 @@ export async function PATCH(
 
     const isLikeBoolean = isLike === "true";
 
-    const value = 1
+    const value = 1;
 
     if (!isLikeBoolean) {
       const updatedComment = await commentModel.findOneAndUpdate(
@@ -29,7 +37,7 @@ export async function PATCH(
         { new: true, select: "likesCount" },
       );
 
-      return NextResponse.json({ updatedComment });
+      return NextResponse.json({ updatedComment, token });
     } else {
       const updatedComment = await commentModel.findOneAndUpdate(
         { _id: id },
@@ -41,7 +49,7 @@ export async function PATCH(
         { new: true, select: "likesCount" },
       );
 
-      return NextResponse.json({ updatedComment });
+      return NextResponse.json({ updatedComment, token });
     }
   } catch (error) {}
 }
