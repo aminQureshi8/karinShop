@@ -6,14 +6,17 @@ import { FaRegSadTear } from "react-icons/fa";
 export default function Comments({
   comments,
   id,
+  userID,
 }: {
   comments: any;
   id: string;
+  userID: string;
 }) {
   const [commentState, setCommentState] = useState([...comments]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(Infinity);
-  const [isOk, setIsOk] = useState(true);
+  // const [isOk, setIsOk] = useState(true);
+  const [isUserCommented, setIsUserCommented] = useState("");
 
   const getComments = async () => {
     const res = await fetch(`/api/comments/${id}/${page + 1}`);
@@ -27,20 +30,39 @@ export default function Comments({
     setPage((prev) => prev + 1);
   };
 
-  const rateUser = async (id: string) => {
-    const res = await fetch(`/api/comments/${id}?isLike=${isOk}`, {
-      method: "PATCH",
-      credentials: "include",
-    });
+  const rateUser = async (id: string, isOk: boolean) => {
+    const res = await fetch(
+      `/api/comments/${id}?isLike=${isOk}&user=${userID}`,
+      {
+        method: "PATCH",
+        credentials: "include",
+      },
+    );
 
     console.log(res);
 
+    const data = await res.json();
+
+    console.log(data);
+
     if (res.ok) {
-      setCommentState((pre) =>
-        pre.map((c) =>
-          c._id === id ? { ...c, likesCount: isOk && c.likesCount + 1 } : c,
-        ),
-      );
+      if (!data.isOk) {
+        setCommentState((pre) =>
+          pre.map((c) =>
+            c._id === id ? { ...c, dislikesCount: c.dislikesCount + 1 } : c,
+          ),
+        );
+      } else {
+        setCommentState((pre) =>
+          pre.map((c) =>
+            c._id === id ? { ...c, likesCount: c.likesCount + 1 } : c,
+          ),
+        );
+      }
+    }
+
+    if (res.status === 400) {
+      setIsUserCommented(data.ok ? "ok" : "not");
     }
   };
 
@@ -70,36 +92,52 @@ export default function Comments({
               <div>
                 <p>{com.comment}</p>
               </div>
-              <div className="flex items-center justify-between">
-                <p>{com.createdAt.toString().slice(10, 30)}</p>
+              <div className="flex items-center justify-between dark:text-gray-400">
+                <div className="flex items-center gap-3 text-xs">
+                  <p>
+                    {com.user.email
+                      .slice(0, 5)
+                      .padEnd(com.user.email.length, "*")}
+                  </p>
+
+                  <p>{new Date(com.createdAt).toLocaleDateString("fa-IR")}</p>
+                </div>
                 <div className="flex items-center gap-3">
-                  <div
-                    className="border rounded-lg p-2 cursor-pointer"
-                    onClick={() => {
-                      setIsOk(false);
-                      rateUser(com._id);
-                    }}
-                  >
-                    <BiDislike size={19} />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="border rounded-lg p-2 cursor-pointer"
-                      onClick={() => {
-                        setIsOk(true);
-                        rateUser(com._id);
-                      }}
-                    >
-                      <BiLike size={19} />
+                  <div className="flex items-center gap-3">
+                    <div className="text-xs">
+                      <p>آیا این دیدگاه برایتان مفید بود؟</p>
                     </div>
-                    <p>{com.likesCount}</p>
+                    <div className="flex items-center gap-5">
+                      <div className="flex items-center gap-1">
+                        <p className="text-red-500 ss02">{com.dislikesCount}</p>
+                        <div
+                          className="rounded-lg p-2 cursor-pointer"
+                          onClick={() => {
+                            rateUser(com._id, false);
+                          }}
+                        >
+                          <BiDislike size={19} className="text-red-500" />
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <p className="text-green-500 ss02">{com.likesCount}</p>
+                        <div
+                          className={` ${isUserCommented === "ok" && "border border-green-500"} rounded-lg p-2 cursor-pointer`}
+                          onClick={() => {
+                            rateUser(com._id, true);
+                          }}
+                        >
+                          <BiLike size={19} className="text-green-500" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           ))}
 
-          {commentState.length !== 0 && commentState.length < total && (
+          {commentState.length > total && (
             <button
               onClick={getComments}
               className="text-blue-500 cursor-pointer"

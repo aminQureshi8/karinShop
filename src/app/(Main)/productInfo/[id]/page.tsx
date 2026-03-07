@@ -23,13 +23,14 @@ export default async function Page({
     .populate({
       path: "comments",
       match: { isApproved: true },
+      
       options: {
         limit: 3,
         sort: { createdAt: -1 },
       },
       populate: {
         path: "user",
-        select: "username avatar",
+        select: "email",
       },
     })
     .lean({ virtuals: true });
