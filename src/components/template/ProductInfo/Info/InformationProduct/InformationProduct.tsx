@@ -1,19 +1,35 @@
 import Buttons from "./Buttons/Buttons";
 import ColorPick from "./Color/ColorPick";
 
-export default function InformationProduct({ colors, features }: any) {
-  console.log(features);
-
+export default function InformationProduct({
+  colors,
+  features,
+  price,
+  title,
+  id,
+  imageUrls,
+  mainCount,
+  breadCrumbs,
+}: any) {
   return (
     <div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3 dark:text-green-400">
-          <p>اپل</p>
-          <p>/</p>
-          <p>گوشی موبایل ساده</p>
+          {breadCrumbs.map((b: string, index: number) => (
+            <div key={index} className="flex items-center gap-2">
+              <p>{b}</p>
+              <p>/</p>
+            </div>
+          ))}
         </div>
         <div>
-          <Buttons />
+          <Buttons
+            price={price}
+            title={title}
+            id={id}
+            imageUrls={imageUrls}
+            mainCount={mainCount}
+          />
         </div>
       </div>
 

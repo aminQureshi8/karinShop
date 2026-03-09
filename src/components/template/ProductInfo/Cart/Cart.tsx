@@ -2,13 +2,13 @@
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 import { BsBasketFill } from "react-icons/bs";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { toggleCart } from "@/app/redux/slices/Cart/Cart";
 import { toggleCartComputer } from "@/app/redux/slices/CartComputer/CartComputer";
 
-export default function Cart({
+function Cart({
   price,
   count,
   id,
@@ -22,13 +22,13 @@ export default function Cart({
   imageUrls: string;
 }) {
   const [counter, setCounter] = useState(1);
-  const totalPrice = price * counter;
 
+  const isInCart = useSelector((state: RootState) =>
+    state.cart.some((item) => item.id === id),
+  );
   const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state.cart);
 
-  const isInCart = cart.some((item) => item.id === id);
-
+  const totalPrice = price * counter;
 
   const handleCartClick = () => {
     dispatch(
@@ -119,3 +119,5 @@ export default function Cart({
     </div>
   );
 }
+
+export default React.memo(Cart);

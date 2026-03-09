@@ -13,10 +13,14 @@ const whishSlice = createSlice({
         state.push(action.payload);
       }
 
-      localStorage.setItem("whish", state);
+      localStorage.setItem("whish", JSON.stringify(state));
+    },
+
+    setWhish: (_state, action) => {
+      return action.payload;
     },
   },
 });
 
-export const { toggleWhish } = whishSlice.actions;
+export const { toggleWhish , setWhish } = whishSlice.actions;
 export default whishSlice.reducer;

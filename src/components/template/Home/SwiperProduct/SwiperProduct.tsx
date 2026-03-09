@@ -16,8 +16,7 @@ export default function SwiperProduct({ product }: any) {
   const whish = useSelector((state: RootState) => state.whish);
 
   const isInCart = cart.some((item) => item.id === product._id);
-  // Corrected: Provide an empty array as a fallback
-  const isInWhish = whish?.some((item) => item.id === product._id);
+  const isInWhish = whish?.some((item: any) => item.id === product._id);
 
   console.log(whish);
 

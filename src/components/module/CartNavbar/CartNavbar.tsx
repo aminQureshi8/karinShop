@@ -1,15 +1,24 @@
 "use client";
-import { toggleCartComputer } from "@/app/redux/slices/CartComputer/CartComputer";
+import {
+  closeCart,
+  toggleCartComputer,
+} from "@/app/redux/slices/CartComputer/CartComputer";
 import { RootState } from "@/app/redux/store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 export default function CartNavbar() {
   const [carts, setCarts] = useState([]);
+  const router = usePathname();
   const isOpen = useSelector((state: RootState) => state.cartComputer.isOpen);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(closeCart());
+  }, [router]);
 
   useEffect(() => {
     const getLocalStorageCart = JSON.parse(
@@ -137,9 +146,11 @@ export default function CartNavbar() {
               </div>
             </div>
             <div>
-              <button className="w-full bg-blue-600 hover:bg-blue-700 rounded-lg p-3 text-white font-bold text-base transition-colors shadow-md">
-                ثبت سفارش
-              </button>
+              <Link href="/order">
+                <button className="w-full bg-blue-600 hover:bg-blue-700 rounded-lg p-3 text-white font-bold text-base transition-colors shadow-md">
+                  ثبت سفارش
+                </button>
+              </Link>
             </div>
           </div>
         </div>

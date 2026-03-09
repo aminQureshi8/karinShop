@@ -14,8 +14,6 @@ export default async function Page({
 }) {
   const { id } = await params;
 
-  console.log(id);
-
   await db();
 
   const product = await productModel
@@ -23,7 +21,7 @@ export default async function Page({
     .populate({
       path: "comments",
       match: { isApproved: true },
-      
+
       options: {
         limit: 3,
         sort: { createdAt: -1 },
@@ -44,9 +42,14 @@ export default async function Page({
       <div className="grid grid-cols-12 gap-5">
         <div className="max-lg:col-span-12 col-span-9">
           <Info
+            breadCrumbs={product.breadCrumbs}
             images={product?.imageUrls}
             colors={product.colors}
             features={product.features}
+            id={product._id.toString()}
+            price={product.price}
+            title={product.title}
+            mainCount={product.count}
           />
         </div>
         <div className="max-lg:col-span-12 col-span-3">
