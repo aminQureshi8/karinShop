@@ -18,7 +18,7 @@ export default function SwiperProduct({ product }: any) {
   const isInCart = cart.some((item) => item.id === product._id);
   const isInWhish = whish?.some((item: any) => item.id === product._id);
 
-  console.log(whish);
+  console.log(product.count);
 
   const handleCartClick = () => {
     dispatch(

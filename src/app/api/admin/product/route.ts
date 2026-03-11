@@ -39,21 +39,23 @@ export async function POST(req: NextRequest) {
       const bytes = await image.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
-      const uploadRes = await new Promise<any>((resolve, reject) => {
-        cloudinary.uploader
-          .upload_stream(
-            {
-              folder: "kadtinShop/products",
-            },
-            (error, result) => {
-              if (error) reject(error);
-              else resolve(result);
-            },
-          )
-          .end(buffer);
-      });
+      // const uploadRes = await new Promise<any>((resolve, reject) => {
+      //   cloudinary.uploader
+      //     .upload_stream(
+      //       {
+      //         folder: "kadtinShop/products",
+      //       },
+      //       (error, result) => {
+      //         if (error) reject(error);
+      //         else resolve(result);
+      //       },
+      //     )
+      //     .end(buffer);
+      // });
 
-      imageUrls.push(uploadRes.secure_url);
+      // imageUrls.push(uploadRes.secure_url || "");
+      imageUrls.push("");
+
     }
 
     await productModel.create({
@@ -66,7 +68,7 @@ export async function POST(req: NextRequest) {
       brand,
       colors,
       tags,
-      features : JSON.parse(features),
+      features: JSON.parse(features),
       imageUrls,
       description,
     });
@@ -78,8 +80,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       {
-        message:
-          error instanceof Error ? error.message : "Internal Server Error",
+        message: error.message,
       },
       { status: 500 },
     );

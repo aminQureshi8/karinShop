@@ -6,10 +6,10 @@ export default function page() {
     <div className="container mx-auto">
       <div className="my-8"></div>
       <div className="grid grid-cols-12">
-        <div className="col-span-8">
+        <div className="col-span-9">
           <ProductOrder />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-3">
           <CartOrder />
         </div>
       </div>

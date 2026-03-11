@@ -18,6 +18,14 @@ const product = new mongoose.Schema({
   ],
   imageUrls: [{ type: String }],
   description: { type: String, required: true },
+  count: {
+    type: Number,
+    default: 0,
+  },
+  inUserBasket: {
+    type: Number,
+    default: 0,
+  },
 });
 
 product.virtual("comments", {

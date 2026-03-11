@@ -128,6 +128,10 @@ export default function FormProduct({
         credentials: "include",
       });
 
+      const u = await res.json();
+
+      console.log(u);
+
       if (res.ok) {
         reset();
         SwalFire(
@@ -400,7 +404,11 @@ export default function FormProduct({
           type="submit"
           className="mt-6 px-6 py-2 rounded-lg bg-blue-600 text-white"
         >
-          {isLoading ? <BeatLoader color="white" size={13} /> : "ثبت محصول"}
+          {isLoading ? (
+            <BeatLoader color="white" className="size-3" />
+          ) : (
+            "ثبت محصول"
+          )}
         </button>
       </form>
     </div>

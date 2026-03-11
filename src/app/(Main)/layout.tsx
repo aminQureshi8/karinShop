@@ -4,6 +4,7 @@ import MenuMobileJSX from "@/components/module/MenuMobile/MenuMobileJSX";
 import Navbar from "@/components/module/Navbar/Navbar";
 import SearchMobile from "@/components/module/SearchMobile/SearchMobile";
 import SearchMobileMenu from "@/components/module/SearchMobileMenu/SearchMobileMenu";
+import NotificationInit from "./NotificationInit";
 
 export default function RootLayout({
   children,
@@ -17,7 +18,8 @@ export default function RootLayout({
       <Navbar />
       <ListMenu />
       <SearchMobile />
-      <CartNavbar/>
+      <CartNavbar />
+      {/* <NotificationInit/> */}
       {children}
     </>
   );

@@ -7,7 +7,7 @@ export default async function NewProduct() {
   await db();
 
   const products = await productModel
-    .find({}, "title price imageUrls slug")
+    .find({}, "title price imageUrls slug count")
     .limit(10)
     .lean();
   return (

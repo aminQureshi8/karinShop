@@ -7,7 +7,7 @@ import Link from "next/link";
 const ListMenu = memo(() => {
   return (
     <div className="container mx-auto">
-      <div className="bg-black max-lg:hidden text-white  dark:text-gray-300 dark:bg-slate-700 text-sm  font-danaMed rounded-full mt-5 p-5">
+      <div className="bg-black max-lg:hidden text-white  dark:text-gray-300 dark:bg-slate-800 text-sm  font-danaMed rounded-full mt-5 p-5">
         <div className="flex justify-between items-center">
           <ul className="flex items-center gap-5 *:cursor-pointer ">
             <Link href="/">
