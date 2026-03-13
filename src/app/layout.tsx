@@ -3,7 +3,8 @@ import "./globals.css";
 import { NextTheme } from "./NextTheme";
 import Providers from "./redux/Providers";
 import { Toaster } from "react-hot-toast";
-
+import TopLoader from "./TopLoader";
+import NextTopLoader from "nextjs-toploader";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -14,6 +15,7 @@ export default function RootLayout({
       <body className="bg-gray-50 dark:bg-gray-900">
         <NextTheme>
           <Providers>
+            <NextTopLoader color="#3b82f6" height={3} showSpinner={false} />
             <AuthRefresh />
             {children}
             <Toaster

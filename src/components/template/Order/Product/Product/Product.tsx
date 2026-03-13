@@ -1,6 +1,6 @@
 import { deCreaseCounter, inCreaseCounter } from "@/app/redux/slices/Cart/Cart";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 export default function Product({
@@ -20,8 +20,6 @@ export default function Product({
 }) {
   const [countState, setCountState] = useState(count);
   const dispatch = useDispatch();
-
-  console.log("mainCount", mainCount);
 
   return (
     <div className="flex w-full pb-5">
