@@ -1,5 +1,6 @@
 "use client";
 
+import { RootState } from "@/app/redux/store";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -12,12 +13,12 @@ export default function CheckOutForm({ id }: { id: string }) {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
 
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state: RootState) => state.cart);
 
   const orderSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const products = cart.map((c: string) => c.id).join("|");
+    const products = cart.map((c: any) => c.id).join("|");
     console.log(products);
 
     try {

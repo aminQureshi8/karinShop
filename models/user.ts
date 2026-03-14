@@ -18,6 +18,12 @@ user.virtual("comments", {
   ref: "comment",
 });
 
+user.virtual("orders", {
+  foreignField: "user",
+  localField: "_id",
+  ref: "order",
+});
+
 const userModel = mongoose.models.user || mongoose.model("user", user);
 
 export default userModel;

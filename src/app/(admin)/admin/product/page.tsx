@@ -4,9 +4,9 @@ import productModel from "@/models/product";
 import { memo } from "react";
 
 const page = memo(async () => {
-  await db()
+  await db();
 
-  const products = await productModel.find({}, "-__v").skip(0).limit(5).lean()
+  const products = await productModel.find({}, "-__v").skip(0).limit(5).lean();
 
   return (
     <div>

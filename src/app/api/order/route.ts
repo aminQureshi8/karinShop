@@ -1,4 +1,5 @@
 import orderModel from "@/models/order";
+import productModel from "@/models/product";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -17,6 +18,15 @@ export async function POST(req: NextRequest) {
       products: splitProducts,
       user,
     });
+
+    await productModel.updateMany(
+      { _id: { $in: splitProducts } },
+      {
+        $inc: {
+          inUserBasket: 1,
+        },
+      },
+    );
 
     return NextResponse.json({
       user,

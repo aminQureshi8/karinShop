@@ -42,9 +42,7 @@ export async function GET(
       page,
       total,
     });
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json({ message: error.message });
   }
 }
-
-

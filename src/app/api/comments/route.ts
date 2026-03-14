@@ -6,8 +6,7 @@ export async function POST(req: NextRequest) {
   try {
     await db();
 
-    const { title, isApprove, isOk, user, product, comment  } = await req.json();
-
+    const { title, isApprove, isOk, user, product, comment } = await req.json();
 
     await commentModel.create({
       title,
@@ -19,7 +18,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ message: "Comment Created" }, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json({ message: error.message }, { status: 201 });
   }
 }

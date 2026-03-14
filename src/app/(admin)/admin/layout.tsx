@@ -1,4 +1,3 @@
-import SideBar from "@/components/module/admin/SideBar/SideBar";
 import ListMenu from "@/components/module/ListMenu/ListMenu";
 import MenuMobileJSX from "@/components/module/MenuMobile/MenuMobileJSX";
 import Navbar from "@/components/module/Navbar/Navbar";

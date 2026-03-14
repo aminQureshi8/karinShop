@@ -143,9 +143,9 @@ export const authAdmin = async () => {
   }
 };
 
-export const authRouteHandler = (header) => {
+export const authRouteHandler = (header : string) => {
   try {
-    const { email, role } = verifyAccessToken(header);
+    const { email , role } : any = verifyAccessToken(header);
 
     console.log(role);
 

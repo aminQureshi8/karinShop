@@ -4,8 +4,8 @@ const whishSlice = createSlice({
   name: "whish",
   initialState: [],
   reducers: {
-    toggleWhish: (state, action) => {
-      const index = state.findIndex((item) => item.id === action.payload.id);
+    toggleWhish: (state : any, action : any) => {
+      const index = state.findIndex((item : any) => item.id === action.payload.id);
 
       if (index !== -1) {
         state.splice(index, 1);

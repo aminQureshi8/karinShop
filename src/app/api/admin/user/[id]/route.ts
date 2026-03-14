@@ -32,7 +32,6 @@ export async function PUT(
     const email = formData.get("email") as string;
     const userName = formData.get("userName") as string;
 
-
     const updatedUser = await userModel.findByIdAndUpdate(
       id,
       { email, userName },
@@ -40,7 +39,7 @@ export async function PUT(
     );
 
     return NextResponse.json({ email, userName });
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json({ message: error.message });
   }
 }
