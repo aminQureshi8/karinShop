@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useState } from "react";
 import DOMPurify from "dompurify";
 
-export default function Intro({ description }: { description: string }) {
+const Intro = memo(({ description }: { description: string }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -17,7 +17,6 @@ export default function Intro({ description }: { description: string }) {
         }}
       />
 
-     
       {!open && (
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-19 bg-gradient-to-t from-transparent to-gray-50 dark:from-transparent dark:to-gray-800 " />
       )}
@@ -30,4 +29,6 @@ export default function Intro({ description }: { description: string }) {
       </button>
     </div>
   );
-}
+});
+
+export default Intro;

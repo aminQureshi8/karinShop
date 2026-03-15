@@ -61,4 +61,4 @@ const ContainerFeCoIN = memo(
   },
 );
 
-export default ContainerFeCoIN; // تغییر export
+export default ContainerFeCoIN;

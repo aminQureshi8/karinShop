@@ -14,12 +14,14 @@ function Cart({
   id,
   title,
   imageUrls,
+  inUserBasket,
 }: {
   price: number;
   count: number;
   id: string;
   title: string;
   imageUrls: string;
+  inUserBasket: number;
 }) {
   const [counter, setCounter] = useState(1);
 
@@ -88,6 +90,8 @@ function Cart({
           <span className="text-base max-xl:text-sm">تومان</span>
         </p>
       </div>
+
+      {!isInCart && <div className="mt-5">در سبد خرید {inUserBasket}+ نفر</div>}
 
       {isInCart ? (
         <div className="mt-5">

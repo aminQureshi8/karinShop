@@ -10,11 +10,11 @@ export default async function page() {
   return (
     <div className="container mx-auto">
       <div className="my-8"></div>
-      <div className="grid grid-cols-12">
-        <div className="col-span-9">
+      <div className="grid grid-cols-12 gap-5">
+        <div className="max-sm:col-span-12 col-span-9">
           <ProductOrder />
         </div>
-        <div className="col-span-3">
+        <div className="max-sm:col-span-12 col-span-3">
           <CartOrder isUserLogin={user.user ? true : false} />
         </div>
       </div>

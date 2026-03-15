@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
           { title: { $regex: query, $options: "i" } },
           { slug: { $regex: query, $options: "i" } },
         ],
-      })
+      } , "title")
       .limit(10); // برای جلوگیری از نتایج زیاد، محدود کنیم
 
     return NextResponse.json({ findProducts });

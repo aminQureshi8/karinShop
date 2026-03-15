@@ -1,4 +1,3 @@
-import React from "react";
 import Search from "./Search/Search";
 import Logo from "./Logo/Logo";
 import Buttons from "./Buttons/Buttons";
@@ -20,7 +19,7 @@ function Navbar() {
       </div>
 
       <div className="lg:hidden">
-        <NavbarResponsive/>
+        <NavbarResponsive />
       </div>
     </>
   );

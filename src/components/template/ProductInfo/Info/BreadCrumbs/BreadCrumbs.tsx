@@ -1,13 +1,14 @@
+import Link from "next/link";
 import { BiHome } from "react-icons/bi";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
 export default function BreadCrumbs() {
   return (
     <div className="flex items-center max-sm:text-sm gap-2">
-      <div className="flex items-center gap-2">
+      <Link href="/" className="flex items-center gap-2">
         <BiHome />
         <p>صحفه اصلی</p>
-      </div>
+      </Link>
       <div>
         <MdKeyboardArrowLeft />
       </div>

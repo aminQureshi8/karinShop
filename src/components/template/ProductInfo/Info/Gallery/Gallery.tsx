@@ -11,7 +11,7 @@ export default function Gallery({ images }: any) {
     <div>
       <div className="relative w-full h-[300px]">
         <Image
-          src={images[0]}
+          src={images[0] || "/image/lap.png"}
           alt="Product"
           fill
           className="object-contain"

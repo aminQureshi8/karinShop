@@ -7,10 +7,19 @@ import { IoHeartOutline } from "react-icons/io5";
 import { IoCartOutline } from "react-icons/io5";
 import { RiUserLine } from "react-icons/ri";
 import type { RootState } from "@/app/redux/store";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export default function MenuMobileJSX() {
+  const router = usePathname();
+
   const isOpen = useSelector((state: RootState) => state.menuMobile.isOpen);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(closeMenu());
+  }, [router]);
 
   return (
     <>
@@ -25,6 +34,10 @@ export default function MenuMobileJSX() {
           </div>
 
           <ul className="mt-5 flex flex-col gap-5">
+            <Link href="/" className="flex items-center gap-x-2">
+              <TbCategory size={19} />
+              <p>صحفه اصلی</p>
+            </Link>
             <li className="flex items-center gap-x-2">
               <TbCategory size={19} />
               <p>دسته بندی ها</p>
