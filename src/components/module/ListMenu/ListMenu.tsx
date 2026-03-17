@@ -81,7 +81,9 @@ const ListMenu = memo(() => {
                 </div>
               </div>
             </li>
-            <li className="transition-all hover:text-blue-500">فروشگاه</li>
+            <Link href="/shop" className="transition-all hover:text-blue-500">
+              فروشگاه
+            </Link>
 
             <li className="transition-all hover:text-blue-500">وبلاگ</li>
           </ul>

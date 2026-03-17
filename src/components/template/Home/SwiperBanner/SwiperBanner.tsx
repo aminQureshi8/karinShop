@@ -41,15 +41,19 @@ function SwiperBanner() {
             className="rounded-4xl"
             width={1515}
             height={900}
+            priority
+            fetchPriority="high"
+            sizes="(max-width: 768px) 100vw, 1515px"
           />
         </SwiperSlide>
-           <SwiperSlide>
+        <SwiperSlide>
           <Image
             alt="Banner"
             src="/image/bg1.gif"
             className="rounded-4xl"
             width={1515}
             height={900}
+            sizes="(max-width: 768px) 100vw, 1515px"
           />
         </SwiperSlide>
 

@@ -55,7 +55,7 @@ export default function SwiperProduct({ product }: any) {
           <Image
             width={200}
             height={200}
-            src={product.imageUrls[0]}
+            src={"/image/e239f5f2f87ca46c23d18719b17d1092abc6bb49_1754241710-removebg-preview.png"}
             alt={product.title}
           />
         </Link>
@@ -93,7 +93,7 @@ export default function SwiperProduct({ product }: any) {
         </div>
       </div>
 
-      <p className="line-clamp-2 text-sm my-3">{product.title}</p>
+      <p className="line-clamp-2 text-sm my-3 leading-6">{product.title}</p>
 
       <div className="border-t-2 border-gray-200 dark:border-gray-700 flex gap-1 items-center justify-end pt-3">
         <del className="text-xs text-gray-500">70000</del>
