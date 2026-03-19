@@ -11,16 +11,17 @@ cloudinary.config({
 });
 
 export async function POST(req: NextRequest) {
-  const token = req.cookies.get("token")?.value;
-  const isAdmin = authRouteHandler(token);
+  // const token = req.cookies.get("token")?.value;
+  // const isAdmin = authRouteHandler(token);
 
-  if (!isAdmin) {
-    return NextResponse.json({ message: "Access denied" }, { status: 403 });
-  }
+  // if (!isAdmin) {
+  //   return NextResponse.json({ message: "Access denied" }, { status: 403 });
+  // }
 
   try {
     await db();
     const formData = await req.formData();
+    const subCategory = req.nextUrl.searchParams.get("subCategory");
     const title = formData.get("title") as string;
     const file = formData.get("image") as File;
 
@@ -31,33 +32,32 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    // const buffer = Buffer.from(await file.arrayBuffer());
 
-    const uploadResult = await new Promise<any>((resolve, reject) => {
-      cloudinary.uploader
-        .upload_stream(
-          {
-            folder: "karin/brand",
-          },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          },
-        )
-        .end(buffer);
-    });
+    // const uploadResult = await new Promise<any>((resolve, reject) => {
+    //   cloudinary.uploader
+    //     .upload_stream(
+    //       {
+    //         folder: "karin/brand",
+    //       },
+    //       (error, result) => {
+    //         if (error) reject(error);
+    //         else resolve(result);
+    //       },
+    //     )
+    //     .end(buffer);
+    // });
 
     const brand = await brandModel.create({
       title,
-      imageUrl: uploadResult.secure_url,
+      // imageUrl: uploadResult.secure_url || "",
+      imageUrl: "",
+      subCategory,
     });
 
     return NextResponse.json(brand, { status: 201 });
   } catch (error) {
-    return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 500 },
-    );
+    return NextResponse.json({ message: error.message });
   }
 }
 
@@ -69,14 +69,13 @@ export async function GET(req: NextRequest) {
 
     const skip = (page - 1) * 3;
 
-    const brands = await brandModel
-      .find()
-      .skip(skip)
-      .limit(3);
+    const brands = await brandModel.find().skip(skip).limit(3);
 
     const totalBrands = await brandModel.countDocuments({});
     const totalPages = Math.ceil(totalBrands / 3);
 
     return NextResponse.json({ brands, totalPages }, { status: 200 });
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({ message: error.message });
+  }
 }

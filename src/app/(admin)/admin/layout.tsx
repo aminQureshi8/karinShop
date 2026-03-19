@@ -1,7 +1,7 @@
-import ListMenu from "@/components/module/ListMenu/ListMenu";
 import MenuMobileJSX from "@/components/module/MenuMobile/MenuMobileJSX";
 import Navbar from "@/components/module/Navbar/Navbar";
 import SideBarMemo from "./SideBarMemo";
+import ListMenuContainer from "@/components/module/ListMenu/ListMenuContainer";
 
 export default function RootLayout({
   children,
@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <>
       <Navbar />
-      <ListMenu />
+      <ListMenuContainer />
       <MenuMobileJSX />
 
       <div className="container mx-auto font-danaMed">

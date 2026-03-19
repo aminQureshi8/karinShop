@@ -22,6 +22,12 @@ const subCategory = new mongoose.Schema(
   },
 );
 
+subCategory.virtual("brands", {
+  foreignField: "subCategory",
+  localField: "_id",
+  ref: "brand",
+});
+
 const subCategoryModel =
   mongoose.models.subCategory || mongoose.model("subCategory", subCategory);
 

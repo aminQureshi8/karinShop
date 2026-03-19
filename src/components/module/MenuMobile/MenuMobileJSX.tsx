@@ -38,10 +38,10 @@ export default function MenuMobileJSX() {
               <TbCategory size={19} />
               <p>صحفه اصلی</p>
             </Link>
-            <li className="flex items-center gap-x-2">
+            <Link href="/shop" className="flex items-center gap-x-2">
               <TbCategory size={19} />
-              <p>دسته بندی ها</p>
-            </li>
+              <p>فروشگاه</p>
+            </Link>
             <li className="flex items-center gap-x-2">
               <RiUserLine size={19} />
               <p>حساب کاربری</p>

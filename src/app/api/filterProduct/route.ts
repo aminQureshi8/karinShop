@@ -10,8 +10,16 @@ export async function GET(req: NextRequest) {
     const minPrice = req.nextUrl.searchParams.get("minPrice");
     const maxPrice = req.nextUrl.searchParams.get("maxPrice");
     const subCategory = req.nextUrl.searchParams.get("subCategory");
+    const filterProduct = req.nextUrl.searchParams.get("filter");
 
     const filter: any = {};
+    let sortQuery: any = {};
+
+    if (filterProduct) {
+      if (filterProduct === "ch") {
+        sortQuery = { price: 1 };
+      }
+    }
 
     if (isStock === "true") {
       filter.count = { $gt: 0 };
@@ -33,7 +41,7 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    const filterProducts = await productModel.find(filter);
+    const filterProducts = await productModel.find(filter).sort(sortQuery);
 
     return NextResponse.json(filterProducts);
   } catch (error) {}

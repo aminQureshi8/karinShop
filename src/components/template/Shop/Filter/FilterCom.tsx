@@ -15,6 +15,7 @@ export default function FilterCom({
   step = 1000,
   checkType,
   setCheckType,
+  setListType,
 }: {
   inStock: boolean;
   setInStock: any;
@@ -27,6 +28,7 @@ export default function FilterCom({
   step: number;
   checkType: string;
   setCheckType: any;
+  setListType: any;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -36,7 +38,7 @@ export default function FilterCom({
 
   const categories = [
     { id: "all", label: "همه کالاها" },
-    { id: "digital", label: "دیجیتال" },
+    { id: "698edaa869ad5da18d4114d1", label: "موبایل" },
     { id: "698f0bd7961ffa9510fae56d", label: "لب تاب" },
   ];
 
@@ -50,6 +52,7 @@ export default function FilterCom({
           onClick={() => {
             setCheckType("all");
             setInStock(false);
+            setListType("pop");
           }}
         >
           حذف فیلترها

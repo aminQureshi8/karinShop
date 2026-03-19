@@ -50,7 +50,7 @@ export default function SwiperProduct({ product }: any) {
 
   return (
     <div className="bg-white shadow-xl p-4 dark:bg-slate-800 rounded-xl font-danaMed">
-      <div className="relative">
+      <div className="relative flex max-sm:justify-center">
         <Link href={`/productInfo/${product._id}`}>
           <Image
             width={200}
