@@ -1,4 +1,8 @@
-import { deCreaseCounter, inCreaseCounter } from "@/app/redux/slices/Cart/Cart";
+import {
+  deCreaseCounter,
+  inCreaseCounter,
+  toggleCart,
+} from "@/app/redux/slices/Cart/Cart";
 import Image from "next/image";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -66,7 +70,12 @@ export default function Product({
         <div className="flex items-center w-full!  justify-between">
           <h2 className="text-sm">{title}</h2>
           <div>
-            <button className="cursor-pointer text-lg">x</button>
+            <button
+              className="cursor-pointer text-lg"
+              onClick={() => dispatch(toggleCart({ id }))}
+            >
+              x
+            </button>
           </div>
         </div>
         <div>

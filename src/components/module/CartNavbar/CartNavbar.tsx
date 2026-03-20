@@ -127,32 +127,34 @@ export default function CartNavbar() {
               </p>
             )}
           </div>
-          <div className="mt-4 pt-4 border-t dark:border-gray-700 border-gray-300 sticky bottom-0 z-10">
-            <div className="flex flex-col gap-3 mb-4">
-              <div className="flex justify-between items-center text-base font-bold">
-                <p className="text-gray-700 dark:text-gray-300">
-                  مبلغ قابل پرداخت:
-                </p>
-                <p className="text-blue-700 dark:text-blue-500">
-                  {carts
-                    .reduce(
-                      (total: any, item: any) =>
-                        total + item.price * item.count,
-                      0,
-                    )
-                    .toLocaleString("fa-IR")}
-                  <span>تومان</span>
-                </p>
+          {!(carts.length === 0) && (
+            <div className="mt-4 pt-4 border-t dark:border-gray-700 border-gray-300 sticky bottom-0 z-10">
+              <div className="flex flex-col gap-3 mb-4">
+                <div className="flex justify-between items-center text-base font-bold">
+                  <p className="text-gray-700 dark:text-gray-300">
+                    مبلغ قابل پرداخت:
+                  </p>
+                  <p className="text-blue-700 dark:text-blue-500">
+                    {carts
+                      .reduce(
+                        (total: any, item: any) =>
+                          total + item.price * item.count,
+                        0,
+                      )
+                      .toLocaleString("fa-IR")}
+                    <span>تومان</span>
+                  </p>
+                </div>
+              </div>
+              <div>
+                <Link href="/order">
+                  <button className="w-full bg-blue-600 hover:bg-blue-700 rounded-lg p-3 text-white font-bold text-base transition-colors shadow-md">
+                    ثبت سفارش
+                  </button>
+                </Link>
               </div>
             </div>
-            <div>
-              <Link href="/order">
-                <button className="w-full bg-blue-600 hover:bg-blue-700 rounded-lg p-3 text-white font-bold text-base transition-colors shadow-md">
-                  ثبت سفارش
-                </button>
-              </Link>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </>
