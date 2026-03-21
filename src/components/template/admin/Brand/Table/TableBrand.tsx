@@ -9,7 +9,23 @@ import { MdEdit } from "react-icons/md";
 import SwalFire from "@/app/utils/swal";
 import Modal from "@/components/module/Modal/Modal";
 import { useForm } from "react-hook-form";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import TableLayout from "@/components/module/Table/Table";
+import { MoreHorizontalIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 interface IFormInput {
   title: string;
   image: FileList;
@@ -178,77 +194,89 @@ export default function TableBrand({
         </>
       </Modal>
 
-      <div>
-        <Table>
-          <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default  border-gray-400 bg-gray-50 dark:bg-gray-700">
-            <tr>
-              <th scope="col" className="px-6 py-3 font-medium">
-                عکس برند
-              </th>
-              <th scope="col" className="px-6 py-3 font-medium">
-                نام برند
-              </th>
-              <th scope="col" className="px-6 py-3 font-medium">
+      <div className="rounded-xl border bg-white dark:bg-gray-800 shadow-sm">
+        <TableLayout>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-right font-bold">شماره</TableHead>
+              <TableHead className="text-right font-bold">
+                عکس دسته بندی
+              </TableHead>
+              <TableHead className="text-right font-bold">
+                نام دسته بندی
+              </TableHead>
+              <TableHead className="text-right font-bold">
                 تاریخ ایجاد
-              </th>
-              <th scope="col" className="px-6 py-3 font-medium">
-                عملیات
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {brands.map((brand: Brand) => (
-              <tr
-                key={brand._id}
-                className="bg-neutral-primary-soft border-b border-gray-300 dark:border-gray-700 border-default hover:bg-neutral-secondary-medium"
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-heading whitespace-nowrap"
-                >
-                  <div>
-                    <Image
-                      src={brand.imageUrl}
-                      width={100}
-                      height={100}
-                      alt="Brand"
-                    />
-                  </div>
-                </th>
-                <td className="px-6 py-4">{brand.title}</td>
-                <td className="px-6 py-4">Laptop</td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-5">
-                    <button
-                      onClick={() => removeBrand(brand._id)}
-                      className="bg-red-500 text-white size-8 flex justify-center items-center rounded-lg cursor-pointer"
-                    >
-                      <MdDelete size={23} className="text-white" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsOpen(true);
-                        setEditBrandObject(brand);
-                      }}
-                      className="bg-blue-500 text-white p-1 rounded-lg cursor-pointer"
-                    >
-                      <MdEdit size={23} className="text-white" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+              </TableHead>
 
-        {totalPageState > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPages={totalPageState}
-          />
-        )}
+              <TableHead className="text-right font-bold">عملیات</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {brands.map((cat: any, index: any) => (
+              <TableRow
+                key={cat._id}
+                className="transition-colors hover:bg-muted/40"
+              >
+                <TableCell className="font-medium ss02">
+                  {(currentPage - 1) * 5 + index + 1}
+                </TableCell>
+                <TableCell className="font-medium">
+                  <Image
+                    src={cat.imageUrl}
+                    width={100}
+                    height={100}
+                    alt="Image"
+                  />
+                </TableCell>
+                <TableCell>{cat.title}</TableCell>
+                <TableCell>
+                  {new Date(cat.createdAt).toLocaleDateString("fa-IR")}
+                </TableCell>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="size-8 cursor-pointer"
+                      >
+                        <MoreHorizontalIcon />
+                        <span className="sr-only">Open menu</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onClick={() => {
+                          setIsOpen(true);
+                          setEditBrandObject(cat);
+                        }}
+                      >
+                        ویرایش
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        variant="destructive"
+                        onClick={() => removeBrand(cat._id)}
+                      >
+                        حذف
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableLayout>
       </div>
+
+      {totalPageState > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPageState}
+        />
+      )}
     </>
   );
 }

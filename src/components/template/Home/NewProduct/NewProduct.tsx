@@ -5,10 +5,10 @@ import db from "@/config/db";
 import productModel from "@/models/product";
 export default async function NewProduct() {
   await db();
-
   const products = await productModel
     .find({}, "title price imageUrls slug count")
     .limit(10)
+    .sort({ createdAt: -1 })
     .lean();
   return (
     <div className="mt-12">

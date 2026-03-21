@@ -7,6 +7,11 @@ export async function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const refreshToken = request.cookies.get("refresh-token")?.value;
 
+  if (pathname.startsWith("/my-account")) {
+    if (!token && !refreshToken) {
+      return NextResponse.redirect(new URL("/auth", request.url));
+    }
+  }
   if (pathname.startsWith("/admin")) {
     if (!token && !refreshToken) {
       return NextResponse.redirect(new URL("/auth", request.url));
@@ -55,10 +60,7 @@ export async function proxy(request: NextRequest) {
     }
   }
   return NextResponse.next();
-
- 
-
 }
 export const config = {
-  matcher: ["/admin/:path*", "/auth"],
+  matcher: ["/admin/:path*", "/auth", "/my-account/:path*"],
 };
