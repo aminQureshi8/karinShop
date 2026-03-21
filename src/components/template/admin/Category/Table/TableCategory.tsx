@@ -7,10 +7,27 @@ import Pagination from "@/components/module/Pagination/Pagination";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import SwalFire from "@/app/utils/swal";
+import { MoreHorizontalIcon } from "lucide-react";
 import Modal from "@/components/module/Modal/Modal";
+import { Button } from "@/components/ui/button";
+
 import { useForm } from "react-hook-form";
 import CategoryType from "@/types/Category/Category.type";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import TableLayout from "@/components/module/Table/Table";
 interface IFormInput {
   title: string;
   image: FileList;
@@ -155,8 +172,8 @@ export default function TableCategory({
         acceptLabel="تغییر"
         declineLabel="لغو"
         onDecline={() => {
-          setIsOpen(false)
-          setEditCategoryObject(null)
+          setIsOpen(false);
+          setEditCategoryObject(null);
         }}
       >
         <>
@@ -180,8 +197,82 @@ export default function TableCategory({
         </>
       </Modal>
 
-      <div>
-        <Table>
+      <div className="rounded-xl border bg-white dark:bg-gray-800 shadow-sm">
+        <TableLayout>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-right font-bold">شماره</TableHead>
+              <TableHead className="text-right font-bold">
+                عکس دسته بندی
+              </TableHead>
+              <TableHead className="text-right font-bold">
+                نام دسته بندی
+              </TableHead>
+              <TableHead className="text-right font-bold">
+                تاریخ ایجاد
+              </TableHead>
+
+              <TableHead className="text-right font-bold">عملیات</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {categories.map((cat: any, index: any) => (
+              <TableRow
+                key={cat._id}
+                className="transition-colors hover:bg-muted/40"
+              >
+                <TableCell className="font-medium ss02">
+                  {(currentPage - 1) * 5 + index + 1}
+                </TableCell>
+                <TableCell className="font-medium">
+                  <Image
+                    src={cat.imageUrl}
+                    width={100}
+                    height={100}
+                    alt="Image"
+                  />
+                </TableCell>
+                <TableCell>{cat.title}</TableCell>
+                <TableCell>
+                  {new Date(cat.createdAt).toLocaleDateString("fa-IR")}
+                </TableCell>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="size-8 cursor-pointer"
+                      >
+                        <MoreHorizontalIcon />
+                        <span className="sr-only">Open menu</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onClick={() => {
+                          setIsOpen(true);
+                          setEditCategoryObject(cat);
+                        }}
+                      >
+                        ویرایش
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        variant="destructive"
+                        onClick={() => removeCategory(cat._id)}
+                      >
+                        حذف
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableLayout>
+
+        {/* <Table>
           <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default  border-gray-400 bg-gray-50 dark:bg-gray-700">
             <tr>
               <th scope="col" className="px-6 py-3 font-medium">
@@ -241,7 +332,7 @@ export default function TableCategory({
               </tr>
             ))}
           </tbody>
-        </Table>
+        </Table> */}
 
         {totalPageState > 1 && (
           <Pagination

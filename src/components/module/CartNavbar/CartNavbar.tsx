@@ -64,11 +64,11 @@ export default function CartNavbar() {
       <div
         className={`fixed top-0 transition-all ${
           isOpen ? "left-0" : "-left-80"
-        }  w-[320px] text-sm z-50 bottom-0  bg-white dark:bg-slate-800 shadow-lg overflow-y-auto max-lg:hidden font-danaMed`}
+        }  w-[320px] text-sm z-50 bottom-0 bg-white dark:bg-slate-800 shadow-lg overflow-y-auto max-lg:hidden font-danaMed`}
       >
         <div className="p-4 h-full flex flex-col">
           {" "}
-          <div className="flex items-center justify-between border-b border-gray-200 pb-3 mb-4 sticky top-0 z-10">
+          <div className="flex items-center justify-between border-b border-gray-200 dark:border-b-gray-600 pb-3 mb-4 sticky top-0 z-10">
             <h2 className="text-lg font-bold">سبد خرید ({carts.length})</h2>
             <button
               aria-label="بستن سبد خرید"
@@ -78,15 +78,14 @@ export default function CartNavbar() {
               <IoCloseOutline size={24} />
             </button>
           </div>
-          <div className="flex-grow space-y-4 overflow-y-auto pr-2">
-            {" "}
+          <div className="grow space-y-4 overflow-y-auto pr-2">
             {carts.length > 0 ? (
               carts.map((item: any) => (
                 <div
                   key={item.id}
                   className="flex items-start border-b border-gray-100 pb-3 last:border-b-0"
                 >
-                  <div className="flex-shrink-0 ml-2">
+                  <div className="shrink-0 ml-2">
                     <Image
                       width={80}
                       height={80}
@@ -96,7 +95,7 @@ export default function CartNavbar() {
                     />
                   </div>
 
-                  <div className="flex-grow min-w-0 space-y-2">
+                  <div className="grow min-w-0 space-y-2">
                     <p className="text-sm font-medium dark:text-white  line-clamp-2 text-gray-800">
                       {item.title}
                     </p>

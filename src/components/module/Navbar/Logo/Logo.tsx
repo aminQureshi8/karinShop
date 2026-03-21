@@ -1,11 +1,12 @@
-import React from 'react'
+import Link from "next/link";
+
 
 function Logo() {
   return (
     <div>
-        <p>کارین شاپ</p>
+      <Link href="/">کارین شاپ</Link>
     </div>
-  )
+  );
 }
 
-export default Logo
+export default Logo;

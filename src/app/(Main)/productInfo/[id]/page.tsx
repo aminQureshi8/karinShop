@@ -66,7 +66,7 @@ export default async function Page({
       <div className="mt-10">
         <ContainerFeCoIN
           description={product.description.toString()}
-          features={product.features}
+          features={JSON.parse(JSON.stringify(product.features))}
           id={product._id.toString()}
           userID={user.user?._id?.toString()}
           comments={product.comments}

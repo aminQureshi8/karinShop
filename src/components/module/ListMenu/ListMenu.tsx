@@ -1,10 +1,8 @@
 "use client";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
-import { memo, useState } from "react";
-import { MdKeyboardArrowLeft } from "react-icons/md";
+import { memo } from "react";
 import Link from "next/link";
-import SubCate from "./SubCate";
 import Ui from "./Ui";
 const ListMenu = memo(({ subCategories }: { subCategories: any }) => {
   return (
@@ -20,8 +18,7 @@ const ListMenu = memo(({ subCategories }: { subCategories: any }) => {
                 <p>دسته بندی ها</p>
                 <MdKeyboardArrowDown className="transition-transform duration-300 group-hover:rotate-180" />
               </div>
-<Ui   subCategories={subCategories}  />
-              
+              <Ui subCategories={subCategories} />
             </li>
             <Link href="/shop" className="transition-all hover:text-blue-500">
               فروشگاه

@@ -5,12 +5,41 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/app/redux/store";
 import { GoArrowUpRight } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaGripfire } from "react-icons/fa";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 export default function SearchMobileMenu() {
   const [search, setSearch] = useState("");
+  const [products, setProducts] = useState([]);
+  const router = usePathname();
   const isOpen = useSelector((state: RootState) => state.searchMobile.isOpen);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(closeSearch());
+    setSearch("");
+  }, [router]);
+
+  useEffect(() => {
+    if (!search.trim()) {
+      setProducts([]);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      searchProduct();
+    }, 500);
+
+    const searchProduct = async () => {
+      const res = await fetch(`/api/search?query=${search}`);
+      const data = await res.json();
+      setProducts(data.findProducts);
+    };
+
+    return () => clearTimeout(timer);
+  }, [search]);
 
   return (
     <div
@@ -49,15 +78,35 @@ export default function SearchMobileMenu() {
         </div>
         <div className="mt-5 text-sm">
           <ul className="flex flex-col gap-5">
-            <li className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <CiSearch size={19} />
-                <p>ایفون ۱۴</p>
-              </div>
-              <div>
-                <GoArrowUpRight size={19} />
-              </div>
-            </li>
+            {products.length === 0 ? (
+              <li className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <CiSearch size={19} />
+                  <p>ایفون ۱۴</p>
+                </div>
+                <div>
+                  <GoArrowUpRight size={19} />
+                </div>
+              </li>
+            ) : (
+              products.map((p) => (
+                <li className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <CiSearch size={19} />
+                    <Link
+                      href={`/productInfo/${p._id}`}
+                      className="line-clamp-1"
+                    >
+                      {p.title}
+                    </Link>
+                  </div>
+                  <div>
+                    <GoArrowUpRight size={19} />
+                  </div>
+                </li>
+              ))
+            )}
+
             <li className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <CiSearch size={19} />

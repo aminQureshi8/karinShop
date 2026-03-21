@@ -14,6 +14,8 @@ export default function SubCate({
   const mouseEnter = async (id: string) => {
     const res = await fetch(`/api/brand/subCate?sub=${id}`);
     const data = await res.json();
+    console.log(data);
+
     setBrandState(data.findsBrand);
   };
 

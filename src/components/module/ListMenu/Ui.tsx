@@ -14,7 +14,7 @@ export default function Ui({ subCategories }: { subCategories: any }) {
           <div className="bg-gray-100 text-black dark:text-white dark:bg-black !h-full rounded-xl p-3">
             <ul className="flex flex-col gap-5">
               {subCategories.map((sub: any) => (
-                <SubCate {...sub} setBrandState={setBrandState} />
+                <SubCate key={sub._id} {...sub} setBrandState={setBrandState} />
               ))}
             </ul>
           </div>

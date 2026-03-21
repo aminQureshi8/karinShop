@@ -8,10 +8,11 @@ export default async function ListMenuContainer() {
   const subCategories = await subCategoryModel
     .find({})
     .populate("brands", "title")
-    .lean();
+    .lean()
+    .exec();
   return (
     <>
-      <ListMenu subCategories={subCategories} />
+      <ListMenu subCategories={JSON.parse(JSON.stringify(subCategories))} />
     </>
   );
 }

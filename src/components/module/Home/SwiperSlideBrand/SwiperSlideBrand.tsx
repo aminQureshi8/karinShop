@@ -14,7 +14,7 @@ export default function SwiperSlideBrand({
     <div className="bg-white dark:bg-slate-800 rounded-xl px-4">
       <Image
         alt={title}
-        src={imageUrl}
+        src={imageUrl || "/image/asus.png"}
         width={150}
         height={150}
         className="!h-[100px]"

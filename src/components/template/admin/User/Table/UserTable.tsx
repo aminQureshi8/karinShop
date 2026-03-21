@@ -2,6 +2,7 @@
 
 import Modal from "@/components/module/Modal/Modal";
 import Pagination from "@/components/module/Pagination/Pagination";
+import TableLayout from "@/components/module/Table/Table";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,7 +12,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -143,7 +143,7 @@ export default function UserTable({
         </>
       </Modal>
       <div className="rounded-xl border bg-white dark:bg-gray-800 shadow-sm">
-        <Table dir="rtl">
+        <TableLayout >
           <TableHeader>
             <TableRow>
               <TableHead className="text-right font-bold">شماره</TableHead>
@@ -208,7 +208,7 @@ export default function UserTable({
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </TableLayout>
       </div>
 
       {totalPageState > 1 && (
