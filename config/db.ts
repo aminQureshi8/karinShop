@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
 
 import "@/models/category";
-import "@/models/comment"
-
-
+import "@/models/comment";
+import "@/models/off";
 
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/karinShop";

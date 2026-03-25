@@ -3,7 +3,7 @@
 import ThemeChange from "@/components/module/Navbar/Buttons/ThemeChange";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BeatLoader } from "react-spinners";
 
 export default function Page() {
@@ -13,6 +13,10 @@ export default function Page() {
 
   const searchParams = useSearchParams();
   const identifier = searchParams.get("identifier");
+
+  useEffect(() => {
+    inputsRef.current[0]?.focus();
+  }, []);
 
   const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
@@ -56,7 +60,6 @@ export default function Page() {
       });
 
       const result = await res.json();
-
 
       if (res.ok) {
         router.push("/");

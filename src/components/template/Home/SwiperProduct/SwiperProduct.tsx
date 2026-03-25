@@ -18,12 +18,16 @@ export default function SwiperProduct({ product }: any) {
   const isInCart = cart.some((item) => item.id === product._id);
   const isInWhish = whish?.some((item: any) => item.id === product._id);
 
-  console.log(product.count);
+  const offPrice = product.campaion
+    ? product.price - (product.price * product.campaion) / 100
+    : product.price - (product.price * product.off[0].percent) / 100
+      ? product.price - (product.price * product.off[0].percent) / 100
+      : product.price;
 
   const handleCartClick = () => {
     dispatch(
       toggleCart({
-        price: product.price,
+        price: offPrice,
         id: product._id,
         title: product.title,
         color: "",
@@ -37,7 +41,7 @@ export default function SwiperProduct({ product }: any) {
   const handleWhishClick = () => {
     dispatch(
       toggleWhish({
-        price: product.price,
+        price: offPrice,
         id: product._id,
         title: product.title,
         color: "",
@@ -55,7 +59,9 @@ export default function SwiperProduct({ product }: any) {
           <Image
             width={200}
             height={200}
-            src={"/image/e239f5f2f87ca46c23d18719b17d1092abc6bb49_1754241710-removebg-preview.png"}
+            src={
+              "/image/e239f5f2f87ca46c23d18719b17d1092abc6bb49_1754241710-removebg-preview.png"
+            }
             alt={product.title}
           />
         </Link>
@@ -97,7 +103,7 @@ export default function SwiperProduct({ product }: any) {
 
       <div className="border-t-2 border-gray-200 dark:border-gray-700 flex gap-1 items-center justify-end pt-3">
         <del className="text-xs text-gray-500">70000</del>
-        <span>{product.price.toLocaleString("fa-IR")}</span>
+        <span>{offPrice.toLocaleString("fa-IR")}</span>
         <span className="text-white bg-blue-500 rounded-full px-2 py-1 text-xs">
           تومان
         </span>

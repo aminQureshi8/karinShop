@@ -27,6 +27,14 @@ const product = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    isStock: {
+      type: Boolean,
+      default: false,
+    },
+    campaion: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
@@ -37,6 +45,12 @@ product.virtual("comments", {
   foreignField: "product",
   localField: "_id",
   ref: "comment",
+});
+
+product.virtual("off", {
+  foreignField: "products",
+  localField: "_id",
+  ref: "off",
 });
 
 const productModel =

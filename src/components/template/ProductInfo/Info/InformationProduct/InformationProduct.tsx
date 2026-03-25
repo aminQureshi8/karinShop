@@ -15,7 +15,7 @@ export default function InformationProduct({
     <div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3 dark:text-green-400">
-          {breadCrumbs.map((b: string, index: number) => (
+          {breadCrumbs?.map((b: string, index: number) => (
             <div key={index} className="flex items-center gap-2">
               <p>{b}</p>
               <p>/</p>

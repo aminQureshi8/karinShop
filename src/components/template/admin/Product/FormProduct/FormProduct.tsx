@@ -286,6 +286,16 @@ export default function FormProduct({
             />
           </div>
 
+          <div>
+            <label className="text-sm">تعداد محصول</label>
+            <input
+              type="text"
+              {...register("count", { required: "این فیلد الزامی است" })}
+              placeholder="3"
+              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+
           <div className="flex flex-col">
             <label className="text-sm" htmlFor="">
               عکس‌های محصول

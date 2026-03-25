@@ -6,10 +6,12 @@ import productModel from "@/models/product";
 export default async function NewProduct() {
   await db();
   const products = await productModel
-    .find({}, "title price imageUrls slug count")
+    .find({}, "title price imageUrls slug count off campaion")
     .limit(10)
+    .populate("off")
     .sort({ createdAt: -1 })
     .lean();
+
   return (
     <div className="mt-12">
       <TopCategory

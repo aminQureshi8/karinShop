@@ -18,24 +18,32 @@ export default async function Page({
 
   const product = await productModel
     .findById(id, { features: { $slice: 6 } })
-    .populate({
-      path: "comments",
-      match: { isApproved: true },
-
-      options: {
-        limit: 3,
-        sort: { createdAt: -1 },
+    .populate([
+      {
+        path: "comments",
+        match: { isApproved: true },
+        options: {
+          limit: 3,
+          sort: { createdAt: -1 },
+        },
+        populate: {
+          path: "user",
+          select: "email",
+        },
       },
-      populate: {
-        path: "user",
-        select: "email",
+      {
+        path: "off",
       },
-    })
+    ])
     .lean({ virtuals: true });
 
-  console.log(product);
-
   const user = await authUser();
+
+  const offPrice = product.campaion
+    ? product.price - (product.price * product.campaion) / 100
+    : product.price - (product.price * product.off[0].percent) / 100
+      ? product.price - (product.price * product.off[0].percent) / 100
+      : product.price;
 
   return (
     <div className="container mx-auto mt-10 font-danaMed">
@@ -55,7 +63,7 @@ export default async function Page({
         <div className="max-lg:col-span-12 col-span-3">
           <Cart
             inUserBasket={product.inUserBasket}
-            price={product.price}
+            price={offPrice}
             count={product.count}
             id={product._id.toString()}
             title={product.title}
