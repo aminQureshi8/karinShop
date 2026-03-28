@@ -20,8 +20,8 @@ export default function SwiperProduct({ product }: any) {
 
   const offPrice = product.campaion
     ? product.price - (product.price * product.campaion) / 100
-    : product.price - (product.price * product.off[0].percent) / 100
-      ? product.price - (product.price * product.off[0].percent) / 100
+    : product.price - (product.price * product?.off[0]?.percent) / 100
+      ? product.price - (product.price * product?.off[0]?.percent) / 100
       : product.price;
 
   const handleCartClick = () => {
@@ -102,7 +102,7 @@ export default function SwiperProduct({ product }: any) {
       <p className="line-clamp-2 text-sm my-3 leading-6">{product.title}</p>
 
       <div className="border-t-2 border-gray-200 dark:border-gray-700 flex gap-1 items-center justify-end pt-3">
-        <del className="text-xs text-gray-500">70000</del>
+        <del className="text-xs text-gray-500">{product.price.toLocaleString("fa-IR")}</del>
         <span>{offPrice.toLocaleString("fa-IR")}</span>
         <span className="text-white bg-blue-500 rounded-full px-2 py-1 text-xs">
           تومان

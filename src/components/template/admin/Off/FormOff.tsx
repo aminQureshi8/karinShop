@@ -4,7 +4,7 @@ import { useState } from "react";
 import ManyProduct from "./ManyProduct/ManyProduct";
 import AllProduct from "./AllProduct/AllProduct";
 
-export default function FormOff() {
+export default function FormOff({ products , totalPages }: { products: any , totalPages: number }) {
   const [option, setOption] = useState("many");
 
   return (
@@ -30,7 +30,9 @@ export default function FormOff() {
           <p> برای کل محصولات</p>
         </div>
       </div>
-      <div className="mt-8">{option === "many" ? <ManyProduct /> : <AllProduct />}</div>
+      <div className="mt-8">
+        {option === "many" ? <ManyProduct products={products} totalPages={totalPages} /> : <AllProduct  />}
+      </div>
     </div>
   );
 }

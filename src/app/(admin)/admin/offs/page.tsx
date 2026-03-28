@@ -1,9 +1,21 @@
 import FormOff from "@/components/template/admin/Off/FormOff";
+import db from "@/config/db";
+import productModel from "@/models/product";
 
-export default function page() {
+export default async function page() {
+  await db();
+
+  const products = await productModel
+    .find({}, "slug price imageUrls campaion")
+    .limit(2)
+    .lean();
+
+  const totalProducts = await productModel.countDocuments({});
+  const totalPages = Math.ceil(totalProducts / 2);
+
   return (
     <>
-      <FormOff />
+      <FormOff products={JSON.parse(JSON.stringify(products))} totalPages={totalPages} />
     </>
   );
 }

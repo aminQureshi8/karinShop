@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 
 const off = new mongoose.Schema(
   {
-    code: { type: String, required: true },
-    products: [{ type: mongoose.Types.ObjectId, ref: "product" }],
+    dateTime: { type: Date, required: true },
     percent: { type: Number, required: true },
   },
   { timestamps: true },

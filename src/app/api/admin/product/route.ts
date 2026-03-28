@@ -55,7 +55,6 @@ export async function POST(req: NextRequest) {
 
       // imageUrls.push(uploadRes.secure_url || "");
       imageUrls.push("");
-
     }
 
     await productModel.create({
@@ -80,7 +79,8 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       {
-        message: error.message,
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
       },
       { status: 500 },
     );

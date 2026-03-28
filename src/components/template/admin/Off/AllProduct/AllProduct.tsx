@@ -4,7 +4,7 @@ export default function AllProduct() {
   const [percent, setPercent] = useState("");
   const [dateTime, setDateTime] = useState("");
 
-  const offSubmit = async (e) => {
+  const offSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
