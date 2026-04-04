@@ -12,9 +12,9 @@ export default function BreadCrumbs() {
       <div>
         <MdKeyboardArrowLeft />
       </div>
-      <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+      <Link href="/shop" className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
         <p>فروشگاه</p>
-      </div>
+      </Link>
       <div>
         <MdKeyboardArrowLeft />
       </div>

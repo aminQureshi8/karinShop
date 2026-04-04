@@ -1,3 +1,4 @@
+
 import FormOff from "@/components/template/admin/Off/FormOff";
 import db from "@/config/db";
 import productModel from "@/models/product";
@@ -15,7 +16,10 @@ export default async function page() {
 
   return (
     <>
-      <FormOff products={JSON.parse(JSON.stringify(products))} totalPages={totalPages} />
+      <FormOff
+        products={JSON.parse(JSON.stringify(products))}
+        totalPages={totalPages}
+      />
     </>
   );
 }

@@ -2,6 +2,7 @@ import Search from "./Search/Search";
 import Logo from "./Logo/Logo";
 import Buttons from "./Buttons/Buttons";
 import NavbarResponsive from "./NavbarResponsive";
+import Providers from "@/app/redux/Providers";
 
 const Navbar = () => {
   return (
@@ -14,7 +15,9 @@ const Navbar = () => {
           <Logo />
         </div>
         <div>
-          <Buttons />
+          <Providers>
+            <Buttons />
+          </Providers>
         </div>
       </div>
 
@@ -23,6 +26,6 @@ const Navbar = () => {
       </div>
     </>
   );
-}
+};
 
 export default Navbar;

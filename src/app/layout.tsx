@@ -14,7 +14,6 @@ export default function RootLayout({
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body className="bg-gray-50 dark:bg-gray-900">
         <NextTheme>
-          <Providers>
             <NextTopLoader color="#3b82f6" height={3} showSpinner={false} />
             <AuthRefresh />
             {children}
@@ -31,7 +30,6 @@ export default function RootLayout({
                 },
               }}
             />
-          </Providers>
         </NextTheme>
       </body>
     </html>

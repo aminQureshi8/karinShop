@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { memo, useState } from "react";
 import ModalSwiper from "../ModalSwiper/ModalSwiper";
 
-export default function Gallery({ images }: any) {
+const Gallery = memo(({ images }: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -39,4 +39,6 @@ export default function Gallery({ images }: any) {
       }
     </div>
   );
-}
+});
+
+export default Gallery;

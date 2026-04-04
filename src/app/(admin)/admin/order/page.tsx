@@ -1,3 +1,4 @@
+import OrderTable from "@/components/template/admin/Order/OrderTable";
 import db from "@/config/db";
 import orderModel from "@/models/order";
 import "@/models/order";
@@ -15,12 +16,14 @@ export default async function page() {
       },
       {
         path: "products",
-        select: "price title",
+        select: "price title imageUrls count",
       },
     ])
     .lean();
 
-  console.log(orders);
-
-  return <div>page</div>;
+  return (
+    <div>
+      <OrderTable orders={orders} />
+    </div>
+  );
 }

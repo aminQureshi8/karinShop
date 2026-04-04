@@ -1,3 +1,4 @@
+import Providers from "@/app/redux/Providers";
 import Buttons from "./Buttons/Buttons";
 import ColorPick from "./Color/ColorPick";
 
@@ -23,13 +24,15 @@ export default function InformationProduct({
           ))}
         </div>
         <div>
-          <Buttons
-            price={price}
-            title={title}
-            id={id}
-            imageUrls={imageUrls}
-            mainCount={mainCount}
-          />
+          <Providers>
+            <Buttons
+              price={price}
+              title={title}
+              id={id}
+              imageUrls={imageUrls}
+              mainCount={mainCount}
+            />
+          </Providers>
         </div>
       </div>
 

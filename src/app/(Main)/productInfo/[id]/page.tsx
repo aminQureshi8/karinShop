@@ -1,7 +1,8 @@
+import Providers from "@/app/redux/Providers";
 import { authUser } from "@/app/utils/auth";
 import Footer from "@/components/module/Footer/Footer";
 import Cart from "@/components/template/ProductInfo/Cart/Cart";
-import ContainerFeCoIN from "@/components/template/ProductInfo/ContainerFeCoIN/ContainerFeCoIN";
+import Kh from "@/components/template/ProductInfo/ContainerFeCoIN/Kh";
 import Info from "@/components/template/ProductInfo/Info/Info";
 import Related from "@/components/template/ProductInfo/RelatedProduct/Related";
 import db from "@/config/db";
@@ -61,30 +62,30 @@ export default async function Page({
           />
         </div>
         <div className="max-lg:col-span-12 col-span-3">
-          <Cart
-            inUserBasket={product.inUserBasket}
-            price={offPrice}
-            count={product.count}
-            id={product._id.toString()}
-            title={product.title}
-            imageUrls={product.imageUrls[0]}
-          />
+          <Providers>
+            <Cart
+              inUserBasket={product.inUserBasket}
+              price={offPrice}
+              count={product.count}
+              id={product._id.toString()}
+              title={product.title}
+              imageUrls={product.imageUrls[0]}
+            />
+          </Providers>
         </div>
       </div>
       <div className="mt-10">
-        <ContainerFeCoIN
+        <Kh
           description={product.description.toString()}
-          features={JSON.parse(JSON.stringify(product.features))}
+          features={product.features}
           id={product._id.toString()}
           userID={user.user?._id?.toString()}
           comments={product.comments}
         />
+    
       </div>
       <div className="mt-10">
-        <Related
-          tags={JSON.parse(JSON.stringify(product.tags))}
-          id={product._id.toString()}
-        />
+        <Related tags={product.tags} id={product._id.toString()} />
       </div>
       <div className="mt-10">
         <Footer />

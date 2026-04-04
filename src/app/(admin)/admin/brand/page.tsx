@@ -1,5 +1,7 @@
+
 import BrandContainer from "@/components/template/admin/Brand/BrandContainer/BrandContainer";
 import db from "@/config/db";
+
 import brandModel from "@/models/brand";
 
 export default async function page() {
@@ -12,7 +14,7 @@ export default async function page() {
 
   return (
     <div>
-      <BrandContainer brands={JSON.parse(JSON.stringify(brands))} totalPages={totalPages}   />
+      <BrandContainer brands={JSON.parse(JSON.stringify(brands))} totalPages={totalPages} />
     </div>
   );
 }

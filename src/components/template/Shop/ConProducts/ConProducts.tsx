@@ -1,3 +1,4 @@
+import Providers from "@/app/redux/Providers";
 import SwiperProduct from "../../Home/SwiperProduct/SwiperProduct";
 
 export default function ConProducts({
@@ -36,7 +37,11 @@ export default function ConProducts({
         </div>
         <ul className="flex items-center max-sm:gap-3 gap-5 *:cursor-pointer transition-colors dark:text-gray-400 *:hover:text-blue-500">
           {listItems.map((li, index) => (
-            <li onClick={() => setListType(li.id)} className={`${li.id === listType ? "text-blue-500" : ""}`} key={index}>
+            <li
+              onClick={() => setListType(li.id)}
+              className={`${li.id === listType ? "text-blue-500" : ""}`}
+              key={index}
+            >
               {li.name}
             </li>
           ))}
@@ -48,13 +53,15 @@ export default function ConProducts({
             <p>محصولی یافت نشد</p>
           </div>
         ) : (
-          <div className="grid max-sm:grid-cols-1 grid-cols-4 gap-5">
-            {products.map((pro: any) => (
-              <div key={pro._id}>
-                <SwiperProduct product={pro} />
-              </div>
-            ))}
-          </div>
+          <Providers>
+            <div className="grid max-sm:grid-cols-1 grid-cols-4 gap-5">
+              {products.map((pro: any) => (
+                <div key={pro._id}>
+                  <SwiperProduct product={pro} />
+                </div>
+              ))}
+            </div>
+          </Providers>
         )}
       </div>
     </div>

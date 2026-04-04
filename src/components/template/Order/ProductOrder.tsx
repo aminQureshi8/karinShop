@@ -1,4 +1,4 @@
-import React from "react";
+import Providers from "@/app/redux/Providers";
 import ProductCon from "./Product/ProductCon/ProductCon";
 
 export default function ProductOrder() {
@@ -14,7 +14,9 @@ export default function ProductOrder() {
         </div>
       </div>
       <div>
-        <ProductCon />
+        <Providers>
+          <ProductCon />
+        </Providers>
       </div>
     </div>
   );

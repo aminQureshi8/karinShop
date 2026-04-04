@@ -3,30 +3,32 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import SwiperProduct from "./SwiperProduct";
+import Providers from "@/app/redux/Providers";
 
 function SwiperProductContainer({ products }: any) {
   return (
-    <div className="w-full overflow-hidden mt-5 mb-5">
-      <Swiper
-        slidesPerView={4.5}
-        spaceBetween={20}
-        pagination={{ clickable: true }}
-        breakpoints={{
-          320: { slidesPerView: 1.5, spaceBetween: 14 },
-          640: { slidesPerView: 2, spaceBetween: 16 },
-          768: { slidesPerView: 3, spaceBetween: 18 },
-          1024: { slidesPerView: 4, spaceBetween: 20 },
-          1280: { slidesPerView: 4.5, spaceBetween: 20 },
-        }}
-        className="mySwiper !h-[410px]"
-      >
-        {products?.map((product: any) => (
-          <SwiperSlide>
-            <SwiperProduct product={product} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+    <Providers>
+      <div className="w-full overflow-hidden mt-5 mb-5">
+        <Swiper
+          slidesPerView={4.5}
+          spaceBetween={20}
+          breakpoints={{
+            320: { slidesPerView: 1.5, spaceBetween: 14 },
+            640: { slidesPerView: 2, spaceBetween: 16 },
+            768: { slidesPerView: 3, spaceBetween: 18 },
+            1024: { slidesPerView: 4, spaceBetween: 20 },
+            1280: { slidesPerView: 4.5, spaceBetween: 20 },
+          }}
+          className="mySwiper !h-[410px]"
+        >
+          {products?.map((product: any) => (
+            <SwiperSlide key={product._id}>
+              <SwiperProduct product={product} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </Providers>
   );
 }
 

@@ -42,8 +42,6 @@ export default function ProductTable({
     } else {
       setProductsClick((pre: any) => pre.filter((p: any) => p !== id));
     }
-
-    console.log(check);
   };
 
   return (

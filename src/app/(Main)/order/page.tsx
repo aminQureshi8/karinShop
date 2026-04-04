@@ -1,11 +1,10 @@
+import Providers from "@/app/redux/Providers";
 import { authUser } from "@/app/utils/auth";
 import CartOrder from "@/components/template/Order/CartOrder";
 import ProductOrder from "@/components/template/Order/ProductOrder";
 
 export default async function page() {
   const user = await authUser();
-
-  console.log(user.user);
 
   return (
     <div className="container mx-auto">
@@ -15,7 +14,9 @@ export default async function page() {
           <ProductOrder />
         </div>
         <div className="max-sm:col-span-12 col-span-3">
-          <CartOrder isUserLogin={user.user ? true : false} />
+          <Providers>
+            <CartOrder isUserLogin={user.user ? true : false} />
+          </Providers>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import ThemeChange from "@/components/module/Navbar/Buttons/ThemeChange";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-export default function page() {
+export default function AuthReg() {
   const router = useRouter();
   const {
     register,
@@ -24,7 +24,7 @@ export default function page() {
     });
 
     if (res.ok) {
-      router.push(`/otp?identifier=${identifier}`);
+      router.push(`/register/otp?identifier=${identifier}`);
     }
   };
 

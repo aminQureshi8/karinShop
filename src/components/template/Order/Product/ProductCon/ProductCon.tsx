@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import Product from "../Product/Product";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";

@@ -12,11 +12,13 @@ import { toggleWhish } from "@/app/redux/slices/Whish/Whish";
 
 export default function SwiperProduct({ product }: any) {
   const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state.cart);
-  const whish = useSelector((state: RootState) => state.whish);
 
-  const isInCart = cart.some((item) => item.id === product._id);
-  const isInWhish = whish?.some((item: any) => item.id === product._id);
+  const isInCart = useSelector((state: RootState) =>
+    state.cart.some((item) => item.id === product._id),
+  );
+  const isInWhish = useSelector((state: RootState) =>
+    state.whish.some((item) => item.id === product._id),
+  );
 
   const offPrice = product.campaion
     ? product.price - (product.price * product.campaion) / 100
@@ -102,7 +104,9 @@ export default function SwiperProduct({ product }: any) {
       <p className="line-clamp-2 text-sm my-3 leading-6">{product.title}</p>
 
       <div className="border-t-2 border-gray-200 dark:border-gray-700 flex gap-1 items-center justify-end pt-3">
-        <del className="text-xs text-gray-500">{product.price.toLocaleString("fa-IR")}</del>
+        <del className="text-xs text-gray-500">
+          {product.price.toLocaleString("fa-IR")}
+        </del>
         <span>{offPrice.toLocaleString("fa-IR")}</span>
         <span className="text-white bg-blue-500 rounded-full px-2 py-1 text-xs">
           تومان

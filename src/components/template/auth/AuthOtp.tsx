@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import { BeatLoader } from "react-spinners";
 
-export default function Page() {
+export default function AuthOtp() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
