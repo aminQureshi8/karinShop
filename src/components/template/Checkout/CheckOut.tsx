@@ -1,10 +1,12 @@
-
+import Providers from "@/app/redux/Providers";
 import CheckOutForm from "./Form/CheckOutForm";
 
-export default function CheckOut({id} : {id : string}) {
+export default function CheckOut({ id }: { id: string }) {
   return (
     <div className="mt-8">
-      <CheckOutForm id={id} />
+      <Providers>
+        <CheckOutForm id={id} />
+      </Providers>
     </div>
   );
 }

@@ -11,10 +11,15 @@ export async function POST(req: NextRequest) {
 
     const splitProducts = products?.split("|");
 
+    const productsWithQuantity = splitProducts?.map((id) => ({
+      product: id,
+      quantity: 1,
+    }));
+
     await orderModel.create({
       phone,
       address,
-      products: splitProducts,
+      products: productsWithQuantity,
       user,
     });
 

@@ -5,9 +5,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-danaMed: "Dana-Medium";
-  --font-danaDemiBold: "Dana-DemiBold";
-  --font-danaLight: "Dana-Light";
+  --font-danaMed: var(--font-danaMed);
+  --font-danaDemiBold: var(--font-danaDemiBold);
+  --font-danaLight: var(--font-danaLight);
 }
 
 /* @layer components {
@@ -37,23 +37,6 @@
   @variant xl {
     padding-inline: 100px;
   }
-}
-
-@font-face {
-  font-family: Dana-Medium;
-  font-display: swap;
-  src: url("/fonts/woff/Dana-Medium.woff") format("woff2");
-}
-
-@font-face {
-  font-family: Dana-DemiBold;
-  font-display: swap;
-  src: url("/fonts/woff/Dana-DemiBold.woff") format("woff2");
-}
-@font-face {
-  font-family: Dana-Light;
-  font-display: swap;
-  src: url("/fonts/woff/Dana-Light.woff") format("woff2");
 }
 
 .mySwiper2,

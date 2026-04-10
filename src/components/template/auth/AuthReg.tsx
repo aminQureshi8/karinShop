@@ -43,6 +43,7 @@ export default function AuthReg() {
           </label>
           <input
             type="text"
+            autoFocus
             {...register("identifier", {
               required: "این فیلد الزامی است",
               pattern: {

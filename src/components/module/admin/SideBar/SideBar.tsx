@@ -9,6 +9,7 @@ import { FaUser } from "react-icons/fa";
 import { MdOutlineCategory } from "react-icons/md";
 import { RiDiscountPercentLine } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { BiComment } from "react-icons/bi";
 const SideBar = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -109,6 +110,14 @@ const SideBar = memo(() => {
               <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <MdOutlineCategory size={20} />
                 <span className="text-sm">برند ها</span>
+              </div>
+            </Link>
+          </div>
+            <div>
+            <Link href="/admin/comment">
+              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
+                <BiComment size={20} />
+                <span className="text-sm">کامنت ها</span>
               </div>
             </Link>
           </div>

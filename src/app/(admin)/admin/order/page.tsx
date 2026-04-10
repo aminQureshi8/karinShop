@@ -1,3 +1,4 @@
+import OrderT from "@/components/template/admin/Order/OrderT";
 import OrderTable from "@/components/template/admin/Order/OrderTable";
 import db from "@/config/db";
 import orderModel from "@/models/order";
@@ -15,15 +16,24 @@ export default async function page() {
         select: "email",
       },
       {
-        path: "products",
+        path: "products.product",
         select: "price title imageUrls count",
       },
     ])
+    .limit(3)
     .lean();
+
+  console.log(orders);
+
+  const totalOrders = await orderModel.countDocuments({});
+  const totalPages = Math.ceil(totalOrders / 3);
 
   return (
     <div>
-      <OrderTable orders={orders} />
+      <OrderT
+        orders={JSON.parse(JSON.stringify(orders))}
+        totalPages={JSON.parse(JSON.stringify(totalPages))}
+      />
     </div>
   );
 }

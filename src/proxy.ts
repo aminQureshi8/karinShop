@@ -13,7 +13,7 @@ export async function proxy(request: NextRequest) {
     }
   }
   if (pathname.startsWith("/admin")) {
-    if (!token && !refreshToken) {
+    if (!token || !refreshToken) {
       return NextResponse.redirect(new URL("/auth", request.url));
     }
 

@@ -23,20 +23,36 @@ import Image from "next/image";
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
+import Pagination from "@/components/module/Pagination/Pagination";
 
-export default function OrderTable({ orders }: { orders: any }) {
+export default function OrderTable({
+  orders,
+  totalPages,
+}: {
+  orders: any;
+  totalPages: number;
+}) {
+  const [orderState, setOrderState] = useState([]);
+  const [intialState, setIntialState] = useState([...orders]);
   const [isOpen, setIsOpen] = useState(false);
   const [editOrder, setEditOrder] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [orderClick, setOrderClick] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  // const [changeCondition, setChangeCondition] = useState(second)
 
   const [productCounters, setProductCounters] = useState<
     Record<string, number>
   >({});
 
   useEffect(() => {
-    console.log(productCounters);
-  }, [productCounters]);
+    // if (currentPage === 1) {
+    //   setOrderState(orders);
+    //   return;
+    // } else {
+    getOrders(currentPage);
+    // }
+  }, [currentPage]);
 
   const { register, handleSubmit, reset } = useForm<IFormInput>({
     mode: "all",
@@ -45,7 +61,14 @@ export default function OrderTable({ orders }: { orders: any }) {
   interface IFormInput {
     phone: string;
     address: string;
+    status: string;
   }
+
+  const getOrders = async (page: number) => {
+    const res = await fetch(`/api/admin/order?page=${page}`);
+    const data = await res.json();
+    setOrderState(data);
+  };
 
   const increase = (id: string, max: number) => {
     setProductCounters((prev) => {
@@ -99,7 +122,52 @@ export default function OrderTable({ orders }: { orders: any }) {
         },
       );
       console.log(res);
+
+      if (res.ok) {
+        getOrders(1);
+        setOrderClick([]);
+        setCurrentPage(1);
+      }
     } catch (error) {}
+  };
+
+  const editOrders = async (data: any) => {
+    console.log(productCounters, "---", data.phone);
+    const res = await fetch(`/api/admin/order?id=${editOrder._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        phone: data.phone,
+        email: data.email,
+        productCounters,
+      }),
+    });
+
+    const dataRes = await res.json();
+
+    console.log(dataRes);
+  };
+
+  const changeCondition = async (id: string, status: string) => {
+    try {
+      const res = await fetch(`/api/admin/order?id=${id}&status=${status}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to update order status");
+      }
+
+      getOrders(currentPage);
+    } catch (error) {
+      console.error("Status update error:", error);
+    }
   };
 
   return (
@@ -107,6 +175,7 @@ export default function OrderTable({ orders }: { orders: any }) {
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
+        onAccept={handleSubmit(editOrders)}
         title="ویرایش سفارش"
         isLoading={isLoading}
         acceptLabel="تغییر"
@@ -136,6 +205,19 @@ export default function OrderTable({ orders }: { orders: any }) {
                 placeholder="آدرس"
                 defaultValue={editOrder?.user.email}
               />
+            </div>
+            <div>
+              <select
+                {...register("status", { required: true })}
+                className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 transition-all"
+                defaultValue={editOrder?.status}
+              >
+                <option value="pending">در انتظار بررسی</option>
+                <option value="preparing">آماده سازی</option>
+                <option value="shipping">در حال ارسال</option>
+                <option value="delivered">ارسال شده</option>
+                <option value="cancelled">لغو شده</option>
+              </select>
             </div>
 
             <div>
@@ -190,46 +272,48 @@ export default function OrderTable({ orders }: { orders: any }) {
           <TableLayout>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-right font-bold relative flex items-center overflow-hidden">
-                  <span
-                    className={`
-      absolute w-full transition-all duration-300 ease-in-out
-      ${
-        orderClick.length !== 0
-          ? "translate-y-0 opacity-100"
-          : "translate-y-full opacity-0"
-      }
-    `}
-                  >
-                    <MdDelete
-                      onClick={removeMany}
-                      size={20}
-                      className="cursor-pointer text-red-500"
-                    />
-                  </span>
+                <TableHead className="w-[80px]">
+                  <div className="relative h-6 flex items-center justify-center overflow-hidden">
+                    <span
+                      className={`absolute transition-all duration-300 ${
+                        orderClick.length === 0
+                          ? "opacity-100 translate-y-0"
+                          : "opacity-0 -translate-y-4"
+                      }`}
+                    >
+                      انتخاب
+                    </span>
 
-                  <span
-                    className={`
-      absolute w-full transition-all duration-300 ease-in-out
-      ${
-        orderClick.length === 0
-          ? "translate-y-0 opacity-100"
-          : "-translate-y-full opacity-0"
-      }
-    `}
-                  >
-                    انتخاب
-                  </span>
+                    <span
+                      className={`absolute transition-all duration-300 ${
+                        orderClick.length !== 0
+                          ? "opacity-100 translate-y-0"
+                          : "opacity-0 translate-y-4"
+                      }`}
+                    >
+                      <MdDelete
+                        onClick={removeMany}
+                        size={18}
+                        className="cursor-pointer text-red-500 hover:text-red-600"
+                      />
+                    </span>
+                  </div>
                 </TableHead>
+
+                <TableHead className="text-right font-bold">شناسه</TableHead>
                 <TableHead className="text-right font-bold">
                   شماره تلفن
                 </TableHead>
                 <TableHead className="text-right font-bold">ایمیل</TableHead>
+                <TableHead className="text-right font-bold">وضیعت</TableHead>
+                <TableHead className="text-right font-bold">
+                  تغییر وضیعت
+                </TableHead>
                 <TableHead className="text-right font-bold">جزییات</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {orders.map((order: any) => (
+              {orderState.map((order: any) => (
                 <TableRow
                   key={order._id}
                   className="transition-colors hover:bg-muted/40"
@@ -237,14 +321,65 @@ export default function OrderTable({ orders }: { orders: any }) {
                   <TableCell>
                     <input
                       type="checkbox"
+                      checked={orderClick.includes(order._id)}
                       onChange={(e) =>
                         clickProduct(order._id, e.target.checked)
                       }
                     />
                   </TableCell>
+                  <TableCell>{order._id}</TableCell>
+
                   <TableCell>{order.phone}</TableCell>
 
                   <TableCell>{order.user.email}</TableCell>
+                  <TableCell>{order.status}</TableCell>
+
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="size-8">
+                          لیست وضیعت
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => changeCondition(order._id, "pending")}
+                        >
+                          در انتظار بررسی
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() =>
+                            changeCondition(order._id, "preparing")
+                          }
+                        >
+                          آماده سازی
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() => changeCondition(order._id, "shipping")}
+                        >
+                          در حال ارسال
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() =>
+                            changeCondition(order._id, "delivered")
+                          }
+                        >
+                          ارسال شده
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() =>
+                            changeCondition(order._id, "cancelled")
+                          }
+                        >
+                          لغو شده
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -259,11 +394,11 @@ export default function OrderTable({ orders }: { orders: any }) {
                             setIsOpen(true);
                             setEditOrder(order);
                             // وقتی مدال باز می‌شه، مقدار اولیه رو ست می‌کنیم
-                            const countersInit: Record<string, number> = {};
-                            order.products.forEach((p: any) => {
-                              countersInit[p._id] = 1;
-                            });
-                            setProductCounters(countersInit);
+                            // const countersInit: Record<string, number> = {};
+                            // order.products.forEach((p: any) => {
+                            //   countersInit[p._id] = 1;
+                            // });
+                            // setProductCounters(countersInit);
                           }}
                         >
                           جزییات
@@ -281,6 +416,14 @@ export default function OrderTable({ orders }: { orders: any }) {
           </TableLayout>
         </div>
       </div>
+
+      {totalPages !== 1 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
+      )}
     </>
   );
 }
