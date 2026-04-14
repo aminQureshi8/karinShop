@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
         pathname: "/uploads/**",
       },
       { protocol: "https", hostname: "res.cloudinary.com" },
+      {
+        protocol: "https",
+        hostname: "karinpub.s3.ir-thr-at1.arvanstorage.ir",
+      },
     ],
   },
 };

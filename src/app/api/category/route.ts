@@ -4,11 +4,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import { authRouteHandler } from "@/app/utils/auth";
 import categoryModel from "@/models/category";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+//   api_key: process.env.CLOUDINARY_API_KEY!,
+//   api_secret: process.env.CLOUDINARY_API_SECRET!,
+// });
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-  api_key: process.env.CLOUDINARY_API_KEY!,
-  api_secret: process.env.CLOUDINARY_API_SECRET!,
+const s3Client = new S3Client({
+  region: "default", // آروان معمولا روی دکمه default هست یا هر چی تو پنل زده
+  endpoint: "https://s3.ir-thr-at1.arvanstorage.ir", // آدرس اصلی بدون نام باکت
+  credentials: {
+    accessKeyId: "e69db9fc-d4a0-47f1-81e2-d556e2846ae6", // از پنل کپی کن
+    secretAccessKey:
+      "72400bfa4d81ade44cb80d5e89cd9ddf794dc6cd1dc314da19c4eb69fb5670c5", // از پنل کپی کن
+  },
 });
 
 export async function POST(req: NextRequest) {
@@ -34,24 +44,44 @@ export async function POST(req: NextRequest) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
+    const fileName = `${Date.now()}-${file.name}`; // اسم یکتا برای جلوگیری از جایگزینی
+    const bucketName = "karinpub";
 
-    const uploadResult = await new Promise<any>((resolve, reject) => {
-      cloudinary.uploader
-        .upload_stream(
-          {
-            folder: "karin/category",
-          },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          },
-        )
-        .end(buffer);
-    });
+    // ۲. تنظیمات آپلود در S3
+    const uploadParams = {
+      Bucket: bucketName,
+      Key: `categoreies/${fileName}`, // مسیری که فایل ذخیره میشه
+      Body: buffer,
+      ContentType: file.type,
+      ACL: "public-read" as any, // اگه میخوای مستقیم با لینک قابل مشاهده باشه
+    };
+
+    // ۳. اجرای دستور آپلود
+    await s3Client.send(new PutObjectCommand(uploadParams));
+
+    // ۴. ساختن لینک نهایی تصویر
+    const imageUrl = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/categoreies/${fileName}`;
+
+    // const buffer = Buffer.from(await file.arrayBuffer());
+
+    // const uploadResult = await new Promise<any>((resolve, reject) => {
+    //   cloudinary.uploader
+    //     .upload_stream(
+    //       {
+    //         folder: "karin/category",
+    //       },
+    //       (error, result) => {
+    //         if (error) reject(error);
+    //         else resolve(result);
+    //       },
+    //     )
+    //     .end(buffer);
+    // });
 
     const category = await categoryModel.create({
       title,
-      imageUrl: uploadResult.secure_url,
+      // imageUrl: uploadResult.secure_url,
+      imageUrl,
     });
 
     return NextResponse.json(category, { status: 201 });
