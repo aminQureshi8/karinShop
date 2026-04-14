@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, MouseEvent, useEffect, memo } from "react";
+import { useState, MouseEvent, useEffect, memo } from "react";
 import { IoIosClose } from "react-icons/io";
 
 interface FormValues {

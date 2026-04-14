@@ -95,7 +95,7 @@ export default function FormCategory({ getCategories }: { getCategories: any }) 
             className="bg-blue-500 cursor-pointer text-sm hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
           >
             {isLoading ? (
-              <BeatLoader size={10} color="#ffffff" />
+              <BeatLoader size={8} color="#ffffff" />
             ) : (
               "ایجاد دسته بندی جدید"
             )}

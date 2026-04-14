@@ -8,11 +8,11 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const token = req.cookies.get("token")?.value;
-    const isAdmin = authRouteHandler(token);
-    if (!isAdmin) {
-      return NextResponse.json({ message: "Access denied" }, { status: 403 });
-    }
+    // const token = req.cookies.get("token")?.value;
+    // const isAdmin = authRouteHandler(token);
+    // if (!isAdmin) {
+    //   return NextResponse.json({ message: "Access denied" }, { status: 403 });
+    // }
 
     await db();
 

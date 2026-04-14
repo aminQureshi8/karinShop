@@ -13,9 +13,8 @@ export default function CategoryContainer({
   categories: CategoryType[];
   totalPages: number;
 }) {
-  const [categoryState, setCategoryState] = useState([...categories]);
+  const [categoryState, setCategoryState] = useState([]);
   const [totalPageState, setTotalPageState] = useState(totalPages);
-  const [intialCategory, setintialCategory] = useState([...categories]);
 
   const getCategories = useCallback(async (page: number) => {
     const res = await fetch(`/api/category?page=${page}`);
@@ -36,7 +35,6 @@ export default function CategoryContainer({
           categories={categoryState}
           getCategories={getCategories}
           totalPageState={totalPageState}
-          intialCategory={intialCategory}
           setCategoryState={setCategoryState}
         />
       </div>

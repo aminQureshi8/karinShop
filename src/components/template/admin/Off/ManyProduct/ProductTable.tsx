@@ -78,19 +78,21 @@ export default function ProductTable({
                 </TableCell>
                 <TableCell>
                   <Image
-                    src="/image/lap.png"
+                    src={product.mainImage}
                     width={100}
                     height={100}
                     alt="d"
                   />
                 </TableCell>
-                <TableCell>{product.slug}</TableCell>
+                <TableCell>
+                  <p className="">{product.slug.slice(0, 30)}</p>
+                </TableCell>
 
                 <TableCell>
                   {product.campaion ? product.campaion : "تحفیف ندارد"}
                 </TableCell>
 
-                <TableCell>
+                <TableCell className="ss02">
                   {product.campaion &&
                     product.price - (product.price * product.campaion) / 100}
                 </TableCell>

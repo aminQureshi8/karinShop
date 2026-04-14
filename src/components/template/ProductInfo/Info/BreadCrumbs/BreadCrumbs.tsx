@@ -1,8 +1,9 @@
+"use cache";
 import Link from "next/link";
 import { BiHome } from "react-icons/bi";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
-export default function BreadCrumbs() {
+export default async function BreadCrumbs() {
   return (
     <div className="flex items-center max-sm:text-sm gap-2">
       <Link href="/" className="flex items-center gap-2">
@@ -12,7 +13,10 @@ export default function BreadCrumbs() {
       <div>
         <MdKeyboardArrowLeft />
       </div>
-      <Link href="/shop" className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+      <Link
+        href="/shop"
+        className="flex items-center gap-2 text-gray-600 dark:text-gray-400"
+      >
         <p>فروشگاه</p>
       </Link>
       <div>

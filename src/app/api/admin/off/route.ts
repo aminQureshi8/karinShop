@@ -60,7 +60,7 @@ export async function GET(req: NextRequest) {
 
     const skip = (Number(page) - 1) * limit;
     const products = await productModel
-      .find({}, "slug price imageUrls campaion")
+      .find({}, "slug price mainImage campaion")
       .skip(skip)
       .limit(limit)
       .lean();

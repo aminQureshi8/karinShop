@@ -25,15 +25,15 @@ export default function Search() {
       return;
     }
 
-    const timer = setTimeout(() => {
-      searchProduct();
-    }, 500);
-
     const searchProduct = async () => {
       const res = await fetch(`/api/search?query=${inputValue}`);
       const data = await res.json();
       setProducts(data.findProducts);
     };
+
+    const timer = setTimeout(() => {
+      searchProduct();
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [inputValue]);

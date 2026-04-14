@@ -1,4 +1,4 @@
-"use client";
+"use cache";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { memo } from "react";

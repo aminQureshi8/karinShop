@@ -1,3 +1,4 @@
+"use cache";
 import TopCategory from "@/components/module/Home/TopCategory/TopCategory";
 import { CiMobile3 } from "react-icons/ci";
 import BrandSwiper from "./BrandSwiper";

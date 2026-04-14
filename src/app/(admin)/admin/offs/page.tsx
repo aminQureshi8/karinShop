@@ -7,9 +7,12 @@ export default async function page() {
   await db();
 
   const products = await productModel
-    .find({}, "slug price imageUrls campaion")
+    .find({}, "slug price mainImage campaion")
     .limit(2)
     .lean();
+
+    console.log(products);
+    
 
   const totalProducts = await productModel.countDocuments({});
   const totalPages = Math.ceil(totalProducts / 2);

@@ -29,7 +29,7 @@ export default function Product({
     <div className="flex w-full pb-5">
       <div>
         <div className="">
-          <Image src={imageUrls} width={300} height={300} alt="Image" />
+          <Image src={imageUrls} width={200} height={200} alt="Image" />
         </div>
         <div className="border rounded-lg flex items-center  justify-between p-2">
           <div

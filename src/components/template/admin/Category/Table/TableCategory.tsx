@@ -65,13 +65,8 @@ export default function TableCategory({
   }, [editCategoryObject, reset]);
 
   useEffect(() => {
-    if (currentPage === 1) {
-      setCategoryState(intialCategory);
-      return;
-    }
-
     getCategories(currentPage);
-  }, [currentPage, intialCategory, setCategoryState, getCategories]);
+  }, [currentPage]);
 
   const removeCategory = async (id: string) => {
     const result = await SwalFire(
@@ -271,15 +266,14 @@ export default function TableCategory({
             ))}
           </TableBody>
         </TableLayout>
-
-        {totalPageState > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPages={totalPageState}
-          />
-        )}
       </div>
+      {totalPageState > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPageState}
+        />
+      )}
     </>
   );
 }

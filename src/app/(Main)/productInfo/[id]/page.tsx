@@ -38,12 +38,14 @@ export default async function Page({
     ])
     .lean({ virtuals: true });
 
+  console.log(product);
+
   const user = await authUser();
 
   const offPrice = product.campaion
     ? product.price - (product.price * product.campaion) / 100
-    : product.price - (product.price * product.off[0].percent) / 100
-      ? product.price - (product.price * product.off[0].percent) / 100
+    : product.price - (product.price * product?.off[0]?.percent) / 100
+      ? product.price - (product.price * product?.off[0]?.percent) / 100
       : product.price;
 
   return (
@@ -53,6 +55,7 @@ export default async function Page({
           <Info
             breadCrumbs={product.breadCrumbs}
             images={product?.imageUrls}
+            mainImage={product.mainImage}
             colors={product.colors}
             features={product.features}
             id={product._id.toString()}
@@ -65,11 +68,12 @@ export default async function Page({
           <Providers>
             <Cart
               inUserBasket={product.inUserBasket}
+              campaion={product.campaion}
               price={offPrice}
               count={product.count}
               id={product._id.toString()}
               title={product.title}
-              imageUrls={product.imageUrls[0]}
+              mainImage={product.mainImage}
             />
           </Providers>
         </div>
@@ -82,7 +86,6 @@ export default async function Page({
           userID={user.user?._id?.toString()}
           comments={product.comments}
         />
-    
       </div>
       <div className="mt-10">
         <Related tags={product.tags} id={product._id.toString()} />

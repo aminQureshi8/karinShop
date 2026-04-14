@@ -1,5 +1,7 @@
+"use cache";
 import productModel from "@/models/product";
 import SwiperRe from "./Swiper/SwiperRe";
+import { Types } from "mongoose";
 
 export default async function Related({
   tags,
@@ -11,9 +13,9 @@ export default async function Related({
   const relatedProducts = await productModel
     .find({
       tags: { $in: tags },
-      _id: { $ne: id },
+      _id: { $ne: new Types.ObjectId(id) },
     })
-    .select("title slug price imageUrls")
+    .select("title slug price mainImage")
     .limit(6)
     .lean();
 

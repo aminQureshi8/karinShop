@@ -13,15 +13,17 @@ function Cart({
   count,
   id,
   title,
-  imageUrls,
+  mainImage,
   inUserBasket,
+  campaion,
 }: {
   price: number;
   count: number;
   id: string;
   title: string;
-  imageUrls: string;
+  mainImage: string;
   inUserBasket: number;
+  campaion: number;
 }) {
   const [counter, setCounter] = useState(1);
 
@@ -39,7 +41,7 @@ function Cart({
         title,
         price,
         color: "",
-        imageUrls,
+        mainImage,
         count: counter,
         mainCount: count,
       }),
@@ -48,11 +50,17 @@ function Cart({
 
   return (
     <div className="dark:bg-gray-800  lg:mt-16 rounded-lg shadow-md bg-white p-3">
-      <div>
+      <div className="flex items-center gap-2">
         <p className="text-xl">
           {price.toLocaleString("fa-IR")}{" "}
           <span className="text-base">تومان</span>
         </p>
+        {campaion !== 0 && (
+          <div className="flex text-sm text-blue-500 font-semibold items-center gap-2">
+            <p>{campaion}</p>
+            <span>درصد تخفیف</span>
+          </div>
+        )}
       </div>
 
       {!isInCart && (
@@ -91,7 +99,9 @@ function Cart({
         </p>
       </div>
 
-      {!isInCart && <div className="mt-5">در سبد خرید {inUserBasket}+ نفر</div>}
+      {inUserBasket !== 0 && !isInCart && (
+        <div className="mt-5">در سبد خرید {inUserBasket}+ نفر</div>
+      )}
 
       {isInCart ? (
         <div className="mt-5">

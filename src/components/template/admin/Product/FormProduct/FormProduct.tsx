@@ -36,6 +36,8 @@ export default function FormProduct({
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [mainImageFile, setMainImageFile] = useState<File | null>(null);
+  const [mainPreview, setMainPreview] = useState<string | null>(null);
 
   const {
     register,
@@ -115,6 +117,10 @@ export default function FormProduct({
       formData.append("tags", JSON.stringify(data.tags || []));
       formData.append("features", JSON.stringify(features));
       formData.append("brand", data.brand || "");
+      formData.append("count", data.count || 0);
+      formData.append("mainImage", mainImageFile);
+
+
 
       if (data.images?.length > 0) {
         Array.from(data.images).forEach((file) => {
@@ -211,7 +217,7 @@ export default function FormProduct({
             </div>
           )}
 
-          {watchedSubCategory === "698edaa869ad5da18d4114d1" && (
+          {watchedSubCategory === "69dba029f808ac0ac3da94a1" && (
             <MobileFilter
               control={control}
               register={register}
@@ -219,7 +225,7 @@ export default function FormProduct({
             />
           )}
 
-          {watchedSubCategory === "698f0bd7961ffa9510fae56d" && (
+          {watchedSubCategory === "69d90396f65c21af85254c4e" && (
             <LapTopFilter
               control={control}
               register={register}
@@ -343,13 +349,21 @@ export default function FormProduct({
                     const files = e.target.files;
                     if (!files) return;
 
-                    const filesArray = Array.from(files);
+                    const newFiles = Array.from(files);
+                    const prevFiles = field.value || [];
 
-                    field.onChange(filesArray);
-                    setSelectedFiles(filesArray);
-                    setImagePreviews(
-                      filesArray.map((f) => URL.createObjectURL(f)),
+                    // ترکیب + مرتب‌سازی واقعی
+                    const mergedFiles = [...prevFiles, ...newFiles].sort(
+                      (a, b) => a.lastModified - b.lastModified,
                     );
+
+                    field.onChange(mergedFiles);
+                    setSelectedFiles(mergedFiles);
+                    setImagePreviews(
+                      mergedFiles.map((f) => URL.createObjectURL(f)),
+                    );
+
+                    e.target.value = "";
                   }}
                   className={` bg-gray-200 dark:border-gray-700 dark:bg-black/60 rounded-xl mt-2 px-3 py-2 text-sm ${
                     errors.images ? "border-red-400" : ""
@@ -361,6 +375,46 @@ export default function FormProduct({
             {errors.images && (
               <p className="text-red-500 text-xs mt-2">
                 {errors.images.message as string}
+              </p>
+            )}
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-sm">عکس کاور محصول (mainImage)</label>
+
+            <Controller
+              name="mainImage"
+              control={control}
+              rules={{ required: "انتخاب عکس کاور الزامی است" }}
+              render={({ field }) => (
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+
+                    field.onChange(file);
+                    setMainImageFile(file);
+                    setMainPreview(URL.createObjectURL(file));
+                  }}
+                  className={`bg-gray-200 dark:bg-black/60 rounded-xl mt-2 px-3 py-2 text-sm ${
+                    errors.mainImage ? "border-red-500" : ""
+                  }`}
+                />
+              )}
+            />
+
+            {mainPreview && (
+              <img
+                src={mainPreview}
+                className="w-32 h-32 object-cover mt-3 rounded-lg border"
+              />
+            )}
+
+            {errors.mainImage && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.mainImage.message as string}
               </p>
             )}
           </div>

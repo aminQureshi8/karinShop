@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
 
+  experimental: {
+    useLightningcss: true,
+  },
+
+  cacheComponents: true,
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -15,6 +20,10 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
         port: "3000",
         pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "karinpub.s3.ir-thr-at1.arvanstorage.ir",
       },
       { protocol: "https", hostname: "res.cloudinary.com" },
     ],

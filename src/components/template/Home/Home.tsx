@@ -1,4 +1,3 @@
-
 import Footer from "@/components/module/Footer/Footer";
 import Banner from "./Banner/Banner";
 import Brand from "./Brand/Brand";
@@ -11,20 +10,22 @@ import PopPro from "./PopPro/PopPro";
 import SwiperBanner from "./SwiperBanner/SwiperBanner";
 import Blog from "./Blog/Blog";
 
+
+
 function HomeCompo() {
   return (
     <div className="container mx-auto mt-12">
-      <SwiperBanner/>
-      <Category/>
-      <Offs/>
-      <NewProduct/>
-      <Banner/>
-      <PopPro/>
-      <Brand/>
-      <Hot/>
-      <Blog/>
-      <Feature/>
-      <Footer/>
+      <SwiperBanner />
+      <Category />
+      <Offs />
+      <NewProduct />
+      <Banner />
+      <PopPro />
+      <Brand />
+      <Hot />
+      <Blog />
+      <Feature />
+      <Footer />
     </div>
   );
 }

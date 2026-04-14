@@ -75,15 +75,15 @@ export default function TableProduct({ products, getProducts }: any) {
                 >
                   <div>
                     <Image
-                      src={pro.imageUrls[0]}
-                      width={100}
-                      height={100}
+                      src={pro.mainImage}
+                      width={200}
+                      height={200}
                       alt="pro"
                     />
                   </div>
                 </th>
                 <td className="px-6 py-4">
-                  <Link href={`/productInfo/${pro._id}`}>{pro.title}</Link>
+                  <Link className="line-clamp-1" href={`/productInfo/${pro._id}`}>{pro.title}</Link>
                 </td>
                 <td className="px-6 py-4">
                   {pro.price.toLocaleString("fa-IR")}
