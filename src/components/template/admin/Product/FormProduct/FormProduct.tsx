@@ -36,6 +36,7 @@ export default function FormProduct({
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [mainImage, setMainImage] = useState<File | null>(null);
 
   const {
     register,
@@ -115,6 +116,15 @@ export default function FormProduct({
       formData.append("tags", JSON.stringify(data.tags || []));
       formData.append("features", JSON.stringify(features));
       formData.append("brand", data.brand || "");
+<<<<<<< HEAD
+      formData.append("count", data.count || 0);
+      formData.append("mainImage", mainImageFile);
+
+
+=======
+      formData.append("count", data.count);
+      formData.append("mainImage", mainImage);
+>>>>>>> providersFix
 
       if (data.images?.length > 0) {
         Array.from(data.images).forEach((file) => {
@@ -219,7 +229,11 @@ export default function FormProduct({
             />
           )}
 
-          {watchedSubCategory === "698f0bd7961ffa9510fae56d" && (
+<<<<<<< HEAD
+          {watchedSubCategory === "69d90396f65c21af85254c4e" && (
+=======
+          {watchedSubCategory === "69e08d049a4a4a3cedbfd486" && (
+>>>>>>> providersFix
             <LapTopFilter
               control={control}
               register={register}

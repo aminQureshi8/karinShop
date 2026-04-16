@@ -4,15 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
 
-<<<<<<< HEAD
-  experimental: {
-    useLightningcss: true,
-  },
-
-  cacheComponents: true,
-=======
 cacheComponents: true,
->>>>>>> providersFix
   typescript: {
     ignoreBuildErrors: true,
   },
