@@ -12,7 +12,7 @@ const page = memo(async () => {
 
   return (
     <div>
-      <ProductContainer products={JSON.parse(JSON.stringify(products))} />
+      <ProductContainer />
     </div>
   );
 });

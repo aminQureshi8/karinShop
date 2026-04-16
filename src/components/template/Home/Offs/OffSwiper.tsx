@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function OffSwiper({ products }: { products: any }) {
   const prevRef = useRef<HTMLButtonElement>(null);
@@ -73,17 +74,19 @@ export default function OffSwiper({ products }: { products: any }) {
         {products.map((product) => (
           <SwiperSlide className="!w-64 !h-full">
             <div className="bg-white cursor-pointer  dark:bg-slate-800 dark:text-white rounded-xl p-3 h-full flex flex-col justify-between">
-              <Image
-                width={100}
-                height={100}
-                src={product.mainImage}
-                alt={product.title}
-                className="w-full h-42 object-contain"
-              />
+              <Link href={`/productInfo/${product._id}`}>
+                <Image
+                  width={100}
+                  height={100}
+                  src={product.mainImage}
+                  alt={product.title}
+                  className="w-full h-42 object-contain"
+                />
+              </Link>
 
               <p className="text-sm mt-3 line-clamp-2">{product.title}</p>
 
-              <div className="mt-3 flex justify-between items-center border-t-2 pt-2 border-gray-200">
+              <div className="mt-3 flex justify-between items-center border-t-2 pt-2 border-gray-200 dark:border-gray-700">
                 <span className="text-xs ss02 text-white bg-blue-500 px-2 py-1 rounded">
                   {product.campaion}٪
                 </span>

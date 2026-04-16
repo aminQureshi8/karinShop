@@ -4,17 +4,37 @@ import SwalFire from "@/app/utils/swal";
 import Table from "@/components/module/Table/Table";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 
-export default function TableProduct({ products, getProducts }: any) {
-  // useEffect(() => {
-  //   if (currentPage === 1) {
-  //     setBrandState(intialBrand);
-  //     return;
-  //   }
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import TableLayout from "@/components/module/Table/Table";
+import { Button } from "@/components/ui/button";
+import { MoreHorizontalIcon } from "lucide-react";
+import Pagination from "@/components/module/Pagination/Pagination";
 
-  //   getBrands(currentPage);
-  // }, [currentPage, intialBrand, setBrandState, getBrands]);
+export default function TableProduct({
+  products,
+  getProducts,
+  totalPages,
+}: any) {
+  const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    getProducts(currentPage);
+  }, [currentPage]);
 
   const removePro = async (id: string) => {
     const result = await SwalFire(
@@ -42,85 +62,81 @@ export default function TableProduct({ products, getProducts }: any) {
   };
   return (
     <>
-      <div>
-        <Table>
-          <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default  border-gray-400 bg-gray-50 dark:bg-gray-700">
-            <tr>
-              <th scope="col" className="px-6 py-3 font-medium">
-                عکس محصول
-              </th>
-              <th scope="col" className="px-6 py-3 font-medium">
-                اسم محصول
-              </th>
-              <th scope="col" className="px-6 py-3 font-medium">
-                قیمت
-              </th>
-              <th scope="col" className="px-6 py-3 font-medium">
-                مقدار
-              </th>
-              <th scope="col" className="px-6 py-3 font-medium">
-                عملیات
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((pro: any) => (
-              <tr
-                key={pro._id}
-                className="bg-neutral-primary-soft border-b border-gray-300 dark:border-gray-700 border-default hover:bg-neutral-secondary-medium"
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-heading whitespace-nowrap"
-                >
-                  <div>
-                    <Image
-                      src={pro.mainImage}
-                      width={200}
-                      height={200}
-                      alt="pro"
-                    />
-                  </div>
-                </th>
-                <td className="px-6 py-4">
-                  <Link className="line-clamp-1" href={`/productInfo/${pro._id}`}>{pro.title}</Link>
-                </td>
-                <td className="px-6 py-4">
-                  {pro.price.toLocaleString("fa-IR")}
-                </td>
-                <td className="px-6 py-4 ss02">{pro.count}</td>
+      <div className="rounded-xl border bg-white dark:bg-gray-800 shadow-sm">
+        <TableLayout>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-right font-bold">شماره</TableHead>
+              <TableHead className="text-right font-bold">عکس محصول</TableHead>
+              <TableHead className="text-right font-bold">اسم محصول</TableHead>
+              <TableHead className="text-right font-bold">قیمت</TableHead>
 
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-5">
-                    <button
-                      onClick={() => removePro(pro._id)}
-                      className="bg-red-500 text-white size-8 flex justify-center items-center rounded-lg cursor-pointer"
-                    >
-                      <MdDelete size={23} className="text-white" />
-                    </button>
-                    <button
+              <TableHead className="text-right font-bold">مقدار</TableHead>
+              <TableHead className="text-right font-bold">عملیات</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {products.map((p: any, index: any) => (
+              <TableRow
+                key={p._id}
+                className="transition-colors hover:bg-muted/40"
+              >
+                <TableCell className="font-medium ss02">
+                  {(currentPage - 1) * 3 + index + 1}
+                </TableCell>
+                <TableCell className="font-medium">
+                  <Image
+                    src={p.mainImage}
+                    width={100}
+                    height={100}
+                    alt="Image"
+                  />
+                </TableCell>
+                <TableCell>{p.title}</TableCell>
+                <TableCell>{p.price}</TableCell>
+                <TableCell>{p.count}</TableCell>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="size-8 cursor-pointer"
+                      >
+                        <MoreHorizontalIcon />
+                        <span className="sr-only">Open menu</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
                       // onClick={() => {
                       //   setIsOpen(true);
-                      //   setEditproObject(pro);
+                      //   setEditCategoryObject(cat);
                       // }}
-                      className="bg-blue-500 text-white p-1 rounded-lg cursor-pointer"
-                    >
-                      <MdEdit size={23} className="text-white" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                      >
+                        ویرایش
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        variant="destructive"
+                        // onClick={() => removeCategory(cat._id)}
+                      >
+                        حذف
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </Table>
-
-        {/* {totalPageState > 1 && (
+          </TableBody>
+        </TableLayout>
+        {totalPages > 1 && (
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            totalPages={totalPageState}
+            totalPages={totalPages}
           />
-        )} */}
+        )}
       </div>
     </>
   );

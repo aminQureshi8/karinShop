@@ -53,7 +53,7 @@ export default function ConProducts({
             <p>محصولی یافت نشد</p>
           </div>
         ) : (
-          <div className="grid max-sm:grid-cols-1 grid-cols-4 gap-5">
+          <div className="grid max-sm:grid-cols-1 grid-cols-3 gap-5">
             {products.map((pro: any) => (
               <div key={pro._id}>
                 <SwiperProduct product={pro} />

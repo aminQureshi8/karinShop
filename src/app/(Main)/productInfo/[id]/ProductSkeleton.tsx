@@ -1,65 +1,99 @@
-export default function ProductSkeleton() {
+
+const ProductDetailSkeleton = () => {
   return (
-    <div className="grid grid-cols-12 gap-6 animate-pulse text-white" dir="ltr">
-      {/* ستون راست - عکس محصول */}
-      <div className="order-1 lg:order-3 col-span-12 lg:col-span-3 bg-[#1e293b] p-5 rounded-xl space-y-5">
-        {/* عکس بزرگ */}
-        <div className="h-72 w-full bg-gray-600 rounded-xl"></div>
-
-        {/* تصاویر کوچک */}
-        <div className="grid grid-cols-3 gap-3">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-20 bg-gray-600 rounded-xl"></div>
-          ))}
-        </div>
+    <div className="min-h-screen  text-white" dir="ltr">
+      <div className="flex items-center gap-2 justify-end mb-8">
+        <div className="h-4 w-24 bg-gray-700/50 rounded animate-pulse"></div>
+        <span className="text-gray-600">‹</span>
+        <div className="h-4 w-20 bg-gray-700/50 rounded animate-pulse"></div>
+        <span className="text-gray-600">‹</span>
+        <div className="h-4 w-28 bg-gray-700/50 rounded animate-pulse"></div>
       </div>
 
-      {/* ستون وسط - توضیحات */}
-      <div className="order-2 col-span-12 lg:col-span-6 space-y-5 bg-[#1e293b] p-6 rounded-xl">
-        {/* عنوان */}
-        <div className="flex justify-end">
-          <div className="h-6 w-3/4 bg-gray-600 rounded"></div>
-        </div>
-        <div className="flex justify-end">
-          <div className="h-4 w-1/2 bg-gray-600 rounded"></div>
+      <div className="flex gap-6 max-w-7xl mx-auto">
+        <div className="flex-1">
+          <div className="bg-[#1a2332] rounded-2xl p-8">
+            <div className="flex gap-8">
+              <div className="shrink-0 order-last">
+                <div className="h-80 w-64 bg-gray-700/50 rounded-2xl animate-pulse"></div>
+                <div className="flex gap-3 mt-4 justify-end">
+                  <div className="h-20 w-20 bg-gray-700/50 rounded-xl animate-pulse"></div>
+                  <div className="h-20 w-20 bg-gray-700/50 rounded-xl animate-pulse"></div>
+                </div>
+              </div>
+
+              <div className="flex-1 space-y-6">
+                <div className="flex gap-3 justify-end">
+                  <div className="h-11 w-11 bg-gray-700/50 rounded-xl animate-pulse"></div>
+                  <div className="h-11 w-11 bg-gray-700/50 rounded-xl animate-pulse"></div>
+                </div>
+
+                <div className="space-y-3 text-right">
+                  <div className="flex justify-end">
+                    <div className="h-7 w-full bg-gray-700/50 rounded animate-pulse"></div>
+                  </div>
+                  <div className="flex justify-end">
+                    <div className="h-5 w-3/4 bg-gray-700/50 rounded animate-pulse"></div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 justify-end">
+                  <div className="h-10 w-10 bg-blue-500/30 rounded-full animate-pulse"></div>
+                  <div className="h-5 w-20 bg-gray-700/50 rounded animate-pulse"></div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-4">
+                  {[...Array(6)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="bg-[#0f1621] rounded-xl p-4 text-center space-y-2"
+                    >
+                      <div className="h-4 w-16 bg-gray-700/50 rounded animate-pulse mx-auto"></div>
+                      <div className="h-6 w-12 bg-gray-700/50 rounded animate-pulse mx-auto"></div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-4 gap-3">
+                  {[...Array(4)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="h-12 bg-[#0f1621] rounded-xl animate-pulse"
+                    ></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* رنگ */}
-        <div className="flex items-center justify-end gap-4 mt-4">
-          <div className="h-6 w-20 bg-gray-600 rounded"></div>
-          <div className="h-6 w-6 bg-gray-600 rounded-full"></div>
-        </div>
+        <div className="w-80 shrink-0 order-first">
+          <div className="bg-[#1a2332] rounded-2xl p-6 space-y-5">
+            <div className="flex justify-start">
+              <div className="h-8 w-48 bg-gray-700/50 rounded animate-pulse"></div>
+            </div>
 
-        {/* ویژگی‌ها */}
-        <div className="grid grid-cols-3 gap-4 mt-4">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-12 bg-[#0f172a] rounded-lg"></div>
-          ))}
-        </div>
+            <div className="bg-[#0f1621] rounded-xl p-3 flex items-center justify-between">
+              <div className="h-8 w-8 bg-gray-700/50 rounded animate-pulse"></div>
+              <div className="h-6 w-12 bg-gray-700/50 rounded animate-pulse"></div>
+              <div className="h-8 w-8 bg-gray-700/50 rounded animate-pulse"></div>
+            </div>
 
-        {/* دکمه بخش‌های پایین */}
-        <div className="flex gap-4 mt-6">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-12 flex-1 bg-[#0f172a] rounded-lg"></div>
-          ))}
-        </div>
-      </div>
+            <div className="flex justify-between items-center">
+              <div className="h-5 w-32 bg-gray-700/50 rounded animate-pulse"></div>
+              <div className="h-5 w-24 bg-gray-700/50 rounded animate-pulse"></div>
+            </div>
 
-      {/* ستون چپ - کارت خرید */}
-      <div className="order-3 lg:order-1 col-span-12 lg:col-span-3 bg-[#1e293b] p-5 rounded-xl space-y-5">
-        <div className="flex justify-end">
-          <div className="h-6 w-32 bg-gray-600  rounded"></div>
-        </div>
+            <div className="flex justify-start">
+              <div className="h-4 w-40 bg-gray-700/50 rounded animate-pulse"></div>
+            </div>
 
-        <div className="flex items-center justify-between bg-[#0f172a] p-3 rounded-lg">
-          <div className="h-6 w-6 bg-gray-600 rounded"></div>
-          <div className="h-6 w-6 bg-gray-600 rounded"></div>
-          <div className="h-6 w-6 bg-gray-600 rounded"></div>
+            <div className="h-14 w-full bg-blue-600/30 rounded-xl animate-pulse"></div>
+          </div>
         </div>
-
-        <div className="h-10 w-full bg-gray-600 rounded"></div>
-        <div className="h-10 w-full bg-blue-700 rounded"></div>
       </div>
     </div>
   );
-}
+};
+
+export default ProductDetailSkeleton;

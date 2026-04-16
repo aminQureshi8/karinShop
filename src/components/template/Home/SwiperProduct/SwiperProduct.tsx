@@ -98,10 +98,7 @@ export default function SwiperProduct({ product }: any) {
           </div>
         </div>
         {product.campaion > 0 && (
-          <div className="absolute top-0 -left-4 flex items-center gap-2">
-            {/* نوار آبی باریک */}
-
-            {/* متن تخفیف */}
+          <div className="absolute select-none top-0 -left-4 flex items-center gap-2">
             <span className="text-blue-500 text-xs font-danaMed font-bold">
               %{product.campaion} تخفیف
             </span>

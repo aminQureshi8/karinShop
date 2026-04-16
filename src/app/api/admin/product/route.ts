@@ -2,7 +2,6 @@ import { authRouteHandler } from "@/app/utils/auth";
 import productModel from "@/models/product";
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
@@ -89,7 +88,7 @@ export async function POST(req: NextRequest) {
 
       imageUrls.push(imageUrl);
 
-      const fileName = `products/${Date.now()}-${i}.${ext}`;
+      // const fileName = `products/${Date.now()}-${i}.${ext}`;
 
       // imageUrls.push(uploadRes.secure_url || "");
     }

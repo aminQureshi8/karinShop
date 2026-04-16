@@ -10,7 +10,7 @@ import db from "@/config/db";
 import productModel from "@/models/product";
 
 export default async function ProductContent({ id }) {
-//   const { id } = await params;
+  //   const { id } = await params;
 
   await db();
 
@@ -49,7 +49,7 @@ export default async function ProductContent({ id }) {
             breadCrumbs={product.breadCrumbs}
             images={product?.imageUrls}
             colors={product.colors}
-            features={product.features}
+            features={JSON.parse(JSON.stringify(product.features))}
             id={product._id.toString()}
             price={product.price}
             title={product.title}
@@ -63,7 +63,7 @@ export default async function ProductContent({ id }) {
             price={offPrice}
             count={product.count}
             id={product._id.toString()}
-            title={product.title}
+            title={product.title.toString()}
             imageUrls={product.imageUrls[0]}
           />
         </div>
@@ -71,7 +71,7 @@ export default async function ProductContent({ id }) {
       <div className="mt-10">
         <Kh
           description={product.description.toString()}
-          features={product.features}
+          features={JSON.parse(JSON.stringify(product.features))}
           id={product._id.toString()}
           userID={user.user?._id?.toString()}
           comments={product.comments}

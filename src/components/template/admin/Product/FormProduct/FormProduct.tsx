@@ -116,15 +116,8 @@ export default function FormProduct({
       formData.append("tags", JSON.stringify(data.tags || []));
       formData.append("features", JSON.stringify(features));
       formData.append("brand", data.brand || "");
-<<<<<<< HEAD
-      formData.append("count", data.count || 0);
-      formData.append("mainImage", mainImageFile);
-
-
-=======
       formData.append("count", data.count);
       formData.append("mainImage", mainImage);
->>>>>>> providersFix
 
       if (data.images?.length > 0) {
         Array.from(data.images).forEach((file) => {
@@ -396,42 +389,6 @@ export default function FormProduct({
 
           <div className="flex flex-col">
             <label className="text-sm">عکس کاور محصول (mainImage)</label>
-
-            <Controller
-              name="mainImage"
-              control={control}
-              rules={{ required: "انتخاب عکس کاور الزامی است" }}
-              render={({ field }) => (
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (!file) return;
-
-                    field.onChange(file);
-                    setMainImageFile(file);
-                    setMainPreview(URL.createObjectURL(file));
-                  }}
-                  className={`bg-gray-200 dark:bg-black/60 rounded-xl mt-2 px-3 py-2 text-sm ${
-                    errors.mainImage ? "border-red-500" : ""
-                  }`}
-                />
-              )}
-            />
-
-            {mainPreview && (
-              <img
-                src={mainPreview}
-                className="w-32 h-32 object-cover mt-3 rounded-lg border"
-              />
-            )}
-
-            {errors.mainImage && (
-              <p className="text-red-500 text-xs mt-2">
-                {errors.mainImage.message as string}
-              </p>
-            )}
           </div>
 
           <Tag register={register} errors={errors} setValue={setValue} />

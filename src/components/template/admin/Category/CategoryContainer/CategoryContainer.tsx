@@ -6,21 +6,9 @@ import FormCategory from "../Form/FormCategory";
 import TableCategory from "../Table/TableCategory";
 import CategoryType from "@/types/Category/Category.type";
 
-<<<<<<< HEAD
-export default function CategoryContainer({
-  categories,
-  totalPages,
-}: {
-  categories: CategoryType[];
-  totalPages: number;
-}) {
-  const [categoryState, setCategoryState] = useState([]);
-  const [totalPageState, setTotalPageState] = useState(totalPages);
-=======
 export default function CategoryContainer() {
   const [categoryState, setCategoryState] = useState([]);
   const [totalPageState, setTotalPageState] = useState(0);
->>>>>>> providersFix
 
   const getCategories = useCallback(async (page: number) => {
     const res = await fetch(`/api/category?page=${page}`);
