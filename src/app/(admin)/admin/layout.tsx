@@ -11,11 +11,9 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <Providers>
         <Navbar />
         <ListMenuContainer />
         <MenuMobileJSX />
-      </Providers>
 
       <div className="container mx-auto font-danaMed">
         <div className="grid grid-cols-12 gap-5  mt-5">

@@ -14,9 +14,7 @@ export default function ProductOrder() {
         </div>
       </div>
       <div>
-        <Providers>
           <ProductCon />
-        </Providers>
       </div>
     </div>
   );

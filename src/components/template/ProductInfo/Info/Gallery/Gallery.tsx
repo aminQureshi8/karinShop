@@ -4,14 +4,22 @@ import Image from "next/image";
 import { memo, useState } from "react";
 import ModalSwiper from "../ModalSwiper/ModalSwiper";
 
+<<<<<<< HEAD
 const Gallery = memo(({ images, mainImage }: any) => {
+=======
+const Gallery = memo(({ images, maimImage }: any) => {
+>>>>>>> providersFix
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
       <div className="relative w-full h-[300px]">
         <Image
+<<<<<<< HEAD
           src={mainImage}
+=======
+          src={maimImage}
+>>>>>>> providersFix
           alt="Product"
           fill
           className="object-contain"

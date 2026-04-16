@@ -40,9 +40,7 @@ const product = new mongoose.Schema(
       default: 0,
     },
   },
-  {
-    timestamps: true,
-  },
+
 );
 
 product.virtual("comments", {

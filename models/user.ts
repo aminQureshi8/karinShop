@@ -1,16 +1,13 @@
 import mongoose from "mongoose";
 
-const user = new mongoose.Schema(
-  {
-    name: { type: String },
-    email: { type: String },
-    phone: { type: String },
-    role: { type: String, enum: ["ADMIN", "USER"], default: "USER" },
-    userName: { type: String },
-    refreshToken: { type: String },
-  },
-  { timestamps: true },
-);
+const user = new mongoose.Schema({
+  name: { type: String },
+  email: { type: String },
+  phone: { type: String },
+  role: { type: String, enum: ["ADMIN", "USER"], default: "USER" },
+  userName: { type: String },
+  refreshToken: { type: String },
+});
 
 user.virtual("comments", {
   foreignField: "user",

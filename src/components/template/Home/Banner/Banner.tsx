@@ -1,5 +1,9 @@
 "use cache";
 import Image from "next/image";
+<<<<<<< HEAD
+=======
+
+>>>>>>> providersFix
 export default async function Banner() {
   return (
     <div className="mt-12">

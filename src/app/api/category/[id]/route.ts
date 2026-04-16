@@ -26,6 +26,7 @@ export async function DELETE(
     await db();
     await categoryModel.findOneAndDelete({ _id: id });
 
+
     return NextResponse.json(
       { message: "Brand deleted successfully" },
       { status: 200 },

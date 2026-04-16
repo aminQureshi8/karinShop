@@ -20,8 +20,13 @@ export default function SwiperProduct({ product }: any) {
     state.whish.some((item) => item.id === product._id),
   );
 
+<<<<<<< HEAD
   const offPrice = product?.campaion
     ? product.price - (product.price * product?.campaion) / 100
+=======
+  const offPrice = product.campaion
+    ? product.price - (product.price * product.campaion) / 100
+>>>>>>> providersFix
     : product.price;
 
   const handleCartClick = () => {
@@ -31,7 +36,11 @@ export default function SwiperProduct({ product }: any) {
         id: product._id,
         title: product.title,
         color: "",
+<<<<<<< HEAD
         mainImage: product.mainImage,
+=======
+        imageUrls: product.mainImage,
+>>>>>>> providersFix
         count: 1,
         mainCount: product.count,
       }),
@@ -45,7 +54,11 @@ export default function SwiperProduct({ product }: any) {
         id: product._id,
         title: product.title,
         color: "",
+<<<<<<< HEAD
         mainImage: product.mainImage,
+=======
+        imageUrls: product.mainImage,
+>>>>>>> providersFix
         count: 1,
         mainCount: product.count,
       }),

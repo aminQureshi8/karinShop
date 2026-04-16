@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authRouteHandler } from "@/app/utils/auth";
 import { v2 as cloudinary } from "cloudinary";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+
 // cloudinary.config({
 //   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
 //   api_key: process.env.CLOUDINARY_API_KEY!,
@@ -11,12 +12,12 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 // });
 
 const s3Client = new S3Client({
-  region: "default", // آروان معمولا روی دکمه default هست یا هر چی تو پنل زده
-  endpoint: "https://s3.ir-thr-at1.arvanstorage.ir", // آدرس اصلی بدون نام باکت
+  region: "default",
+  endpoint: "https://s3.ir-thr-at1.arvanstorage.ir",
   credentials: {
-    accessKeyId: "e69db9fc-d4a0-47f1-81e2-d556e2846ae6", // از پنل کپی کن
+    accessKeyId: "e69db9fc-d4a0-47f1-81e2-d556e2846ae6",
     secretAccessKey:
-      "72400bfa4d81ade44cb80d5e89cd9ddf794dc6cd1dc314da19c4eb69fb5670c5", // از پنل کپی کن
+      "72400bfa4d81ade44cb80d5e89cd9ddf794dc6cd1dc314da19c4eb69fb5670c5",
   },
 });
 
@@ -45,17 +46,35 @@ export async function POST(req: NextRequest) {
     const fileName = `${Date.now()}-${file.name}`; // اسم یکتا برای جلوگیری از جایگزینی
     const bucketName = "karinpub";
 
+<<<<<<< HEAD
     const uploadParams = {
       Bucket: bucketName,
       Key: `brands/${fileName}`, // مسیری که فایل ذخیره میشه
       Body: buffer,
       ContentType: file.type,
       ACL: "public-read" as any, // اگه میخوای مستقیم با لینک قابل مشاهده باشه
+=======
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const fileName = `${Date.now()}-${file.name}`;
+    const bucketName = "karinpub";
+
+    const uploadParams = {
+      Bucket: bucketName,
+      Key: `brands/${fileName}`,
+      Body: buffer,
+      ContentType: file.type,
+      ACL: "public-read" as any,
+>>>>>>> providersFix
     };
 
     await s3Client.send(new PutObjectCommand(uploadParams));
 
     const imageUrl = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/brands/${fileName}`;
+<<<<<<< HEAD
+=======
+
+    // const buffer = Buffer.from(await file.arrayBuffer());
+>>>>>>> providersFix
 
     // const uploadResult = await new Promise<any>((resolve, reject) => {
     //   cloudinary.uploader

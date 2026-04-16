@@ -4,11 +4,15 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
 
+<<<<<<< HEAD
   experimental: {
     useLightningcss: true,
   },
 
   cacheComponents: true,
+=======
+cacheComponents: true,
+>>>>>>> providersFix
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -26,6 +30,10 @@ const nextConfig: NextConfig = {
         hostname: "karinpub.s3.ir-thr-at1.arvanstorage.ir",
       },
       { protocol: "https", hostname: "res.cloudinary.com" },
+      {
+        protocol: "https",
+        hostname: "karinpub.s3.ir-thr-at1.arvanstorage.ir",
+      },
     ],
   },
 };

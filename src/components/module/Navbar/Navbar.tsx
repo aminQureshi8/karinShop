@@ -15,9 +15,7 @@ const Navbar = () => {
           <Logo />
         </div>
         <div>
-          <Providers>
             <Buttons />
-          </Providers>
         </div>
       </div>
 

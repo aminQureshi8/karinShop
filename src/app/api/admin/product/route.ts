@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+
 // cloudinary.config({
 //   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
 //   api_key: process.env.CLOUDINARY_API_KEY!,
@@ -11,12 +13,12 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 // });
 
 const s3Client = new S3Client({
-  region: "default", // آروان معمولا روی دکمه default هست یا هر چی تو پنل زده
-  endpoint: "https://s3.ir-thr-at1.arvanstorage.ir", // آدرس اصلی بدون نام باکت
+  region: "default",
+  endpoint: "https://s3.ir-thr-at1.arvanstorage.ir",
   credentials: {
-    accessKeyId: "e69db9fc-d4a0-47f1-81e2-d556e2846ae6", // از پنل کپی کن
+    accessKeyId: "e69db9fc-d4a0-47f1-81e2-d556e2846ae6",
     secretAccessKey:
-      "72400bfa4d81ade44cb80d5e89cd9ddf794dc6cd1dc314da19c4eb69fb5670c5", // از پنل کپی کن
+      "72400bfa4d81ade44cb80d5e89cd9ddf794dc6cd1dc314da19c4eb69fb5670c5",
   },
 });
 export async function POST(req: NextRequest) {
@@ -42,24 +44,23 @@ export async function POST(req: NextRequest) {
     const images = formData.getAll("images") as File[];
     const description = formData.get("description") as string;
     const count = formData.get("count") as string;
-    const mainImagFile = formData.get("mainImage") as File;
+    const mainImageFile = formData.get("mainImage") as File;
 
-    const buffer = Buffer.from(await mainImagFile.arrayBuffer());
-
-    const ext = mainImagFile.name.split(".").pop();
-    const fileName = `products/${Date.now()}-main.${ext}`;
+    const buffer = Buffer.from(await mainImageFile.arrayBuffer());
+    const fileName = `${Date.now()}-${mainImageFile.name}`;
+    const bucketName = "karinpub";
 
     const uploadParams = {
-      Bucket: "karinpub",
-      Key: fileName,
+      Bucket: bucketName,
+      Key: `products/${fileName}`,
       Body: buffer,
-      ContentType: mainImagFile.type,
+      ContentType: mainImageFile.type,
       ACL: "public-read" as any,
     };
 
     await s3Client.send(new PutObjectCommand(uploadParams));
 
-    const mainImage = `https://karinpub.s3.ir-thr-at1.arvanstorage.ir/${fileName}`;
+    const mainImage = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/products/${fileName}`;
 
     const imageUrls: string[] = [];
     for (let i = 0; i < images.length; i++) {
@@ -67,12 +68,15 @@ export async function POST(req: NextRequest) {
       if (image.size === 0) continue;
 
       const buffer = Buffer.from(await image.arrayBuffer());
+
+      const bucketName = "karinpub";
+
       const ext = image.name.split(".").pop();
 
-      const fileName = `products/${Date.now()}-${i}.${ext}`;
+      const fileName = `products/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
       const uploadParams = {
-        Bucket: "karinpub",
+        Bucket: bucketName,
         Key: fileName,
         Body: buffer,
         ContentType: image.type,
@@ -81,13 +85,13 @@ export async function POST(req: NextRequest) {
 
       await s3Client.send(new PutObjectCommand(uploadParams));
 
-      const imageUrl = `https://karinpub.s3.ir-thr-at1.arvanstorage.ir/${fileName}`;
+      const imageUrl = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/${fileName}`;
 
-      // if (i === 0) {
-      //   imageUrls.unshift(imageUrl);
-      // } else {
       imageUrls.push(imageUrl);
-      // }
+
+      const fileName = `products/${Date.now()}-${i}.${ext}`;
+
+      // imageUrls.push(uploadRes.secure_url || "");
     }
 
     await productModel.create({

@@ -46,14 +46,12 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <Providers>
         <MenuMobileJSX />
         <SearchMobileMenu />
         <Navbar />
         <ListMenuContainer />
         <SearchMobile />
         <CartNavbar />
-      </Providers>
       {/* <NotificationInit/> */}
       {children}
     </>

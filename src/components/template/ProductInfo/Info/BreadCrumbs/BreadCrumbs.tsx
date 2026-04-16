@@ -11,8 +11,13 @@ export default async function BreadCrumbs() {
         <p>صحفه اصلی</p>
       </Link>
       <div>
+<<<<<<< HEAD
         <MdKeyboardArrowLeft />
       </div>
+=======
+      <MdKeyboardArrowLeft />
+    </div>
+>>>>>>> providersFix
       <Link
         href="/shop"
         className="flex items-center gap-2 text-gray-600 dark:text-gray-400"
