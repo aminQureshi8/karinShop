@@ -5,6 +5,7 @@ import { danaMedium, danaLight, danaBold } from "./fonts";
 import { Toaster } from "react-hot-toast";
 import TopLoader from "./TopLoader";
 import NextTopLoader from "nextjs-toploader";
+import Providers from "./redux/Providers";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,7 +22,7 @@ export default function RootLayout({
         <NextTheme>
           <NextTopLoader color="#3b82f6" height={3} showSpinner={false} />
           <AuthRefresh />
-          {children}
+          <Providers>{children}</Providers>
           <Toaster
             position="top-right"
             reverseOrder={false}

@@ -4,14 +4,14 @@ import Image from "next/image";
 import { memo, useState } from "react";
 import ModalSwiper from "../ModalSwiper/ModalSwiper";
 
-const Gallery = memo(({ images }: any) => {
+const Gallery = memo(({ images, maimImage }: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
       <div className="relative w-full h-[300px]">
         <Image
-          src={images[0] || "/image/lap.png"}
+          src={maimImage}
           alt="Product"
           fill
           className="object-contain"

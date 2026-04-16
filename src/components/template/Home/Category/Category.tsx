@@ -1,3 +1,4 @@
+
 import TopCategory from "@/components/module/Home/TopCategory/TopCategory";
 import db from "@/config/db";
 import categoryModel from "@/models/category";
@@ -7,7 +8,10 @@ import { BiCategory } from "react-icons/bi";
 export default async function Category() {
   await db();
 
-  const categories = await categoryModel.find().limit(7).lean();
+  const categories = await categoryModel
+    .find({}, "imageUrl title")
+    .limit(7)
+    .lean();
 
   return (
     <div className="mt-12">
@@ -25,7 +29,7 @@ export default async function Category() {
                 src={cat.imageUrl}
                 width={120}
                 height={120}
-                alt="Category"
+                alt={cat.title}
               />
             </div>
             <div>

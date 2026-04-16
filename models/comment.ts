@@ -39,9 +39,7 @@ const comment = new mongoose.Schema(
       default: 0,
     },
   },
-  {
-    timestamps: true,
-  },
+
 );
 
 const commentModel =

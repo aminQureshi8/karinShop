@@ -53,7 +53,6 @@ export default function ConProducts({
             <p>محصولی یافت نشد</p>
           </div>
         ) : (
-          <Providers>
             <div className="grid max-sm:grid-cols-1 grid-cols-4 gap-5">
               {products.map((pro: any) => (
                 <div key={pro._id}>
@@ -61,7 +60,6 @@ export default function ConProducts({
                 </div>
               ))}
             </div>
-          </Providers>
         )}
       </div>
     </div>

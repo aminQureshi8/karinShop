@@ -65,11 +65,6 @@ export default function TableCategory({
   }, [editCategoryObject, reset]);
 
   useEffect(() => {
-    if (currentPage === 1) {
-      setCategoryState(intialCategory);
-      return;
-    }
-
     getCategories(currentPage);
   }, [currentPage, intialCategory, setCategoryState, getCategories]);
 
@@ -222,7 +217,7 @@ export default function TableCategory({
                 className="transition-colors hover:bg-muted/40"
               >
                 <TableCell className="font-medium ss02">
-                  {(currentPage - 1) * 5 + index + 1}
+                  {(currentPage - 1) * 3 + index + 1}
                 </TableCell>
                 <TableCell className="font-medium">
                   <Image
@@ -271,15 +266,14 @@ export default function TableCategory({
             ))}
           </TableBody>
         </TableLayout>
-
-        {totalPageState > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPages={totalPageState}
-          />
-        )}
       </div>
+      {totalPageState > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPageState}
+        />
+      )}
     </>
   );
 }

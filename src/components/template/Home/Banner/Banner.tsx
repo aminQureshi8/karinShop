@@ -1,6 +1,7 @@
+"use cache";
 import Image from "next/image";
 
-export default function Banner() {
+export default async function Banner() {
   return (
     <div className="mt-12">
       <div className="grid max-sm:grid-cols-1 grid-cols-2  gap-5">

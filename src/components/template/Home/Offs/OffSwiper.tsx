@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import Image from "next/image";
 
-export default function OffSwiper({ products }) {
+export default function OffSwiper({ products }: { products: any }) {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   return (

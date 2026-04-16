@@ -18,6 +18,10 @@ const product = new mongoose.Schema(
       },
     ],
     imageUrls: [{ type: String }],
+    mainImage: {
+      type: String,
+      required: true,
+    },
     description: { type: String, required: true },
     count: {
       type: Number,
@@ -36,9 +40,7 @@ const product = new mongoose.Schema(
       default: 0,
     },
   },
-  {
-    timestamps: true,
-  },
+
 );
 
 product.virtual("comments", {

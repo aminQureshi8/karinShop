@@ -36,6 +36,7 @@ export default function FormProduct({
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [mainImage, setMainImage] = useState<File | null>(null);
 
   const {
     register,
@@ -115,6 +116,8 @@ export default function FormProduct({
       formData.append("tags", JSON.stringify(data.tags || []));
       formData.append("features", JSON.stringify(features));
       formData.append("brand", data.brand || "");
+      formData.append("count", data.count);
+      formData.append("mainImage", mainImage);
 
       if (data.images?.length > 0) {
         Array.from(data.images).forEach((file) => {
@@ -219,7 +222,7 @@ export default function FormProduct({
             />
           )}
 
-          {watchedSubCategory === "698f0bd7961ffa9510fae56d" && (
+          {watchedSubCategory === "69e08d049a4a4a3cedbfd486" && (
             <LapTopFilter
               control={control}
               register={register}
@@ -293,6 +296,17 @@ export default function FormProduct({
               {...register("count", { required: "این فیلد الزامی است" })}
               placeholder="3"
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0] || null;
+                setMainImage(file);
+              }}
             />
           </div>
 

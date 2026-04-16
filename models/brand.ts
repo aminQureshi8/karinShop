@@ -6,11 +6,11 @@ const brand = new mongoose.Schema(
     imageUrl: { type: String },
     subCategory: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"subCategory",
+      ref: "subCategory",
       required: true,
     },
   },
-  { timestamps: true },
+
 );
 
 const brandModel = mongoose.models.brand || mongoose.model("brand", brand);

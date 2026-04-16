@@ -7,7 +7,6 @@ import Providers from "@/app/redux/Providers";
 
 function SwiperProductContainer({ products }: any) {
   return (
-    <Providers>
       <div className="w-full overflow-hidden mt-5 mb-5">
         <Swiper
           slidesPerView={4.5}
@@ -28,7 +27,6 @@ function SwiperProductContainer({ products }: any) {
           ))}
         </Swiper>
       </div>
-    </Providers>
   );
 }
 

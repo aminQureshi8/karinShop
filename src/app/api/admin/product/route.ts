@@ -3,10 +3,22 @@ import productModel from "@/models/product";
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-  api_key: process.env.CLOUDINARY_API_KEY!,
-  api_secret: process.env.CLOUDINARY_API_SECRET!,
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+//   api_key: process.env.CLOUDINARY_API_KEY!,
+//   api_secret: process.env.CLOUDINARY_API_SECRET!,
+// });
+
+const s3Client = new S3Client({
+  region: "default",
+  endpoint: "https://s3.ir-thr-at1.arvanstorage.ir",
+  credentials: {
+    accessKeyId: "e69db9fc-d4a0-47f1-81e2-d556e2846ae6",
+    secretAccessKey:
+      "72400bfa4d81ade44cb80d5e89cd9ddf794dc6cd1dc314da19c4eb69fb5670c5",
+  },
 });
 export async function POST(req: NextRequest) {
   try {
@@ -30,14 +42,51 @@ export async function POST(req: NextRequest) {
     const features = formData.get("features") as string;
     const images = formData.getAll("images") as File[];
     const description = formData.get("description") as string;
+    const count = formData.get("count") as string;
+    const mainImageFile = formData.get("mainImage") as File;
+
+    const buffer = Buffer.from(await mainImageFile.arrayBuffer());
+    const fileName = `${Date.now()}-${mainImageFile.name}`;
+    const bucketName = "karinpub";
+
+    const uploadParams = {
+      Bucket: bucketName,
+      Key: `products/${fileName}`,
+      Body: buffer,
+      ContentType: mainImageFile.type,
+      ACL: "public-read" as any,
+    };
+
+    await s3Client.send(new PutObjectCommand(uploadParams));
+
+    const mainImage = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/products/${fileName}`;
 
     const imageUrls: string[] = [];
 
     for (const image of images) {
       if (image.size === 0) continue;
 
-      const bytes = await image.arrayBuffer();
-      const buffer = Buffer.from(bytes);
+      const buffer = Buffer.from(await image.arrayBuffer());
+
+      const bucketName = "karinpub";
+
+      const ext = image.name.split(".").pop();
+
+      const fileName = `products/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+      const uploadParams = {
+        Bucket: bucketName,
+        Key: fileName,
+        Body: buffer,
+        ContentType: image.type,
+        ACL: "public-read" as any,
+      };
+
+      await s3Client.send(new PutObjectCommand(uploadParams));
+
+      const imageUrl = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/${fileName}`;
+
+      imageUrls.push(imageUrl);
 
       // const uploadRes = await new Promise<any>((resolve, reject) => {
       //   cloudinary.uploader
@@ -54,7 +103,6 @@ export async function POST(req: NextRequest) {
       // });
 
       // imageUrls.push(uploadRes.secure_url || "");
-      imageUrls.push("");
     }
 
     await productModel.create({
@@ -70,6 +118,8 @@ export async function POST(req: NextRequest) {
       features: JSON.parse(features),
       imageUrls,
       description,
+      count,
+      mainImage,
     });
 
     return NextResponse.json(

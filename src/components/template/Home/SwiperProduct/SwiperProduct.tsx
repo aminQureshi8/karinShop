@@ -22,9 +22,7 @@ export default function SwiperProduct({ product }: any) {
 
   const offPrice = product.campaion
     ? product.price - (product.price * product.campaion) / 100
-    : product.price - (product.price * product?.off[0]?.percent) / 100
-      ? product.price - (product.price * product?.off[0]?.percent) / 100
-      : product.price;
+    : product.price;
 
   const handleCartClick = () => {
     dispatch(
@@ -33,7 +31,7 @@ export default function SwiperProduct({ product }: any) {
         id: product._id,
         title: product.title,
         color: "",
-        imageUrls: product.imageUrls[0],
+        imageUrls: product.mainImage,
         count: 1,
         mainCount: product.count,
       }),
@@ -47,7 +45,7 @@ export default function SwiperProduct({ product }: any) {
         id: product._id,
         title: product.title,
         color: "",
-        imageUrls: product.imageUrls[0],
+        imageUrls: product.mainImage,
         count: 1,
         mainCount: product.count,
       }),
@@ -61,9 +59,7 @@ export default function SwiperProduct({ product }: any) {
           <Image
             width={200}
             height={200}
-            src={
-              "/image/e239f5f2f87ca46c23d18719b17d1092abc6bb49_1754241710-removebg-preview.png"
-            }
+            src={product.mainImage}
             alt={product.title}
           />
         </Link>

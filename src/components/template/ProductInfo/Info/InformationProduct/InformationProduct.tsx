@@ -24,7 +24,6 @@ export default function InformationProduct({
           ))}
         </div>
         <div>
-          <Providers>
             <Buttons
               price={price}
               title={title}
@@ -32,7 +31,6 @@ export default function InformationProduct({
               imageUrls={imageUrls}
               mainCount={mainCount}
             />
-          </Providers>
         </div>
       </div>
 

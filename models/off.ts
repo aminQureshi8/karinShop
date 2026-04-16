@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const off = new mongoose.Schema(
   {
-    dateTime: { type: Date, required: true },
+    dateTime: { type: String, required: true },
     percent: { type: Number, required: true },
   },
-  { timestamps: true },
+
 );
 
 const offModel = mongoose.models.off || mongoose.model("off", off);
