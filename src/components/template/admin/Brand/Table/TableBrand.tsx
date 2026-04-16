@@ -44,7 +44,6 @@ export default function TableBrand({
   getBrands,
   totalPageState,
   setBrandState,
-  intialBrand,
 }: TableBrandProps) {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isOpen, setIsOpen] = useState(false);
@@ -62,13 +61,8 @@ export default function TableBrand({
   }, [editBrandObject, reset]);
 
   useEffect(() => {
-    if (currentPage === 1) {
-      setBrandState(intialBrand);
-      return;
-    }
-
     getBrands(currentPage);
-  }, [currentPage, intialBrand, setBrandState, getBrands]);
+  }, [currentPage]);
 
   const removeBrand = async (id: string) => {
     const result = await SwalFire(
@@ -219,7 +213,7 @@ export default function TableBrand({
                 className="transition-colors hover:bg-muted/40"
               >
                 <TableCell className="font-medium ss02">
-                  {(currentPage - 1) * 5 + index + 1}
+                  {(currentPage - 1) * 3 + index + 1}
                 </TableCell>
                 <TableCell className="font-medium">
                   <Image

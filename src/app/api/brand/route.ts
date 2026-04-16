@@ -42,18 +42,7 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
     }
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const fileName = `${Date.now()}-${file.name}`; // اسم یکتا برای جلوگیری از جایگزینی
-    const bucketName = "karinpub";
 
-<<<<<<< HEAD
-    const uploadParams = {
-      Bucket: bucketName,
-      Key: `brands/${fileName}`, // مسیری که فایل ذخیره میشه
-      Body: buffer,
-      ContentType: file.type,
-      ACL: "public-read" as any, // اگه میخوای مستقیم با لینک قابل مشاهده باشه
-=======
     const buffer = Buffer.from(await file.arrayBuffer());
     const fileName = `${Date.now()}-${file.name}`;
     const bucketName = "karinpub";
@@ -64,17 +53,13 @@ export async function POST(req: NextRequest) {
       Body: buffer,
       ContentType: file.type,
       ACL: "public-read" as any,
->>>>>>> providersFix
     };
 
     await s3Client.send(new PutObjectCommand(uploadParams));
 
     const imageUrl = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/brands/${fileName}`;
-<<<<<<< HEAD
-=======
 
     // const buffer = Buffer.from(await file.arrayBuffer());
->>>>>>> providersFix
 
     // const uploadResult = await new Promise<any>((resolve, reject) => {
     //   cloudinary.uploader

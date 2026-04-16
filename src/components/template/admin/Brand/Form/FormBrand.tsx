@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
@@ -7,10 +7,21 @@ import { BeatLoader } from "react-spinners";
 interface IFormInput {
   title: string;
   image: FileList;
+  subCategory: string;
 }
 
 export default function FormBrand({ getBrands }: { getBrands: any }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [subCategory, setSubCategory] = useState([]);
+
+  useEffect(() => {
+    const getSub = async () => {
+      const res = await fetch("/api/category/subCategory");
+      const data = await res.json();
+      setSubCategory(data);
+    };
+    getSub();
+  }, []);
 
   const {
     register,
@@ -28,7 +39,9 @@ export default function FormBrand({ getBrands }: { getBrands: any }) {
         formData.append("image", data.image[0]);
       }
 
-      const res = await fetch("/api/brand", {
+      console.log(data);
+
+      const res = await fetch(`/api/brand?subCategory=${data.subCategory}`, {
         method: "POST",
         credentials: "include",
         body: formData,
@@ -55,7 +68,7 @@ export default function FormBrand({ getBrands }: { getBrands: any }) {
   return (
     <div>
       <form onSubmit={handleSubmit(createBrand)}>
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-3 gap-5">
           <div>
             <label htmlFor="title">نام برند</label>
             <input
@@ -83,6 +96,23 @@ export default function FormBrand({ getBrands }: { getBrands: any }) {
             {errors.image && (
               <span className="text-xs mt-3 text-red-500">
                 {errors.image.message}
+              </span>
+            )}
+          </div>
+          <div>
+            <label htmlFor="">زیر دسته بندی</label>
+            <select
+              {...register("subCategory", { required: "این فیلد الزامی است" })}
+              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            >
+              <option>انتخاب زیر دسته بندی</option>
+              {subCategory.map((sub) => (
+                <option value={sub._id}>{sub.title}</option>
+              ))}
+            </select>
+            {errors.subCategory && (
+              <span className="text-xs mt-3 text-red-500">
+                {errors.subCategory.message}
               </span>
             )}
           </div>

@@ -38,10 +38,7 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   await db();
 
-  const subCategories = await categoryModel
-    .find()
-    .populate("subCategory")
-    .lean();
+  const subCategories = await subCategoryModel.find({}, "title").lean();
 
-  return NextResponse.json({ message: subCategories });
+  return NextResponse.json(subCategories);
 }

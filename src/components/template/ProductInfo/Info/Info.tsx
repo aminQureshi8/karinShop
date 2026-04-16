@@ -15,11 +15,7 @@ const Info = memo(
     id,
     mainCount,
     breadCrumbs,
-<<<<<<< HEAD
-    mainImage
-=======
     maimImage
->>>>>>> providersFix
   }: any) => {
     return (
       <div>
@@ -30,11 +26,7 @@ const Info = memo(
         <div className="mt-10 rounded-lg shadow-md bg-white dark:bg-gray-800 pl-3 pt-3 pb-3">
           <div className="grid grid-cols-12 gap-5">
             <div className="max-md:col-span-12 col-span-4">
-<<<<<<< HEAD
-              <Gallery images={images} mainImage={mainImage} />
-=======
               <Gallery images={images} maimImage={maimImage} />
->>>>>>> providersFix
             </div>
             <div className="max-md:col-span-12 col-span-8">
               <InformationProduct

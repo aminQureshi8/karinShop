@@ -229,11 +229,7 @@ export default function FormProduct({
             />
           )}
 
-<<<<<<< HEAD
-          {watchedSubCategory === "69d90396f65c21af85254c4e" && (
-=======
           {watchedSubCategory === "69e08d049a4a4a3cedbfd486" && (
->>>>>>> providersFix
             <LapTopFilter
               control={control}
               register={register}

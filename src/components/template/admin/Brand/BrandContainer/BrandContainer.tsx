@@ -5,16 +5,9 @@ import FormBrand from "../Form/FormBrand";
 import TableBrand from "../Table/TableBrand";
 import Brand from "@/types/Brand/Brand.type";
 
-export default function BrandContainer({
-  brands,
-  totalPages,
-}: {
-  brands: Brand[];
-  totalPages: number;
-}) {
-  const [brandState, setBrandState] = useState([...brands]);
-  const [totalPageState, setTotalPageState] = useState(totalPages);
-  const [intialBrand, setintialBrand] = useState([...brands]);
+export default function BrandContainer() {
+  const [brandState, setBrandState] = useState([]);
+  const [totalPageState, setTotalPageState] = useState(0);
 
   const getBrands = useCallback(async (page: number) => {
     const res = await fetch(`/api/brand?page=${page}`);
@@ -35,7 +28,6 @@ export default function BrandContainer({
           brands={brandState}
           getBrands={getBrands}
           totalPageState={totalPageState}
-          intialBrand={intialBrand}
           setBrandState={setBrandState}
         />
       </div>
