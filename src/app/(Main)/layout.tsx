@@ -4,12 +4,13 @@ import Navbar from "@/components/module/Navbar/Navbar";
 import SearchMobile from "@/components/module/SearchMobile/SearchMobile";
 import SearchMobileMenu from "@/components/module/SearchMobileMenu/SearchMobileMenu";
 import ListMenuContainer from "@/components/module/ListMenu/ListMenuContainer";
-import Providers from "../redux/Providers";
+import { Suspense } from "react";
+import MenuSkeleton from "@/components/loading/SkeletonMenu";
 
 export const metadata = {
-  title: "فروشگاه اینترنتی دیجی‌مارکت | خرید لوازم دیجیتال، آرایشی و بهداشتی",
+  title: "فروشگاه اینترنتی کارین شاپ | خرید لوازم دیجیتال، آرایشی و بهداشتی",
   description:
-    "دیجی‌مارکت، فروشگاه آنلاین خرید لوازم دیجیتال، گوشی موبایل، لپ تاپ، لوازم آرایشی و بهداشتی، تجهیزات شخصی، لوازم جانبی و هزاران محصول با بهترین قیمت و ارسال سریع.",
+    "کارین شاپ، فروشگاه آنلاین خرید لوازم دیجیتال، گوشی موبایل، لپ تاپ، لوازم آرایشی و بهداشتی، تجهیزات شخصی، لوازم جانبی و هزاران محصول با بهترین قیمت و ارسال سریع. ساخته شده توسط فلان شخص",
   keywords: [
     "خرید آنلاین",
     "فروشگاه اینترنتی",
@@ -22,20 +23,26 @@ export const metadata = {
     "بهترین قیمت",
     "ارسال سریع",
   ],
+  authors: [
+    {
+      name: "Amin Qureyshi",
+      url: "https://example.com",
+    },
+  ],
   openGraph: {
-    title: "فروشگاه اینترنتی دیجی‌مارکت | خرید بهترین کالاها",
+    title: "فروشگاه اینترنتی کارین شاپ | خرید بهترین کالاها",
     description:
-      "خرید آسان لوازم دیجیتال، آرایشی و بهداشتی با بهترین قیمت و تنوع بالا از دیجی‌مارکت.",
+      "خرید آسان لوازم دیجیتال، آرایشی و بهداشتی با بهترین قیمت و تنوع بالا از کارین شاپ. ساخته شده توسط فلان شخص",
     url: "https://example.com",
-    siteName: "دیجی‌مارکت",
+    siteName: "کارین شاپ",
     locale: "fa_IR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "دیجی‌مارکت | فروشگاه آنلاین",
+    title: "کارین شاپ | فروشگاه آنلاین",
     description:
-      "فروشگاه اینترنتی خرید لوازم دیجیتال، آرایشی و بهداشتی با بهترین قیمت.",
+      "فروشگاه اینترنتی خرید لوازم دیجیتال، آرایشی و بهداشتی با بهترین قیمت. ساخته شده توسط فلان شخص",
   },
 };
 
@@ -46,12 +53,14 @@ export default function RootLayout({
 }>) {
   return (
     <>
-        <MenuMobileJSX />
-        <SearchMobileMenu />
-        <Navbar />
+      <MenuMobileJSX />
+      <SearchMobileMenu />
+      <Navbar />
+      <Suspense fallback={<MenuSkeleton />}>
         <ListMenuContainer />
-        <SearchMobile />
-        <CartNavbar />
+      </Suspense>
+      <SearchMobile />
+      <CartNavbar />
       {/* <NotificationInit/> */}
       {children}
     </>

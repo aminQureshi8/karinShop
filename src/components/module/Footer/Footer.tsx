@@ -1,4 +1,3 @@
-"use cache";
 import FooterTopBtn from "./FooterTopBtn";
 
 export default async function Footer() {

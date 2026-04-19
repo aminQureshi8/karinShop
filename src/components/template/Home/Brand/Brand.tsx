@@ -1,13 +1,12 @@
-"use cache";
 import TopCategory from "@/components/module/Home/TopCategory/TopCategory";
 import { CiMobile3 } from "react-icons/ci";
 import BrandSwiper from "./BrandSwiper";
 import db from "@/config/db";
-import brandModel from "@/models/brand";
+import { getBrands } from "@/lib/getBrands";
 
 export default async function Brand() {
   await db();
-  const brands = await brandModel.find({}, "-__v").lean();
+  const brands = await getBrands();
   return (
     <div className="mt-12">
       <TopCategory
@@ -15,7 +14,7 @@ export default async function Brand() {
         des="جدیدترین و بروزترین محصولات"
         icon={<CiMobile3 size={22} />}
       />
-      <BrandSwiper brands={JSON.parse(JSON.stringify(brands))} />
+      <BrandSwiper brands={JSON.parse(JSON.stringify((brands)))} />
     </div>
   );
 }

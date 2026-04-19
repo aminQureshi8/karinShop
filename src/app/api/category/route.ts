@@ -11,11 +11,6 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 //   api_secret: process.env.CLOUDINARY_API_SECRET!,
 // });
 
-<<<<<<< HEAD
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-
-=======
->>>>>>> providersFix
 const s3Client = new S3Client({
   region: "default", // آروان معمولا روی دکمه default هست یا هر چی تو پنل زده
   endpoint: "https://s3.ir-thr-at1.arvanstorage.ir", // آدرس اصلی بدون نام باکت
@@ -57,32 +52,20 @@ export async function POST(req: NextRequest) {
     const fileName = `${Date.now()}-${file.name}`; // اسم یکتا برای جلوگیری از جایگزینی
     const bucketName = "karinpub";
 
-<<<<<<< HEAD
-    const uploadParams = {
-      Bucket: bucketName,
-      Key: `categories/${fileName}`, // مسیری که فایل ذخیره میشه
-=======
     // ۲. تنظیمات آپلود در S3
     const uploadParams = {
       Bucket: bucketName,
       Key: `categoreies/${fileName}`, // مسیری که فایل ذخیره میشه
->>>>>>> providersFix
       Body: buffer,
       ContentType: file.type,
       ACL: "public-read" as any, // اگه میخوای مستقیم با لینک قابل مشاهده باشه
     };
 
-<<<<<<< HEAD
-    await s3Client.send(new PutObjectCommand(uploadParams));
-
-    const imageUrl = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/categories/${fileName}`;
-=======
     // ۳. اجرای دستور آپلود
     await s3Client.send(new PutObjectCommand(uploadParams));
 
     // ۴. ساختن لینک نهایی تصویر
     const imageUrl = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/categoreies/${fileName}`;
->>>>>>> providersFix
 
     // const buffer = Buffer.from(await file.arrayBuffer());
 

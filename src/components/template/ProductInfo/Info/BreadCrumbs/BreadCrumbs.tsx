@@ -1,4 +1,3 @@
-"use cache";
 import Link from "next/link";
 import { BiHome } from "react-icons/bi";
 import { MdKeyboardArrowLeft } from "react-icons/md";

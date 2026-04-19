@@ -1,5 +1,4 @@
 "use client";
-export const dynamic = "force-dynamic";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef } from "react";
 import { Navigation } from "swiper/modules";
@@ -14,7 +13,7 @@ function SwiperBanner() {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   return (
-    <div className="">
+  <div className="">
       <Swiper
         className="mySwiper rounded-4xl"
         modules={[Autoplay, Navigation]}

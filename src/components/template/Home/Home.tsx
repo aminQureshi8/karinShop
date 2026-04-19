@@ -9,19 +9,40 @@ import Offs from "./Offs/Offs";
 import PopPro from "./PopPro/PopPro";
 import SwiperBanner from "./SwiperBanner/SwiperBanner";
 import Blog from "./Blog/Blog";
-
-
+import { Suspense } from "react";
+import CategorySkeleton from "@/components/loading/SkeletonCategory";
+import SwiperProductSkeleton from "@/components/loading/SkeletonSwiperProduct";
+import SkeletonTopCategory from "@/components/loading/SkeletonTopCategory";
+import SkeletonOffSwiper from "@/components/loading/SkeletonOffSwiper";
+import SkeletonSwiperBanner from "@/components/loading/SkeletonSwiperBanner";
 
 function HomeCompo() {
   return (
     <div className="container mx-auto mt-12">
-      <SwiperBanner />
-      <Category />
-      <Offs />
-      <NewProduct />
+      <Suspense fallback={<SkeletonSwiperBanner />}>
+        <SwiperBanner />
+      </Suspense>
+      <Suspense fallback={<CategorySkeleton />}>
+        <Category />
+      </Suspense>
+      <Suspense fallback={<SkeletonOffSwiper />}>
+        <Offs />
+      </Suspense>
+      <Suspense
+        fallback={
+          <>
+            <SkeletonTopCategory />
+            <SwiperProductSkeleton />
+          </>
+        }
+      >
+        <NewProduct />
+      </Suspense>
       <Banner />
       <PopPro />
-      <Brand />
+      <Suspense fallback={<p>lll</p>}>
+        <Brand />
+      </Suspense>
       <Hot />
       <Blog />
       <Feature />

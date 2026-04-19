@@ -35,6 +35,9 @@ export default async function ProductContent({ id }) {
     ])
     .lean({ virtuals: true });
 
+    console.log(product);
+    
+
   const user = await authUser();
 
   const offPrice = product.campaion
@@ -42,7 +45,7 @@ export default async function ProductContent({ id }) {
     : product.price;
 
   return (
-    <div className="">
+    <div>
       <div className="grid grid-cols-12 gap-5">
         <div className="max-lg:col-span-12 col-span-9">
           <Info
@@ -65,6 +68,7 @@ export default async function ProductContent({ id }) {
             id={product._id.toString()}
             title={product.title.toString()}
             imageUrls={product.imageUrls[0]}
+            campaion={product.campaion}
           />
         </div>
       </div>

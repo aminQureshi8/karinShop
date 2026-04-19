@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import SwiperProduct from "./SwiperProduct";
-import Providers from "@/app/redux/Providers";
+
 
 function SwiperProductContainer({ products }: any) {
   return (

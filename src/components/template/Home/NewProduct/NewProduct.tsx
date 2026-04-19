@@ -3,7 +3,11 @@ import TopCategory from "@/components/module/Home/TopCategory/TopCategory";
 import { CiMobile3 } from "react-icons/ci";
 import SwiperProductContainer from "../SwiperProduct/SwiperProductContainer";
 import productModel from "@/models/product";
+import { connection } from "next/server";
+
 export default async function NewProduct() {
+  await connection();
+
   await db();
   const products = await productModel
     .find({}, "title price mainImage slug count off campaion")

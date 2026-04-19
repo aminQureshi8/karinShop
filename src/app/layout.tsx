@@ -3,7 +3,6 @@ import AuthRefresh from "@/components/module/auth/AuthRefresh";
 import { NextTheme } from "./NextTheme";
 import { danaMedium, danaLight, danaBold } from "./fonts";
 import { Toaster } from "react-hot-toast";
-import TopLoader from "./TopLoader";
 import NextTopLoader from "nextjs-toploader";
 import Providers from "./redux/Providers";
 export default function RootLayout({

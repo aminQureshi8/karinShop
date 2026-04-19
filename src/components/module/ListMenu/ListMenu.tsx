@@ -1,10 +1,10 @@
-"use cache";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { memo } from "react";
 import Link from "next/link";
 import Ui from "./Ui";
-const ListMenu = memo(({ subCategories }: { subCategories: any }) => {
+const ListMenu = memo( async ({ subCategories }: { subCategories: any }) => {
+
   return (
     <div className="container mx-auto">
       <div className="bg-black max-lg:hidden text-white  dark:text-gray-300 dark:bg-slate-800 text-sm  font-danaMed rounded-full mt-5 p-5">

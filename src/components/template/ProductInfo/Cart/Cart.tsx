@@ -56,7 +56,7 @@ function Cart({
           <span className="text-base">تومان</span>
         </p>
         {campaion !== 0 && (
-          <div className="flex text-sm text-blue-500 font-semibold items-center gap-2">
+          <div className="flex text-sm ss02 text-blue-500 font-semibold items-center gap-2">
             <p>{campaion}</p>
             <span>درصد تخفیف</span>
           </div>

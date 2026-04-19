@@ -1,11 +1,12 @@
-
 import TopCategory from "@/components/module/Home/TopCategory/TopCategory";
 import db from "@/config/db";
 import categoryModel from "@/models/category";
 import Image from "next/image";
+import { connection } from "next/server";
 import { BiCategory } from "react-icons/bi";
 
 export default async function Category() {
+  await connection();
   await db();
 
   const categories = await categoryModel

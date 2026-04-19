@@ -1,4 +1,3 @@
-"use cache";
 import productModel from "@/models/product";
 import SwiperRe from "./Swiper/SwiperRe";
 import { Types } from "mongoose";
