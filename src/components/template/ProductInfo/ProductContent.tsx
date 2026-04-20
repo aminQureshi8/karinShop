@@ -1,7 +1,5 @@
-import Providers from "@/app/redux/Providers";
 import { authUser } from "@/app/utils/auth";
 import Footer from "@/components/module/Footer/Footer";
-import Cart from "@/components/template/ProductInfo/Cart/Cart";
 import CartWrapper from "@/components/template/ProductInfo/Cart/CartWrapper";
 import Kh from "@/components/template/ProductInfo/ContainerFeCoIN/Kh";
 import Info from "@/components/template/ProductInfo/Info/Info";
@@ -9,9 +7,7 @@ import Related from "@/components/template/ProductInfo/RelatedProduct/Related";
 import db from "@/config/db";
 import productModel from "@/models/product";
 
-export default async function ProductContent({ id }) {
-  //   const { id } = await params;
-
+export default async function ProductContent({ id }: { id: string }) {
   await db();
 
   const product = await productModel
@@ -32,11 +28,18 @@ export default async function ProductContent({ id }) {
       {
         path: "off",
       },
+      {
+        path: "category",
+        select: "title",
+      },
+      {
+        path: "subCategory",
+        select: "title",
+      },
     ])
     .lean({ virtuals: true });
 
-    console.log(product);
-    
+
 
   const user = await authUser();
 
@@ -58,6 +61,8 @@ export default async function ProductContent({ id }) {
             title={product.title}
             mainCount={product.count}
             maimImage={product.mainImage}
+            category={product.category.title}
+            subCategory={product.subCategory.title}
           />
         </div>
         <div className="max-lg:col-span-12 col-span-3">

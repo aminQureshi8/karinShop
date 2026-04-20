@@ -17,7 +17,7 @@ const FEATURES = {
     وزن: "weight",
   },
 
-  "69dba029f808ac0ac3da94a1": {
+  "69e638587b8600310bd0621b": {
     برند: "brand",
     مدل: "model",
     "حافظه داخلی": "storage",

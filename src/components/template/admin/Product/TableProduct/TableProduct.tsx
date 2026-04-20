@@ -25,11 +25,13 @@ import TableLayout from "@/components/module/Table/Table";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
 import Pagination from "@/components/module/Pagination/Pagination";
+import SkeletonTableProduct from "./SkeletonTableProduct";
 
 export default function TableProduct({
   products,
   getProducts,
   totalPages,
+  isLoading,
 }: any) {
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
@@ -75,59 +77,66 @@ export default function TableProduct({
               <TableHead className="text-right font-bold">عملیات</TableHead>
             </TableRow>
           </TableHeader>
+
           <TableBody>
-            {products.map((p: any, index: any) => (
-              <TableRow
-                key={p._id}
-                className="transition-colors hover:bg-muted/40"
-              >
-                <TableCell className="font-medium ss02">
-                  {(currentPage - 1) * 3 + index + 1}
-                </TableCell>
-                <TableCell className="font-medium">
-                  <Image
-                    src={p.mainImage}
-                    width={100}
-                    height={100}
-                    alt="Image"
-                  />
-                </TableCell>
-                <TableCell>{p.title}</TableCell>
-                <TableCell>{p.price}</TableCell>
-                <TableCell>{p.count}</TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="size-8 cursor-pointer"
-                      >
-                        <MoreHorizontalIcon />
-                        <span className="sr-only">Open menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                      // onClick={() => {
-                      //   setIsOpen(true);
-                      //   setEditCategoryObject(cat);
-                      // }}
-                      >
-                        ویرایش
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        variant="destructive"
-                        // onClick={() => removeCategory(cat._id)}
-                      >
-                        حذف
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
+            {isLoading ? (
+              <SkeletonTableProduct />
+            ) : products.length === 0 ? (
+              <div>j</div>
+            ) : (
+              products.map((p: any, index: any) => (
+                <TableRow
+                  key={p._id}
+                  className="transition-colors hover:bg-muted/40"
+                >
+                  <TableCell className="font-medium ss02">
+                    {(currentPage - 1) * 3 + index + 1}
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    <Image
+                      src={p.mainImage}
+                      width={100}
+                      height={100}
+                      alt="Image"
+                    />
+                  </TableCell>
+                  <TableCell>{p.title}</TableCell>
+                  <TableCell>{p.price}</TableCell>
+                  <TableCell>{p.count}</TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-8 cursor-pointer"
+                        >
+                          <MoreHorizontalIcon />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                        // onClick={() => {
+                        //   setIsOpen(true);
+                        //   setEditCategoryObject(cat);
+                        // }}
+                        >
+                          ویرایش
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          variant="destructive"
+                          onClick={() => removePro(p._id)}
+                        >
+                          حذف
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </TableLayout>
         {totalPages > 1 && (

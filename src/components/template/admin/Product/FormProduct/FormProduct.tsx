@@ -214,7 +214,7 @@ export default function FormProduct({
             </div>
           )}
 
-          {watchedSubCategory === "69dba029f808ac0ac3da94a1" && (
+          {watchedSubCategory === "69e638587b8600310bd0621b" && (
             <MobileFilter
               control={control}
               register={register}
@@ -440,11 +440,7 @@ export default function FormProduct({
           type="submit"
           className="mt-6 px-6 py-2 rounded-lg bg-blue-600 text-white"
         >
-          {isLoading ? (
-            <BeatLoader color="white" className="size-3" />
-          ) : (
-            "ثبت محصول"
-          )}
+          {isLoading ? <BeatLoader color="white" size={9} /> : "ثبت محصول"}
         </button>
       </form>
     </div>

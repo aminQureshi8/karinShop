@@ -6,6 +6,7 @@ import TableProduct from "./TableProduct/TableProduct";
 export default function ProductContainer() {
   const [productState, setProductState] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getProducts = async (page: number) => {
     const res = await fetch(`/api/admin/product?page=${page}`);
@@ -14,6 +15,7 @@ export default function ProductContainer() {
 
     setProductState(result.products);
     setTotalPages(result.totalPage);
+    setIsLoading(false);
   };
 
   return (
@@ -22,7 +24,12 @@ export default function ProductContainer() {
         <Search />
       </div>
       <div>
-        <TableProduct products={productState} getProducts={getProducts} totalPages={totalPages} />
+        <TableProduct
+          products={productState}
+          getProducts={getProducts}
+          totalPages={totalPages}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );

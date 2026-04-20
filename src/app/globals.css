@@ -10,12 +10,6 @@
   --font-danaLight: var(--font-danaLight);
 }
 
-/* @layer components {
-  .swal-popup {
-    @apply text-sm sm:text-base;
-  }
-} */
-
 @utility ss02 {
   -moz-font-feature-settings: "ss02";
   -webkit-font-feature-settings: "ss02";
@@ -218,4 +212,48 @@
   border-radius: 9999px;
   cursor: pointer;
   border: none;
+}
+
+/* Dark mode editor background */
+.dark .ck.ck-editor__main > .ck-editor__editable {
+  background-color: #1f1f1f !important;
+  color: #f5f5f5 !important;
+}
+
+/* Toolbar background */
+.dark .ck.ck-toolbar {
+  background-color: #2a2a2a !important;
+  border-color: #3a3a3a !important;
+}
+
+/* Toolbar buttons text */
+.dark .ck.ck-button .ck-button__label {
+  color: #e5e7eb !important;
+}
+
+/* Icons */
+.dark .ck.ck-icon {
+  color: #e5e7eb !important;
+}
+
+.dark .ck.ck-icon svg {
+  fill: #e5e7eb !important;
+}
+
+/* Hover state */
+.dark .ck.ck-button:hover {
+  background-color: #3a3a3a !important;
+}
+
+.dark .ck.ck-button:hover .ck-icon svg {
+  fill: #ffffff !important;
+}
+
+/* Active button */
+.dark .ck.ck-button.ck-on {
+  background-color: #444 !important;
+}
+
+.dark .ck.ck-button.ck-on .ck-icon svg {
+  fill: #ffffff !important;
 }

@@ -15,12 +15,14 @@ const Info = memo(
     id,
     mainCount,
     breadCrumbs,
-    maimImage
+    maimImage,
+    category,
+    subCategory,
   }: any) => {
     return (
       <div>
         <div>
-          <BreadCrumbs />
+          <BreadCrumbs category={category} subCategory={subCategory} />
         </div>
 
         <div className="mt-10 rounded-lg shadow-md bg-white dark:bg-gray-800 pl-3 pt-3 pb-3">
