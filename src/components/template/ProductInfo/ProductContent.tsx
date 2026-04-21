@@ -39,8 +39,6 @@ export default async function ProductContent({ id }: { id: string }) {
     ])
     .lean({ virtuals: true });
 
-
-
   const user = await authUser();
 
   const offPrice = product.campaion
@@ -74,6 +72,7 @@ export default async function ProductContent({ id }: { id: string }) {
             title={product.title.toString()}
             imageUrls={product.imageUrls[0]}
             campaion={product.campaion}
+            mainImage={product.mainImage}
           />
         </div>
       </div>

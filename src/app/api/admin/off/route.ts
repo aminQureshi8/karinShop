@@ -13,7 +13,11 @@ export async function POST(req: NextRequest) {
 
     if (option === "all") {
       await offModel.deleteMany({});
-      await offModel.create({ dateTime, percent });
+      await offModel.create({
+        dateTime,
+        percent: JSON.parse(percent),
+        type: "all",
+      });
       await productModel.updateMany(
         {},
         {
@@ -26,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     if (option === "many") {
       const getProducts = products?.split("|");
-      await offModel.create({ dateTime, percent });
+      await offModel.create({ dateTime, percent, type: "many" });
       await productModel.updateMany(
         { _id: { $in: getProducts } },
         {
@@ -47,7 +51,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ dateTime, percent, option, products });
   } catch (error) {
-    // return NextResponse.json({ message: error.message });
+    return NextResponse.json(
+      { message: error.message || "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
 
