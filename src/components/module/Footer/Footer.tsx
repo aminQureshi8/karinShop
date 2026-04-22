@@ -1,10 +1,11 @@
 import { BsInstagram, BsLinkedin, BsTelegram, BsYoutube } from "react-icons/bs";
 import FooterTopBtn from "./FooterTopBtn";
+import Image from "next/image";
 
 export default async function Footer() {
   return (
     <div className="bg-slate-900 dark:bg-slate-800 rounded-xl p-5 mb-12">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5">
         <div className="lg:col-span-2">
           <h2 className="text-white font-bold">درباره کارین شاپ</h2>
           <p className="text-gray-400 mt-5 leading-8">
@@ -40,25 +41,43 @@ export default async function Footer() {
         </div>
         <div>
           <h2 className="text-white font-bold">تماس با ما</h2>
-          <ul className="text-gray-400 mt-5 text-sm">
+          <ul className="text-gray-400 mt-5 text-sm flex flex-col gap-5">
             <li className="flex items-center justify-between">
               <p>شماره تماس:</p>
               <p>۰۹۰۵۲۰۱۸۷۵۱</p>
             </li>
+            <li className="flex items-center justify-between">
+              <p>ادرس ایمیل:</p>
+              <p>amin.ghoreishi86@gmail.com</p>
+            </li>
           </ul>
         </div>
-        <div>
+        <div className="flex flex-col items-center">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="bg-gray-900 rounded-xl p-3 size-22">
+              <Image src="/image/logo.png" alt="" width={80} height={60} />
+            </div>
+            <div className="bg-gray-900 rounded-xl p-3 size-22">
+              <Image src="/image/kasbokar.webp" alt="" width={80} height={60} />
+            </div>
+          </div>
           <FooterTopBtn />
         </div>
       </div>
-      <div className="bg-gray-900 rounded-xl p-5 flex items-center justify-between">
+      <div className="bg-gray-900 mt-5 rounded-xl p-5 flex items-center justify-between">
         <div>
           <h2>کارین شاپ</h2>
         </div>
         <div className="relative">
-          <input type="text" placeholder="از جدید ترین تخفیف ها با خبر شوید" className="bg-gray-800 rounded-lg p-2 w-82" />
+          <input
+            type="text"
+            placeholder="از جدید ترین تخفیف ها با خبر شوید"
+            className="bg-gray-800 rounded-lg p-2 w-82"
+          />
           <div className="absolute left-0 top-0">
-            <button className="bg-blue-500 text-white rounded-xl px-4">ثبت</button>
+            <button className="bg-blue-500 text-white rounded-xl px-4">
+              ثبت
+            </button>
           </div>
         </div>
       </div>

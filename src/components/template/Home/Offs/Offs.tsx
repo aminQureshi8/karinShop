@@ -16,8 +16,6 @@ export default async function Offs() {
 
   const off = await offModel.find({}, "dateTime").lean();
 
-
-
   return (
     <>
       <OffSwiper
