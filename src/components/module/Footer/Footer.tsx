@@ -1,3 +1,4 @@
+import { BsInstagram, BsLinkedin, BsTelegram, BsYoutube } from "react-icons/bs";
 import FooterTopBtn from "./FooterTopBtn";
 
 export default async function Footer() {
@@ -12,6 +13,20 @@ export default async function Footer() {
             با انتخاب محصولات ما، تجربه‌ای حرفه‌ای و لذت‌بخش از فناوری را در
             خانه یا محل کار داشته باشید.
           </p>
+          <div className="flex items-center gap-3 mt-5">
+            <div className="bg-gray-900 p-3 rounded-xl">
+              <BsInstagram size={23} className=" text-blue-500" />
+            </div>
+            <div className="bg-gray-900 p-3 rounded-xl">
+              <BsTelegram size={23} className=" text-blue-500" />
+            </div>
+            <div className="bg-gray-900 p-3 rounded-xl">
+              <BsLinkedin size={23} className=" text-blue-500" />
+            </div>
+            <div className="bg-gray-900 p-3 rounded-xl">
+              <BsYoutube size={23} className=" text-blue-500" />
+            </div>
+          </div>
         </div>
 
         <div>
@@ -34,6 +49,17 @@ export default async function Footer() {
         </div>
         <div>
           <FooterTopBtn />
+        </div>
+      </div>
+      <div className="bg-gray-900 rounded-xl p-5 flex items-center justify-between">
+        <div>
+          <h2>کارین شاپ</h2>
+        </div>
+        <div className="relative">
+          <input type="text" placeholder="از جدید ترین تخفیف ها با خبر شوید" className="bg-gray-800 rounded-lg p-2 w-82" />
+          <div className="absolute left-0 top-0">
+            <button className="bg-blue-500 text-white rounded-xl px-4">ثبت</button>
+          </div>
         </div>
       </div>
     </div>

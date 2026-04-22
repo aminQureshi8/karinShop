@@ -1,10 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  turbopack: {},
 
+  reactCompiler: true,
   cacheComponents: true,
+
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -21,10 +22,9 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "karinpub.s3.ir-thr-at1.arvanstorage.ir",
       },
-      { protocol: "https", hostname: "res.cloudinary.com" },
       {
         protocol: "https",
-        hostname: "karinpub.s3.ir-thr-at1.arvanstorage.ir",
+        hostname: "res.cloudinary.com",
       },
     ],
   },
