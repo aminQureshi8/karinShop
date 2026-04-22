@@ -16,7 +16,7 @@ export default async function Offs() {
 
   const off = await offModel.find({}, "dateTime").lean();
 
-  console.log("off", off.dateTime);
+
 
   return (
     <>
