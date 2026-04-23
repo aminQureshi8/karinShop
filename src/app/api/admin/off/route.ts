@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     if (option === "all") {
       await offModel.deleteMany({});
-      await offModel.create({
+      const off = await offModel.create({
         dateTime,
         percent: JSON.parse(percent),
         type: "all",
@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
         {},
         {
           $set: {
+            off: off._id,
             campaion: JSON.parse(percent),
           },
         },

@@ -20,8 +20,8 @@ export default function SwiperProduct({ product }: any) {
     state.whish.some((item) => item.id === product._id),
   );
 
-  const offPrice = product.campaion
-    ? product.price - (product.price * product.campaion) / 100
+  const offPrice = product.off?.percent
+    ? product.price - (product.price * product.off.percent) / 100
     : product.price;
 
   const handleCartClick = () => {
@@ -97,10 +97,10 @@ export default function SwiperProduct({ product }: any) {
             </div>
           </div>
         </div>
-        {product.campaion > 0 && (
+        {product.off?.percent > 0 && (
           <div className="absolute select-none top-0 z-30 -left-4 flex items-center gap-2">
             <span className="text-blue-500 text-xs font-danaMed font-bold">
-              %{product.campaion} تخفیف
+              %{product.off?.percent} تخفیف
             </span>
 
             <div className="w-1.5 h-8 bg-blue-500 rounded-r-md"></div>
@@ -112,7 +112,7 @@ export default function SwiperProduct({ product }: any) {
 
       <div className="border-t-2 border-gray-200 dark:border-gray-700 flex gap-1 items-center justify-end pt-3">
         <del className="text-xs text-gray-500">
-          {product.campaion !== 0 && product.price.toLocaleString("fa-IR")}
+          {product?.off?.percent !== 0 && product.price.toLocaleString("fa-IR")}
         </del>
         <span>{offPrice.toLocaleString("fa-IR")}</span>
         <span className="text-white bg-blue-500 rounded-full px-2 py-1 text-xs">

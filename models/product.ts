@@ -46,18 +46,16 @@ const product = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  off: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "off",
+  },
 });
 
 product.virtual("comments", {
   foreignField: "product",
   localField: "_id",
   ref: "comment",
-});
-
-product.virtual("off", {
-  foreignField: "products",
-  localField: "_id",
-  ref: "off",
 });
 
 const productModel =

@@ -64,7 +64,7 @@ export default function OffSwiper({ products, dateTime }: { products: any }) {
 
               <div className="mt-3 flex justify-between items-center border-t-2 pt-2 border-gray-200 dark:border-gray-700">
                 <span className="text-xs ss02 text-white bg-blue-500 px-2 py-1 rounded">
-                  {product.campaion}٪
+                  {product.off?.percent}٪
                 </span>
                 <span className="text-sm ss02">
                   {product.price.toLocaleString()} تومان
