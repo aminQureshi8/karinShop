@@ -17,7 +17,6 @@ export default async function NewProduct() {
     { off: { $nin: activeOffIds } },
     { $set: { off: null, campaion: 0 } },
   );
-  // ********************************
 
   const products = await productModel
     .find({}, "title price mainImage slug count")

@@ -13,6 +13,9 @@ export default async function ListMenuContainer() {
     .populate("brands", "title")
     .lean()
     .exec();
+
+    console.log(subCategories);
+    
   return (
     <>
       <ListMenu subCategories={JSON.parse(JSON.stringify(subCategories))} />

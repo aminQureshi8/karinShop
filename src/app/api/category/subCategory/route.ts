@@ -3,6 +3,17 @@ import db from "@/config/db";
 import categoryModel from "@/models/category";
 import subCategoryModel from "@/models/subCategory";
 import { NextRequest, NextResponse } from "next/server";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+
+const s3Client = new S3Client({
+  region: "default",
+  endpoint: "https://s3.ir-thr-at1.arvanstorage.ir",
+  credentials: {
+    accessKeyId: "e69db9fc-d4a0-47f1-81e2-d556e2846ae6",
+    secretAccessKey:
+      "72400bfa4d81ade44cb80d5e89cd9ddf794dc6cd1dc314da19c4eb69fb5670c5",
+  },
+});
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,12 +26,13 @@ export async function POST(req: NextRequest) {
 
     await db();
 
-    const { title, href, category } = await req.json();
+    const { title, href, category, icon } = await req.json();
 
     await subCategoryModel.create({
       title,
       href,
       category,
+      icon,
     });
 
     return NextResponse.json(

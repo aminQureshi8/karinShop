@@ -5,7 +5,9 @@ const category = new mongoose.Schema(
     title: { type: String, required: true },
     imageUrl: { type: String },
   },
-
+  {
+    timestamps: true,
+  },
 );
 
 category.virtual("subCategory", {

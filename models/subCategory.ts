@@ -15,6 +15,10 @@ const subCategory = new mongoose.Schema(
       ref: "category",
       required: true,
     },
+    icon: {
+      type: String,
+      required: true,
+    },
   },
   {
     toJSON: { virtuals: true },

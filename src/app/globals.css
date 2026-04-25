@@ -257,3 +257,19 @@
 .dark .ck.ck-button.ck-on .ck-icon svg {
   fill: #ffffff !important;
 }
+
+.brand-title {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.brand-title::after {
+  content: "";
+  width: 3px;
+  height: 24px;
+  background: #4da3ff;
+  margin-right: 12px;
+}
