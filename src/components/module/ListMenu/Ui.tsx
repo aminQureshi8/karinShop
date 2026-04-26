@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubCate from "./SubCate";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
@@ -8,9 +8,37 @@ export default function Ui({ subCategories }: { subCategories: any }) {
   const [brandState, setBrandState] = useState([]);
   const [section, setSection] = useState("/mobile");
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const firstFetch = async () => {
+      try {
+        const res = await fetch(
+          `/api/brand/subCate?sub=69ec882d66035179b28972f6`,
+          { signal: controller.signal },
+        );
+        const data = await res.json();
+        setBrandState(data.findsBrand);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          console.error(err);
+        }
+      }
+    };
+
+    firstFetch();
+
+    return () => controller.abort();
+  }, []);
+
   const sectionTitle = {
     "/mobile": "موبایل",
     "/laptop": "لپ تاپ",
+  }[section];
+
+  const liTags = {
+    "/mobile": ["گوشی ارزان", "گوشی موبایل قسطی"],
+    "/laptop": ["لپ تاپ اقتصادی", "لپ تاپ تا ۱۰ میلیون تومان"],
   }[section];
 
   return (
@@ -18,7 +46,7 @@ export default function Ui({ subCategories }: { subCategories: any }) {
       <div className="h-80">
         <div className="p-5 grid grid-cols-3 gap-5 h-full">
           <div className="bg-gray-100 text-black dark:text-white dark:bg-black !h-full rounded-xl p-3">
-            <ul className="flex flex-col gap-5">
+            <ul className="flex flex-col">
               {subCategories.map((sub: any) => (
                 <SubCate
                   key={sub._id}
@@ -57,9 +85,9 @@ export default function Ui({ subCategories }: { subCategories: any }) {
                     بر اساس قیمت {sectionTitle} :
                   </h2>
                   <ul className="flex flex-col gap-3 mt-2">
-                    <li>لب تاب</li>
-                    <li>لب تاب</li>
-                    <li>لب تاب</li>
+                    {liTags?.map((li) => (
+                      <li>{li}</li>
+                    ))}
                   </ul>
                 </div>
                 <div>
