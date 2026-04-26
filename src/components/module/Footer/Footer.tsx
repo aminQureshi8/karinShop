@@ -72,7 +72,7 @@ export default async function Footer() {
           <input
             type="text"
             placeholder="از جدید ترین تخفیف ها با خبر شوید"
-            className="bg-gray-800 rounded-lg p-2 w-82"
+            className="bg-gray-800 rounded-lg p-2 max-sm:w-40 w-82"
           />
           <div className="absolute left-0 top-0">
             <button className="bg-blue-500 text-white rounded-xl px-4">

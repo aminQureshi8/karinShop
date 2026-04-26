@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Feature() {
   return (
-    <div className="grid grid-cols-5 font-danaMed">
+    <div className="grid max-sm:grid-cols-1 grid-cols-5 font-danaMed">
       <div className="flex flex-col items-center">
         <Image src="/image/1.svg" width={50} height={50} alt="fe" />
         <p className="text-sm text-gray-700 dark:text-gray-400">
