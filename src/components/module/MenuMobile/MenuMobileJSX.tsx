@@ -11,9 +11,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 
 export default function MenuMobileJSX() {
-  const [categorySection, setCategorySection] = useState(null);
+  const [categorySection, setCategorySection] = useState<string | null>(null);
 
   const router = usePathname();
 
@@ -27,18 +28,25 @@ export default function MenuMobileJSX() {
   return (
     <>
       <div
-        className={`fixed w-[250px] z-20 bg-white dark:bg-gray-800 inset-y-0 transition-all overflow-hidden
-          ${isOpen ? "right-0" : "-right-[250px]"}`}
+        className={`fixed w-[300px] z-20 bg-white dark:bg-gray-800 inset-y-0 transition-all max-sm:overflow-auto overflow-hidden
+          ${isOpen ? "right-0" : "-right-[300px]"}`}
       >
         <div className="p-3 font-danaMed text-sm relative">
+          {/* Main Menu */}
           <div
             className={`transition-transform duration-300 ${
-              categorySection === null ? "translate-x-0" : "-translate-x-full"
+              categorySection === null ? "translate-x-0" : "-translate-x-[107%]"
             }`}
           >
             <div className="flex items-center justify-between border-b-2 border-gray-200 pb-3 dark:border-b-gray-700">
               <h2>کارین شاپ</h2>
-              <IoCloseOutline size={19} onClick={() => dispatch(closeMenu())} />
+              <IoCloseOutline
+                size={19}
+                onClick={() => {
+                  dispatch(closeMenu());
+                  setCategorySection(null);
+                }}
+              />
             </div>
 
             <ul className="mt-5 flex flex-col gap-5">
@@ -72,9 +80,14 @@ export default function MenuMobileJSX() {
             </ul>
           </div>
 
+          {/* Category List */}
           <div
-            className={`absolute inset-0 p-3 bg-white dark:bg-gray-800 transition-transform duration-300 ${
-              categorySection === null ? "translate-x-full" : "translate-x-0"
+            className={`absolute min-h-screen inset-0 p-3 bg-white dark:bg-gray-800 transition-transform duration-300 ${
+              categorySection === "cat"
+                ? "translate-x-0"
+                : categorySection === null
+                  ? "translate-x-full"
+                  : "translate-x-0"
             }`}
           >
             <div
@@ -86,9 +99,158 @@ export default function MenuMobileJSX() {
             </div>
 
             <ul className="mt-5 flex flex-col gap-5">
-              <li>دسته ۱</li>
-              <li>دسته ۲</li>
-              <li>دسته ۳</li>
+              <li
+                className="relative w-full h-40 rounded-lg overflow-hidden cursor-pointer"
+                onClick={() => setCategorySection("mobile")}
+              >
+                <Image
+                  src="/image/1 copy.webp"
+                  fill
+                  alt="دسته بندی"
+                  className="object-cover"
+                />
+                <div className="absolute bg-blue-500 text-white p-2 text-xs">
+                  <p>موبایل</p>
+                </div>
+              </li>
+              <li
+                className="relative w-full h-40 rounded-lg overflow-hidden cursor-pointer"
+                onClick={() => setCategorySection("laptop")}
+              >
+                <Image
+                  src="/image/2.jpg"
+                  fill
+                  alt="دسته بندی"
+                  className="object-cover"
+                />
+                <div className="absolute bg-blue-500 text-white p-2 text-xs">
+                  <p>لپ تاپ</p>
+                </div>
+              </li>
+              <li
+                className="relative w-full h-40 rounded-lg overflow-hidden cursor-pointer"
+                onClick={() => setCategorySection("headphone")}
+              >
+                <Image
+                  src="/image/4 (1).webp"
+                  fill
+                  alt="دسته بندی"
+                  className="object-cover"
+                />
+                <div className="absolute bg-blue-500 text-white p-2 text-xs">
+                  <p>هدفون</p>
+                </div>
+              </li>
+              <li
+                className="relative w-full h-40 rounded-lg overflow-hidden cursor-pointer"
+                onClick={() => setCategorySection("bestseller")}
+              >
+                <Image
+                  src="/image/3.webp"
+                  fill
+                  alt="دسته بندی"
+                  className="object-cover"
+                />
+                <div className="absolute bg-blue-500 text-white p-2 text-xs">
+                  <p>پرفروش ها</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          {/* Mobile Category Detail */}
+          <div
+            className={`absolute inset-0 min-h-screen p-3 bg-white dark:bg-gray-800 transition-transform duration-300 ${
+              categorySection === "mobile"
+                ? "translate-x-0"
+                : "translate-x-full"
+            }`}
+          >
+            <div
+              className="flex items-center gap-2 border-b-2 border-gray-200 pb-3 dark:border-b-gray-700 cursor-pointer"
+              onClick={() => setCategorySection("cat")}
+            >
+              <h2>موبایل</h2>
+              <ArrowLeft size={15} />
+            </div>
+
+            <ul className="mt-5 flex flex-col gap-3">
+              <li className="cursor-pointer hover:text-blue-500">سامسونگ</li>
+              <li className="cursor-pointer hover:text-blue-500">اپل</li>
+              <li className="cursor-pointer hover:text-blue-500">شیائومی</li>
+              <li className="cursor-pointer hover:text-blue-500">نوکیا</li>
+            </ul>
+          </div>
+
+          {/* Laptop Category Detail */}
+          <div
+            className={`absolute min-h-screen inset-0 p-3 bg-white dark:bg-gray-800 transition-transform duration-300 ${
+              categorySection === "laptop"
+                ? "translate-x-0"
+                : "translate-x-full"
+            }`}
+          >
+            <div
+              className="flex items-center gap-2 border-b-2 border-gray-200 pb-3 dark:border-b-gray-700 cursor-pointer"
+              onClick={() => setCategorySection("cat")}
+            >
+              <h2>لپ تاپ</h2>
+              <ArrowLeft size={15} />
+            </div>
+
+            <ul className="mt-5 flex flex-col gap-3">
+              <li className="cursor-pointer hover:text-blue-500">ایسوس</li>
+              <li className="cursor-pointer hover:text-blue-500">لنوو</li>
+              <li className="cursor-pointer hover:text-blue-500">اچ پی</li>
+              <li className="cursor-pointer hover:text-blue-500">دل</li>
+            </ul>
+          </div>
+
+          {/* Headphone Category Detail */}
+          <div
+            className={`absolute min-h-screen inset-0 p-3 bg-white dark:bg-gray-800 transition-transform duration-300 ${
+              categorySection === "headphone"
+                ? "translate-x-0"
+                : "translate-x-full"
+            }`}
+          >
+            <div
+              className="flex items-center gap-2 border-b-2 border-gray-200 pb-3 dark:border-b-gray-700 cursor-pointer"
+              onClick={() => setCategorySection("cat")}
+            >
+              <h2>هدفون</h2>
+              <ArrowLeft size={15} />
+            </div>
+
+            <ul className="mt-5 flex flex-col gap-3">
+              <li className="cursor-pointer hover:text-blue-500">سونی</li>
+              <li className="cursor-pointer hover:text-blue-500">بیتس</li>
+              <li className="cursor-pointer hover:text-blue-500">جی بی ال</li>
+              <li className="cursor-pointer hover:text-blue-500">سنهایزر</li>
+            </ul>
+          </div>
+
+          {/* Bestseller Category Detail */}
+          <div
+            className={`absolute min-h-screen inset-0 p-3 bg-white dark:bg-gray-800 transition-transform duration-300 ${
+              categorySection === "bestseller"
+                ? "translate-x-0"
+                : "translate-x-full"
+            }`}
+          >
+            <div
+              className="flex items-center gap-2 border-b-2 border-gray-200 pb-3 dark:border-b-gray-700 cursor-pointer"
+              onClick={() => setCategorySection("cat")}
+            >
+              <h2>پرفروش ها</h2>
+              <ArrowLeft size={15} />
+            </div>
+
+            <ul className="mt-5 flex flex-col gap-3">
+              <li className="cursor-pointer hover:text-blue-500">محصول ۱</li>
+              <li className="cursor-pointer hover:text-blue-500">محصول ۲</li>
+              <li className="cursor-pointer hover:text-blue-500">محصول ۳</li>
+              <li className="cursor-pointer hover:text-blue-500">محصول ۴</li>
             </ul>
           </div>
         </div>
@@ -96,7 +258,10 @@ export default function MenuMobileJSX() {
 
       {isOpen && (
         <div
-          onClick={() => dispatch(closeMenu())}
+          onClick={() => {
+            dispatch(closeMenu());
+            setCategorySection(null);
+          }}
           className="bg-black/60 fixed inset-0 z-10"
         ></div>
       )}

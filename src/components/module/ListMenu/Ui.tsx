@@ -72,8 +72,11 @@ export default function Ui({ subCategories }: { subCategories: any }) {
                   </h2>
 
                   <ul className="flex flex-col gap-3 mt-2">
-                    {brandState.map((brand: any) => (
-                      <li className=" text-gray-600 dark:text-gray-400">
+                    {brandState.map((brand: any, index: number) => (
+                      <li
+                        key={index}
+                        className=" text-gray-600 dark:text-gray-400"
+                      >
                         {brand.title}
                       </li>
                     ))}
@@ -85,8 +88,8 @@ export default function Ui({ subCategories }: { subCategories: any }) {
                     بر اساس قیمت {sectionTitle} :
                   </h2>
                   <ul className="flex flex-col gap-3 mt-2">
-                    {liTags?.map((li) => (
-                      <li>{li}</li>
+                    {liTags?.map((li, index) => (
+                      <li key={index}>{li}</li>
                     ))}
                   </ul>
                 </div>
