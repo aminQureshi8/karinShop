@@ -1,5 +1,4 @@
-import SideBar from "@/components/module/admin/SideBar/SideBar";
-
+import SideBar from "@/components/module/sideBarProfile/SideBar";
 
 const SideBarMemo = () => {
   return (

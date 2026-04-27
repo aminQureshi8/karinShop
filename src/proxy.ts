@@ -9,12 +9,42 @@ export async function proxy(request: NextRequest) {
 
   if (pathname.startsWith("/my-account")) {
     if (!token && !refreshToken) {
-      return NextResponse.redirect(new URL("/auth", request.url));
+      return NextResponse.redirect(new URL("/register/auth", request.url));
+    }
+
+    if (token) {
+      try {
+        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+        const { payload } = await jwtVerify(token, secret);
+
+        if (pathname.startsWith("/my-account")) {
+          if (payload.role !== "USER") {
+            return NextResponse.redirect(new URL("/", request.url));
+          }
+        }
+
+        return NextResponse.next();
+      } catch (error) {
+        if (refreshToken) {
+          return NextResponse.next();
+        }
+        return NextResponse.redirect(new URL("/register/auth", request.url));
+      }
+    }
+
+    if (refreshToken) {
+      try {
+        const secret = new TextEncoder().encode(process.env.JWT_SECRET_REFRESH);
+        await jwtVerify(refreshToken, secret);
+        return NextResponse.next();
+      } catch (error) {
+        return NextResponse.redirect(new URL("/register/auth", request.url));
+      }
     }
   }
   if (pathname.startsWith("/admin")) {
     if (!token || !refreshToken) {
-      return NextResponse.redirect(new URL("/auth", request.url));
+      return NextResponse.redirect(new URL("/register/auth", request.url));
     }
 
     if (token) {
@@ -33,7 +63,7 @@ export async function proxy(request: NextRequest) {
         if (refreshToken) {
           return NextResponse.next();
         }
-        return NextResponse.redirect(new URL("/auth", request.url));
+        return NextResponse.redirect(new URL("/register/auth", request.url));
       }
     }
 
@@ -43,12 +73,12 @@ export async function proxy(request: NextRequest) {
         await jwtVerify(refreshToken, secret);
         return NextResponse.next();
       } catch (error) {
-        return NextResponse.redirect(new URL("/auth", request.url));
+        return NextResponse.redirect(new URL("/register/auth", request.url));
       }
     }
   }
 
-  if (pathname.startsWith("/auth")) {
+  if (pathname.startsWith("/register/auth")) {
     if (token) {
       try {
         await jwtVerify(
@@ -62,5 +92,5 @@ export async function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 export const config = {
-  matcher: ["/admin/:path*", "/auth", "/my-account/:path*"],
+  matcher: ["/admin/:path*", "/register/auth", "/my-account/:path*"],
 };
