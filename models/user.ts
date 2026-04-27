@@ -5,7 +5,7 @@ const user = new mongoose.Schema({
   email: { type: String },
   phone: { type: String },
   role: { type: String, enum: ["ADMIN", "USER"], default: "USER" },
-  userName: { type: String },
+  dateTime: { type: Date, require: true },
   refreshToken: { type: String },
 });
 
