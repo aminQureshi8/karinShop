@@ -18,7 +18,7 @@ export default function AuthOtp() {
     inputsRef.current[0]?.focus();
   }, []);
 
-  const { register, handleSubmit, setValue, watch } = useForm({
+  const { register, handleSubmit, reset, setValue, watch } = useForm({
     defaultValues: {
       otp: Array(6).fill(""),
     },
@@ -59,10 +59,9 @@ export default function AuthOtp() {
         body: JSON.stringify({ otpCode, identifier }),
       });
 
-      const result = await res.json();
-
       if (res.ok) {
         router.push("/");
+        reset();
       }
     } catch (error) {
     } finally {
