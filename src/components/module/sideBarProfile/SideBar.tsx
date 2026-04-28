@@ -7,10 +7,16 @@ import { BsBasket } from "react-icons/bs";
 import { HeartIcon, Settings2Icon } from "lucide-react";
 import { IoNotifications } from "react-icons/io5";
 import { authUser } from "@/app/utils/auth";
+import userModel from "@/models/user";
 const SideBar = memo(async () => {
   const user = await authUser();
 
-  console.log(user);
+  const findUser = await userModel.findOne(
+    { _id: user?.user?._id },
+    "name phone",
+  );
+
+  console.log(findUser);
 
   return (
     <div className="bg-white rounded-lg dark:bg-slate-800">
@@ -27,19 +33,21 @@ const SideBar = memo(async () => {
               />
             </div>
             <div>
-              <h2 className="text-base font-semibold">پارسا واصلی</h2>
+              <h2 className="text-base font-semibold">{findUser?.name || "بدون نام"}</h2>
               <p className="text-xs mt-1 text-gray-600 dark:text-gray-300">
-                09052019751
+                {findUser?.phone || "بدون شماره"}
               </p>
             </div>
           </div>
           <div>
-            <CiEdit size={24} className="text-blue-500" />
+            <Link href="/my-account/information">
+              <CiEdit size={24} className="text-blue-500" />
+            </Link>
           </div>
         </div>
         <div className="flex flex-col gap-5 mt-3 dark:text-gray-300">
           <div>
-            <Link href="/admin/">
+            <Link href="/my-account/">
               <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <RxDashboard size={20} />
                 <span className="text-sm">داشبورد</span>

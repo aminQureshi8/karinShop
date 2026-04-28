@@ -4,14 +4,41 @@ import DatePicker from "@hassanmojab/react-modern-calendar-datepicker";
 import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 import jalaali from "jalaali-js";
 import { useState } from "react";
+import SwalFire from "@/app/utils/swal";
+import { BeatLoader } from "react-spinners";
 export default function Information({
   email,
   id,
+  name,
+  phone,
+  dateTime,
 }: {
   email: string;
   id: string;
 }) {
-  const [selectedDay, setSelectedDay] = useState<any>(null);
+  const initDate = dateTime ? new Date(dateTime) : null;
+
+  console.log(initDate);
+  
+
+  let defaultJalali = null;
+
+  if (initDate && !isNaN(initDate.getTime())) {
+    const j = jalaali.toJalaali(
+      initDate.getFullYear(),
+      initDate.getMonth() + 1,
+      initDate.getDate(),
+    );
+
+    defaultJalali = {
+      year: j.jy,
+      month: j.jm,
+      day: j.jd,
+    };
+  }
+
+  const [selectedDay, setSelectedDay] = useState<any>(defaultJalali);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -24,6 +51,20 @@ export default function Information({
 
   const editUser = async (data: any) => {
     try {
+      setIsLoading(true);
+
+      if (!selectedDay) {
+        SwalFire(
+          "لطفا تاریخ تولد را انتخاب کنید",
+          "error",
+          false,
+          "",
+          "باشه",
+          "",
+          "",
+        );
+        return;
+      }
       const g = jalaali.toGregorian(
         selectedDay.year,
         selectedDay.month,
@@ -32,8 +73,6 @@ export default function Information({
 
       const iso = new Date(g.gy, g.gm - 1, g.gd).toISOString();
 
-      console.log(data);
-
       const res = await fetch(`/api/profile/information?id=${id}`, {
         method: "PUT",
         headers: {
@@ -41,10 +80,17 @@ export default function Information({
         },
         body: JSON.stringify({ data, iso }),
       });
-      const result = await res.json();
+      if (res.ok) {
+        SwalFire("با موفقعیت ویرایش شد", "success", false, "", "باشه", "", "");
+        reset();
+      }
 
-      console.log(result);
-    } catch (error) {}
+      const datda = await res.json();
+      console.log(datda);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <div className=" bg-white dark:bg-gray-800 p-3 rounded-xl">
@@ -58,7 +104,14 @@ export default function Information({
             <input
               type="text"
               placeholder="بدون نام"
-              {...register("name", { required: "نام خانوادگی الزام است" })}
+              defaultValue={name}
+              {...register("name", {
+                required: "نام خانوادگی الزام است",
+                pattern: {
+                  value: /^[\u0600-\u06FF\s]+$/,
+                  message: "نام فقط باید شامل حروف فارسی باشد",
+                },
+              })}
               className="bg-gray-200  ss02 text-sm dark:bg-black/60 mt-2.5 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
             {errors.name && (
@@ -70,7 +123,14 @@ export default function Information({
             <input
               type="text"
               placeholder="09000000000"
-              {...register("phone", { required: "نام خانوادگی الزام است" })}
+              defaultValue={phone}
+              {...register("phone", {
+                required: "شماره موبایل الزامی است",
+                pattern: {
+                  value: /^(0|\+98|98)?9\d{9}$/,
+                  message: "شماره موبایل معتبر نیست",
+                },
+              })}
               className="bg-gray-200  ss02 text-sm dark:bg-black/60 mt-2.5 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
             {errors.phone && (
@@ -83,7 +143,13 @@ export default function Information({
             <label className="text-sm">ایمیل</label>
             <input
               type="text"
-              {...register("email", { required: "ت" })}
+              {...register("email", {
+                required: "ایمیل خود را وارد کنید",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "ایمیل وارد شده معتبر نیست",
+                },
+              })}
               defaultValue={email}
               placeholder="ایمیل خود را وارد کنید"
               className="bg-gray-200  ss02 text-sm dark:bg-black/60 mt-2.5 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
@@ -124,7 +190,7 @@ export default function Information({
             type="submit"
             className="bg-blue-500 text-white px-5 py-2 rounded-xl text-sm cursor-pointer"
           >
-            ویرایش
+            {isLoading ? <BeatLoader color="white" size={10} /> : "ویرایش"}
           </button>
         </div>
       </form>
