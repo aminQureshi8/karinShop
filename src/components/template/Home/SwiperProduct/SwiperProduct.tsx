@@ -17,7 +17,7 @@ export default function SwiperProduct({ product }: any) {
     state.cart.some((item) => item.id === product._id),
   );
   const isInWhish = useSelector((state: RootState) =>
-    state.whish.some((item) => item.id === product._id),
+    state.whish.some((item) => item._id === product._id),
   );
 
   const offPrice = product.off?.percent
@@ -42,7 +42,7 @@ export default function SwiperProduct({ product }: any) {
     dispatch(
       toggleWhish({
         price: offPrice,
-        id: product._id,
+        _id: product._id,
         title: product.title,
         color: "",
         mainImage: product.mainImage,

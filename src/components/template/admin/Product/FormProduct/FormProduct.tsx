@@ -214,7 +214,7 @@ export default function FormProduct({
             </div>
           )}
 
-          {watchedSubCategory === "69e638587b8600310bd0621b" && (
+          {watchedSubCategory === "69ec882d66035179b28972f6" && (
             <MobileFilter
               control={control}
               register={register}
@@ -222,7 +222,7 @@ export default function FormProduct({
             />
           )}
 
-          {watchedSubCategory === "69e08d049a4a4a3cedbfd486" && (
+          {watchedSubCategory === "69ecb33d525492a519ced638" && (
             <LapTopFilter
               control={control}
               register={register}

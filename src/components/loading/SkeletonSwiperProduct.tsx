@@ -1,4 +1,4 @@
-export default function SwiperProductSkeleton() {
+export default function SkeletonSwiperProduct() {
   return (
     <div className="grid grid-cols-4">
       <div className="bg-white shadow-xl p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed animate-pulse">

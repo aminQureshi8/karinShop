@@ -18,9 +18,6 @@ export default function Information({
 }) {
   const initDate = dateTime ? new Date(dateTime) : null;
 
-  console.log(initDate);
-  
-
   let defaultJalali = null;
 
   if (initDate && !isNaN(initDate.getTime())) {

@@ -8,7 +8,7 @@ export default function WhishCom() {
         <BiHeart />
         <h2>محصولات مورد علاقه ی من</h2>
       </div>
-      <div>
+      <div className="mt-3">
         <WhishProduct />
       </div>
     </div>

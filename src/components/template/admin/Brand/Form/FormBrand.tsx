@@ -90,7 +90,7 @@ export default function FormBrand({ getBrands }: { getBrands: any }) {
             <input
               type="file"
               id="image"
-              {...register("image", { required: "این فیلد الزامی است" })}
+              {...register("image")}
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
             {errors.image && (

@@ -36,28 +36,32 @@ export async function POST(req: NextRequest) {
     const title = formData.get("title") as string;
     const file = formData.get("image") as File;
 
-    if (!title || !file) {
+    if (!title) {
       return NextResponse.json(
         { message: "Title و Image الزامی هستند" },
         { status: 400 },
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const fileName = `${Date.now()}-${file.name}`;
-    const bucketName = "karinpub";
+    let imageUrl = "";
 
-    const uploadParams = {
-      Bucket: bucketName,
-      Key: `brands/${fileName}`,
-      Body: buffer,
-      ContentType: file.type,
-      ACL: "public-read" as any,
-    };
+    if (file) {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const fileName = `${Date.now()}-${file.name}`;
+      const bucketName = "karinpub";
 
-    await s3Client.send(new PutObjectCommand(uploadParams));
+      const uploadParams = {
+        Bucket: bucketName,
+        Key: `brands/${fileName}`,
+        Body: buffer,
+        ContentType: file.type,
+        ACL: "public-read" as any,
+      };
 
-    const imageUrl = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/brands/${fileName}`;
+      await s3Client.send(new PutObjectCommand(uploadParams));
+
+      imageUrl = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/brands/${fileName}`;
+    }
 
     // const buffer = Buffer.from(await file.arrayBuffer());
 
