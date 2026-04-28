@@ -1,7 +1,7 @@
 import "./globals.css";
 import AuthRefresh from "@/components/module/auth/AuthRefresh";
 import { NextTheme } from "./NextTheme";
-import { danaMedium, danaLight, danaBold } from "./fonts";
+import { danaMedium, danaLight, danaBold, morabbaReg } from "./fonts";
 import { Toaster } from "react-hot-toast";
 import NextTopLoader from "nextjs-toploader";
 import Providers from "./redux/Providers";
@@ -15,7 +15,7 @@ export default function RootLayout({
       lang="fa"
       dir="rtl"
       suppressHydrationWarning
-      className={`${danaMedium.variable} ${danaLight.variable} ${danaBold.variable}`}
+      className={`${danaMedium.variable} ${danaLight.variable} ${danaBold.variable} ${morabbaReg.variable}`}
     >
       <body className="bg-gray-50 dark:bg-gray-900">
         <NextTheme>

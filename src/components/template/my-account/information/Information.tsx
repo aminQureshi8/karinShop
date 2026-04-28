@@ -15,6 +15,9 @@ export default function Information({
 }: {
   email: string;
   id: string;
+  name: string;
+  phone: string;
+  dateTime: string;
 }) {
   const initDate = dateTime ? new Date(dateTime) : null;
 
@@ -90,7 +93,7 @@ export default function Information({
     }
   };
   return (
-    <div className=" bg-white dark:bg-gray-800 p-3 rounded-xl">
+    <div className=" bg-white shadow-md dark:bg-gray-800 p-3 rounded-xl">
       <div>
         <h2>اطلاعات حساب کاربری</h2>
       </div>

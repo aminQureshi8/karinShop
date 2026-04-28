@@ -17,3 +17,9 @@ export const danaBold = localFont({
   display: "swap",
   variable: "--font-danaDemiBold",
 });
+
+export const morabbaReg = localFont({
+  src: "../../public/fonts/woff2/Morabba-Regular.woff2",
+  display: "swap",
+  variable: "--font-morabbaReg",
+});

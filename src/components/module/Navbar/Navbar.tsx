@@ -6,7 +6,7 @@ import NavbarResponsive from "./NavbarResponsive";
 const Navbar = () => {
   return (
     <>
-      <div className="flex justify-between container mx-auto max-lg:hidden pt-3 font-danaMed">
+      <div className="flex justify-between items-center container mx-auto max-lg:hidden pt-3 font-danaMed">
         <div>
           <Search />
         </div>
