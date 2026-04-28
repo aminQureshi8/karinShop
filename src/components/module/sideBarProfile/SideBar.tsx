@@ -16,8 +16,6 @@ const SideBar = memo(async () => {
     "name phone",
   );
 
-  console.log(findUser);
-
   return (
     <div className="bg-white rounded-lg dark:bg-slate-800">
       <div className="p-3">
@@ -33,7 +31,9 @@ const SideBar = memo(async () => {
               />
             </div>
             <div>
-              <h2 className="text-base font-semibold">{findUser?.name || "بدون نام"}</h2>
+              <h2 className="text-base font-semibold">
+                {findUser?.name || "بدون نام"}
+              </h2>
               <p className="text-xs mt-1 text-gray-600 dark:text-gray-300">
                 {findUser?.phone || "بدون شماره"}
               </p>
@@ -63,7 +63,7 @@ const SideBar = memo(async () => {
             </Link>
           </div>
           <div>
-            <Link href="/admin/order">
+            <Link href="/my-account/wish">
               <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <HeartIcon size={20} />
                 <span className="text-sm">علاقه مندی ها</span>

@@ -65,7 +65,7 @@ const ColorSelector = memo(
 
             <button
               onClick={addColor}
-              className="absolute left-0 top-0 h-full bg-blue-500 text-white px-4 text-xs rounded-l-xl flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors"
+              className="absolute left-0 top-2 h-9.5 bg-blue-500 text-white px-4 text-xs rounded-l-lg flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors"
             >
               افزودن
             </button>

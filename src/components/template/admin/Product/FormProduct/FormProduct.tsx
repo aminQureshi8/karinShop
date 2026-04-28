@@ -299,10 +299,12 @@ export default function FormProduct({
             />
           </div>
 
-          <div>
+          <div className="flex flex-col">
+            <label className="text-sm">عکس کاور محصول (mainImage)</label>
             <input
               type="file"
               accept="image/*"
+              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               onChange={(e) => {
                 const file = e.target.files?.[0] || null;
                 setMainImage(file);
@@ -385,10 +387,6 @@ export default function FormProduct({
                 {errors.images.message as string}
               </p>
             )}
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-sm">عکس کاور محصول (mainImage)</label>
           </div>
 
           <Tag register={register} errors={errors} setValue={setValue} />
