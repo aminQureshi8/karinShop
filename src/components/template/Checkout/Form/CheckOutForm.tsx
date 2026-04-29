@@ -1,17 +1,14 @@
 "use client";
 
 import { RootState } from "@/app/redux/store";
-import dynamic from "next/dynamic";
+import { provinces } from "@/lib/iranProvinces";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
-const Map = dynamic(() => import("./Map"), {
-  ssr: false,
-});
 
 export default function CheckOutForm({ id }: { id: string }) {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [province, setProvince] = useState("");
 
   const cart = useSelector((state: RootState) => state.cart);
 
@@ -38,30 +35,73 @@ export default function CheckOutForm({ id }: { id: string }) {
   };
 
   return (
-    <div>
+    <div className="mt-5 bg-white shadow-md dark:bg-gray-800 p-3 rounded-xl">
       <form onSubmit={orderSubmit}>
-        <div className="grid grid-cols-1">
+        <div className="grid grid-cols-2 gap-3">
           <div>
-            <label htmlFor="">موبایل</label>
             <input
-              onChange={(e) => setPhone(e.target.value)}
               type="text"
-              className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              placeholder="نام*"
+              className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
           <div>
-            <label htmlFor="">ادرس</label>
             <input
-              onChange={(e) => setAddress(e.target.value)}
               type="text"
-              className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              placeholder="نام خانوادگی*"
+              className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
           <div>
-            <Map />
+            <select
+              name=""
+              id=""
+              onChange={(e) => setProvince(e.target.value)}
+              className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            >
+              <option>استان*</option>
+              {provinces.map((p, index) => (
+                <option key={index} value={p.name}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
-            <button type="submit">ثبت و پرداخت</button>
+            <select
+              name=""
+              id=""
+              className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            >
+              <option value="-1">شهر مورد نظر را انتخاب کنید</option>
+              {provinces
+                .find((p) => p.name === province)
+                ?.cities.map((c, index) => (
+                  <option key={index}>{c}</option>
+                ))}
+            </select>
+          </div>
+
+          <div className="col-span-2">
+            <input
+              type="text"
+              placeholder="ادرس*"
+              className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="کد پستی*"
+              className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="تلفن*"
+              className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
           </div>
         </div>
       </form>

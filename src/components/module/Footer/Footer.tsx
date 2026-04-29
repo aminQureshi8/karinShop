@@ -1,10 +1,11 @@
 import { BsInstagram, BsLinkedin, BsTelegram, BsYoutube } from "react-icons/bs";
 import FooterTopBtn from "./FooterTopBtn";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Footer() {
   return (
-    <div className="bg-slate-900 dark:bg-slate-800 rounded-xl p-5 mb-12">
+    <div className="bg-slate-900 dark:bg-slate-800 rounded-xl p-5 mb-12 mt-12">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5">
         <div className="lg:col-span-2">
           <h2 className="text-white font-bold">درباره کارین شاپ</h2>
@@ -66,16 +67,19 @@ export default async function Footer() {
       </div>
       <div className="bg-gray-900 mt-5 rounded-xl p-5 flex items-center justify-between">
         <div>
-          <h2>کارین شاپ</h2>
+          <Link href="/" className=" text-3xl font-morabbaReg">
+            <span className="text-blue-500">کارین </span>
+            <span>شاپ</span>
+          </Link>
         </div>
         <div className="relative">
           <input
             type="text"
             placeholder="از جدید ترین تخفیف ها با خبر شوید"
-            className="bg-gray-800 rounded-lg p-2 max-sm:w-40 w-82"
+            className="bg-gray-800 rounded-lg p-2 outline-0 pl-20 max-sm:w-40 w-82"
           />
           <div className="absolute left-0 top-0">
-            <button className="bg-blue-500 text-white rounded-xl px-4">
+            <button className="bg-blue-500 text-white h-10 rounded-lg px-4">
               ثبت
             </button>
           </div>

@@ -8,8 +8,8 @@ export default function ProductCon() {
 
   return (
     <div className="flex flex-col divide-y-2 space-y-5 mt-5">
-      {carts.map((cart: any) => (
-        <Product {...cart} />
+      {carts.map((cart: any, index: number) => (
+        <Product {...cart} key={index} />
       ))}
     </div>
   );
