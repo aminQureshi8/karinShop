@@ -14,7 +14,7 @@ export default async function page() {
           <ProductOrder />
         </div>
         <div className="max-sm:col-span-12 col-span-3">
-            <CartOrder isUserLogin={user.user ? true : false} />
+          <CartOrder isUserLogin={user.user ? true : false} />
         </div>
       </div>
     </div>

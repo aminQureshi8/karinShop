@@ -32,7 +32,7 @@ const cartSlice = createSlice({
       const item = state.find((cart) => cart.id === action.payload.id);
 
       if (item) {
-        const oldCount = item.count; 
+        const oldCount = item.count;
         const unitPrice = item.price / oldCount;
 
         const newCount = action.payload.count;
