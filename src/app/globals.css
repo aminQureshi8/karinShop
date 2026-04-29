@@ -52,12 +52,12 @@
 }
 
 .swal2-popup {
-  @apply !font-danaMed bg-white !text-xs dark:bg-gray-800 dark:text-white;
+  @apply font-danaMed! bg-white text-xs! dark:bg-gray-800 dark:text-white;
 }
 
 .swal2-title,
 .swal2-content {
-  @apply !font-danaMed;
+  @apply font-danaMed!;
 }
 
 /* .ck.ck-editor__editable {
