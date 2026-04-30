@@ -3,85 +3,82 @@ import {
   inCreaseCounter,
   toggleCart,
 } from "@/app/redux/slices/Cart/Cart";
+import { Truck } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { BiCloset } from "react-icons/bi";
+import { FaCertificate } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 
 export default function Product({
-  imageUrls,
+  mainImage,
   price,
   count,
   mainCount,
   id,
   title,
 }: {
-  imageUrls: string;
+  mainImage: string;
   price: number;
   count: number;
   mainCount: number;
   id: string;
   title: string;
 }) {
-  const [countState, setCountState] = useState(count);
   const dispatch = useDispatch();
 
   return (
-    <div className="flex w-full pb-5">
+    <div className="flex gap-3 w-full pb-5">
       <div>
-        <div className="">
-          <Image src={imageUrls} width={200} height={200} alt="Image" />
-        </div>
-        <div className="border rounded-lg flex items-center  justify-between p-2">
-          <div
-            onClick={() =>
-              setCountState((pre: number) => {
-                if (pre >= mainCount) {
-                  return pre;
-                }
-                const newCount = pre + 1;
+        <Image src={mainImage} width={200} height={200} alt="Image" />
 
-                dispatch(inCreaseCounter({ id, count: newCount }));
-
-                return newCount;
-              })
-            }
+        <div className="border ss02 rounded-lg flex items-center justify-between mt-2 p-2">
+          <button
+            onClick={() => dispatch(inCreaseCounter(id))}
+            disabled={count >= mainCount}
           >
             +
-          </div>
-          <div>{countState}</div>
-          <div
-            onClick={() =>
-              setCountState((pre: number) => {
-                if (pre <= 1) return 1;
-                const newCount = pre - 1;
+          </button>
 
-                dispatch(deCreaseCounter({ id, count: newCount }));
+          <div>{count}</div>
 
-                return newCount;
-              })
-            }
+          <button
+            onClick={() => dispatch(deCreaseCounter(id))}
+            disabled={count <= 1}
           >
             -
-          </div>
+          </button>
         </div>
       </div>
 
       <div className="grow">
-        <div className="flex items-center w-full!  justify-between">
-          <h2 className="text-sm">{title}</h2>
+        <div className="flex flex-col justify-between h-full">
           <div>
-            <button
-              className="cursor-pointer text-lg"
-              onClick={() => dispatch(toggleCart({ id }))}
-            >
-              x
-            </button>
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm">{title}</h2>
+              <button
+                className="cursor-pointer"
+                onClick={() => dispatch(toggleCart({ id }))}
+              >
+                <IoClose />
+              </button>
+            </div>
+            <div className="mt-3 flex items-center gap-2 text-sm">
+              <div className="size-3 bg-blue-500 rounded-full"></div>
+              <p>ابی</p>
+            </div>
+            <div className="flex items-center mt-3 gap-2 text-sm text-gray-500 dark:text-gray-500">
+              <Truck />
+              <p>ارسال یک روز کاری</p>
+            </div>
+            <div className="flex items-center mt-3 gap-2 text-sm text-gray-500 dark:text-gray-500">
+              <FaCertificate />
+              <p>گارانتی 18 ماهه</p>
+            </div>
           </div>
-        </div>
-        <div>
-          <div>
-            <p>{price * countState} تومان</p>
-          </div>
+          <p className="mt-3 text-2xl dark:text-gray-300 font-bold text-gray-800">
+            {(price * count).toLocaleString("fa-IR")} تومان
+          </p>
         </div>
       </div>
     </div>

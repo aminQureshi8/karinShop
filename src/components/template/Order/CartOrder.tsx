@@ -9,15 +9,16 @@ export default function CartOrder({ isUserLogin }: { isUserLogin: boolean }) {
   const carts = useSelector((state: RootState) => state.cart);
 
   const totalPrice = carts.reduce((pre: number, con: any) => {
-    return pre + con.price;
+    return pre + con.price * con.count;
   }, 0);
+
+  console.log(totalPrice);
 
   const checkLogin = () => {
     if (!isUserLogin) {
       SwalFire("لطفا اول وارد شوید", "warning", false, "", "باشه");
       return;
     }
-
     redirect("/checkout");
   };
 

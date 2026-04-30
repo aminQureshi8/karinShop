@@ -1,4 +1,3 @@
-import Providers from "@/app/redux/Providers";
 import ProductCon from "./Product/ProductCon/ProductCon";
 
 export default function ProductOrder() {
@@ -14,7 +13,7 @@ export default function ProductOrder() {
         </div>
       </div>
       <div>
-          <ProductCon />
+        <ProductCon />
       </div>
     </div>
   );

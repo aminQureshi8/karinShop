@@ -6,7 +6,7 @@ export default function CheckOutCart({ post }) {
   const carts = useSelector((state: RootState) => state.cart);
 
   const totalPrice = carts.reduce((pre: number, con: any) => {
-    return pre + con.price;
+    return pre + con.price * con.count;
   }, 0);
 
   //   const checkLogin = () => {

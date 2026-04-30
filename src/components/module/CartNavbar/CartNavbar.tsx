@@ -10,8 +10,11 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { deCreaseCounter, inCreaseCounter } from "@/app/redux/slices/Cart/Cart";
+
 export default function CartNavbar() {
-  const [carts, setCarts] = useState([]);
+  const carts = useSelector((state: RootState) => state.cart);
+
   const router = usePathname();
   const isOpen = useSelector((state: RootState) => state.cartComputer.isOpen);
   const dispatch = useDispatch();
@@ -20,37 +23,12 @@ export default function CartNavbar() {
     dispatch(closeCart());
   }, [router]);
 
-  useEffect(() => {
-    const getLocalStorageCart = JSON.parse(
-      localStorage.getItem("cart") || "[]",
-    );
-    setCarts(getLocalStorageCart);
-  }, [isOpen]);
-
-  const addCount = (id: number, mainCount: number) => {
-    setCarts((prev: any) => {
-      const updated = prev.map((item: any) =>
-        item.id === id && item.count < mainCount
-          ? { ...item, count: item.count + 1 }
-          : item,
-      );
-      localStorage.setItem("cart", JSON.stringify(updated));
-
-      return updated;
-    });
+  const addCount = (id: string) => {
+    dispatch(inCreaseCounter(id));
   };
 
-  const minusCount = (id: number, mainCount: number) => {
-    setCarts((prev: any) => {
-      const updated = prev.map((item: any) =>
-        item.id === id && item.count > 1
-          ? { ...item, count: item.count - 1 }
-          : item,
-      );
-      localStorage.setItem("cart", JSON.stringify(updated));
-
-      return updated;
-    });
+  const minusCount = (id: string) => {
+    dispatch(deCreaseCounter(id));
   };
 
   return (
