@@ -5,7 +5,7 @@ import CheckOutCart from "./CheckOutCart";
 export default function CheckOutContainer({ id }: { id: string }) {
   const [post, setPost] = useState({ name: "pishtaz", price: 70000 });
 
-  console.log(post);
+  
 
   return (
     <div className="container mx-auto font-danaMed">

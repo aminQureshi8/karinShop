@@ -53,7 +53,8 @@ export default function CheckOutCart({ post }) {
           </div>
         </div>
         <button
-          //   onClick={checkLogin}
+          type="submit"
+          form="checkout-form"
           className="bg-blue-500 text-sm text-white mt-5 w-full p-2 rounded-lg cursor-pointer"
         >
           تایید و تکمیل سفارش

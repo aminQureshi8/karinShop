@@ -4,106 +4,192 @@ import { RootState } from "@/app/redux/store";
 import { provinces } from "@/lib/iranProvinces";
 import { Truck } from "lucide-react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
+interface FormValues {
+  firstName: string;
+  lastName: string;
+  province: string;
+  city: string;
+  address: string;
+  zipCode: string;
+  phone: string;
+}
+
 export default function CheckOutForm({ id, post, setPost }: { id: string }) {
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
   const [province, setProvince] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    mode: "onSubmit",
+  });
 
   const cart = useSelector((state: RootState) => state.cart);
 
-  const orderSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
+  const orderSubmit = async (data: FormValues) => {
     const products = cart.map((c: any) => c.id).join("|");
-    console.log(products);
 
     try {
       const res = await fetch(`/api/order?user=${id}&products=${products}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ address, phone }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
         credentials: "include",
       });
 
-      const data = await res.json();
-
-      console.log(data);
-    } catch (error) {}
+      const result = await res.json();
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div>
       <div className="mt-8 bg-white shadow-md dark:bg-gray-800 p-3 rounded-xl">
-        <form onSubmit={orderSubmit}>
+        <form onSubmit={handleSubmit(orderSubmit)} id="checkout-form">
           <div className="grid grid-cols-2 gap-3">
             <div>
               <input
                 type="text"
                 placeholder="نام*"
-                className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                {...register("firstName", {
+                  required: "نام الزامی است",
+                  minLength: { value: 2, message: "حداقل ۲ کاراکتر" },
+                })}
+                className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               />
+              {errors.firstName && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.firstName.message}
+                </p>
+              )}
             </div>
+
             <div>
               <input
                 type="text"
                 placeholder="نام خانوادگی*"
-                className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                {...register("lastName", {
+                  required: "نام خانوادگی الزامی است",
+                  minLength: { value: 2, message: "حداقل ۲ کاراکتر" },
+                })}
+                className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               />
+              {errors.lastName && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.lastName.message}
+                </p>
+              )}
             </div>
+
             <div>
               <select
-                name=""
-                id=""
+                {...register("province", {
+                  required: "استان را انتخاب کنید",
+                })}
                 onChange={(e) => setProvince(e.target.value)}
-                className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               >
-                <option>استان*</option>
-                {provinces.map((p, index) => (
-                  <option key={index} value={p.name}>
+                <option value="">استان*</option>
+                {provinces.map((p, i) => (
+                  <option key={i} value={p.name}>
                     {p.name}
                   </option>
                 ))}
               </select>
+
+              {errors.province && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.province.message}
+                </p>
+              )}
             </div>
+
             <div>
               <select
-                name=""
-                id=""
-                className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                {...register("city", {
+                  required: "شهر را انتخاب کنید",
+                })}
+                className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               >
-                <option value="-1">شهر مورد نظر را انتخاب کنید</option>
+                <option value="">شهر*</option>
+
                 {provinces
                   .find((p) => p.name === province)
-                  ?.cities.map((c, index) => (
-                    <option key={index}>{c}</option>
+                  ?.cities.map((c, i) => (
+                    <option key={i} value={c}>
+                      {c}
+                    </option>
                   ))}
               </select>
+
+              {errors.city && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.city.message}
+                </p>
+              )}
             </div>
 
             <div className="col-span-2">
               <input
                 type="text"
-                placeholder="ادرس*"
-                className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                placeholder="آدرس*"
+                {...register("address", {
+                  required: "آدرس الزامی است",
+                  minLength: { value: 10, message: "آدرس خیلی کوتاه است" },
+                })}
+                className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               />
+              {errors.address && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.address.message}
+                </p>
+              )}
             </div>
+
             <div>
               <input
                 type="text"
                 placeholder="کد پستی*"
-                className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                {...register("zipCode", {
+                  required: "کد پستی الزامی است",
+                  pattern: {
+                    value: /^\d{10}$/,
+                    message: "کد پستی باید ۱۰ رقم باشد",
+                  },
+                })}
+                className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               />
+              {errors.zipCode && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.zipCode.message}
+                </p>
+              )}
             </div>
+
             <div>
               <input
                 type="text"
-                placeholder="تلفن*"
-                className="bg-gray-100 ss02 text-sm dark:bg-black/60  w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                placeholder="شماره موبایل*"
+                {...register("phone", {
+                  required: "شماره موبایل الزامی است",
+                  pattern: {
+                    value: /^09\d{9}$/,
+                    message: "شماره موبایل معتبر نیست (مثال: 09123456789)",
+                  },
+                })}
+                className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               />
+              {errors.phone && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.phone.message}
+                </p>
+              )}
             </div>
           </div>
         </form>
@@ -114,18 +200,24 @@ export default function CheckOutForm({ id, post, setPost }: { id: string }) {
           <Truck />
           <h2>نوع ارسال</h2>
         </div>
+
         <div className="flex flex-col gap-5 mt-3">
           <div
             onClick={() => setPost({ name: "pishtaz", price: 70000 })}
-            className={`border border-gray-300 ${post.name === "pishtaz" ? "bg-blue-500 text-white" : ""} transition-colors  dark:border-gray-600 p-2 rounded-xl text-sm cursor-pointer`}
+            className={`border p-2 rounded-xl cursor-pointer ${
+              post.name === "pishtaz" ? "bg-blue-500 text-white" : ""
+            }`}
           >
             <h2>پست پیشتاز : ۷۰ هزار تومان</h2>
           </div>
+
           <div
             onClick={() => setPost({ name: "normal", price: 30000 })}
-            className={`border border-gray-300 ${post.name === "normal" ? "bg-blue-500 text-white" : ""} transition-colors  dark:border-gray-600 p-2 rounded-xl text-sm cursor-pointer`}
+            className={`border p-2 rounded-xl cursor-pointer ${
+              post.name === "normal" ? "bg-blue-500 text-white" : ""
+            }`}
           >
-            <h2>پست پیشتاز : ۷۰ هزار تومان</h2>
+            <h2>پست معمولی : ۳۰ هزار تومان</h2>
           </div>
         </div>
       </div>
