@@ -3,9 +3,8 @@ import {
   inCreaseCounter,
   toggleCart,
 } from "@/app/redux/slices/Cart/Cart";
-import { Truck } from "lucide-react";
+import { Minus, Plus, Truck } from "lucide-react";
 import Image from "next/image";
-import { BiCloset } from "react-icons/bi";
 import { FaCertificate } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import { useDispatch } from "react-redux";
@@ -37,7 +36,7 @@ export default function Product({
             onClick={() => dispatch(inCreaseCounter(id))}
             disabled={count >= mainCount}
           >
-            +
+            <Plus size={17} className="text-green-500" />
           </button>
 
           <div>{count}</div>
@@ -46,7 +45,7 @@ export default function Product({
             onClick={() => dispatch(deCreaseCounter(id))}
             disabled={count <= 1}
           >
-            -
+            <Minus size={17} className="text-red-500" />
           </button>
         </div>
       </div>

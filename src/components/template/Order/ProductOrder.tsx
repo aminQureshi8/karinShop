@@ -1,3 +1,4 @@
+import { Trash } from "lucide-react";
 import ProductCon from "./Product/ProductCon/ProductCon";
 
 export default function ProductOrder() {
@@ -9,7 +10,10 @@ export default function ProductOrder() {
           <p>(2 کالا)</p>
         </div>
         <div>
-          <button>حذف همه</button>
+          <button className="flex items-center gap-2 cursor-pointer text-sm">
+            <p>حذف همه</p>
+            <Trash size={17} />
+          </button>
         </div>
       </div>
       <div>

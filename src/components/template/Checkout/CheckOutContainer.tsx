@@ -5,8 +5,6 @@ import CheckOutCart from "./CheckOutCart";
 export default function CheckOutContainer({ id }: { id: string }) {
   const [post, setPost] = useState({ name: "pishtaz", price: 70000 });
 
-  
-
   return (
     <div className="container mx-auto font-danaMed">
       <div className="grid grid-cols-12 gap-5">

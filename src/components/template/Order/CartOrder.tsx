@@ -12,8 +12,6 @@ export default function CartOrder({ isUserLogin }: { isUserLogin: boolean }) {
     return pre + con.price * con.count;
   }, 0);
 
-  console.log(totalPrice);
-
   const checkLogin = () => {
     if (!isUserLogin) {
       SwalFire("لطفا اول وارد شوید", "warning", false, "", "باشه");
@@ -26,15 +24,15 @@ export default function CartOrder({ isUserLogin }: { isUserLogin: boolean }) {
     <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
       <div className="flex items-center justify-between">
         <div>مبلغ نهایی:</div>
-        <div className="flex items-center">
-          <p>{totalPrice}</p>
+        <div className="flex items-center gap-1">
+          <p>{totalPrice.toLocaleString("fa-IR")}</p>
           <p>تومان</p>
         </div>
       </div>
-      <div>
+      <div className="mt-3">
         <button
           onClick={checkLogin}
-          className="bg-blue-500 text-white w-full p-2 rounded-lg cursor-pointer"
+          className="bg-blue-500 text-sm text-white w-full p-2 rounded-lg cursor-pointer"
         >
           تایید و تکمیل سفارش
         </button>
