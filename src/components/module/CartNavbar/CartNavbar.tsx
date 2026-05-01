@@ -5,7 +5,7 @@ import {
 } from "@/app/redux/slices/CartComputer/CartComputer";
 import { RootState } from "@/app/redux/store";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
@@ -78,16 +78,10 @@ export default function CartNavbar() {
                     </p>
 
                     <div className="text-sm font-bold text-blue-600 flex items-center justify-between">
-                      <div className="border-2 dark:border-gray-700 border-gray-200 rounded-xl flex items-center gap-5 px-2 py-2 text-xs">
-                        <div
-                          onClick={() => minusCount(item.id, item.mainCount)}
-                        >
-                          -
-                        </div>
+                      <div className="border-2 ss02 dark:border-gray-700 border-gray-200 rounded-xl flex items-center gap-5 px-2 py-2 text-xs">
+                        <div onClick={() => minusCount(item.id)}>-</div>
                         <div>{item.count}</div>
-                        <div onClick={() => addCount(item.id, item.mainCount)}>
-                          +
-                        </div>
+                        <div onClick={() => addCount(item.id)}>+</div>
                       </div>
                       <p>
                         {(item.price * item.count).toLocaleString("fa-IR")}{" "}

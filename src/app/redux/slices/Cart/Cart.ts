@@ -42,9 +42,9 @@ const cartSlice = createSlice({
 
     deCreaseCounter: (state, action: PayloadAction<string>) => {
       const item = state.find((cart) => cart.id === action.payload);
-      if (item && item.count > 1) {
-        item.count -= 1;
-      }
+      if (!item) return;
+
+      item.count > 1 ? item.count-- : state.splice(state.indexOf(item), 1);
     },
 
     setCart: (_state, action: PayloadAction<CartItem[]>) => {

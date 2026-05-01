@@ -1,6 +1,7 @@
 "use client";
 
 import { RootState } from "@/app/redux/store";
+import SwalFire from "@/app/utils/swal";
 import { provinces } from "@/lib/iranProvinces";
 import { Truck } from "lucide-react";
 import { useState } from "react";
@@ -30,19 +31,33 @@ export default function CheckOutForm({ id, post, setPost }: { id: string }) {
 
   const cart = useSelector((state: RootState) => state.cart);
 
+  console.log("cart -->", cart);
+
   const orderSubmit = async (data: FormValues) => {
-    const products = cart.map((c: any) => c.id).join("|");
+    const products = cart.map((c: any) => ({
+      id: c.id,
+      quantity: c.count,
+    }));
+
+    const orderData = {
+      userId: id,
+      phone: data.phone,
+      address: data.address,
+      products,
+    };
 
     try {
-      const res = await fetch(`/api/order?user=${id}&products=${products}`, {
+      const res = await fetch("/api/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include",
+        body: JSON.stringify(orderData),
       });
 
       const result = await res.json();
       console.log(result);
+
+      if (res.ok) {
+      }
     } catch (error) {
       console.log(error);
     }
