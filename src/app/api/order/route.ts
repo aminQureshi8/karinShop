@@ -1,8 +1,10 @@
+import db from "@/config/db";
 import orderModel from "@/models/order";
 import productModel from "@/models/product";
 import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
+    await db();
     const body = await req.json();
     const { userId, address, phone } = body;
 
@@ -17,15 +19,14 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
     }
+    const operations = products.map((item: any) => ({
+      updateOne: {
+        filter: { _id: item.product },
+        update: { $inc: { count: -item.quantity } },
+      },
+    }));
 
-    await productModel.bulkWrite(
-      products.map((item: any) => ({
-        updateOne: {
-          filter: { _id: item.product },
-          update: { $inc: { stock: -item.quantity } },
-        },
-      })),
-    );
+    await productModel.bulkWrite(operations);
 
     const order = await orderModel.create({
       user: userId,
