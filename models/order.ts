@@ -9,7 +9,7 @@ const order = new Schema(
       {
         product: {
           type: Schema.Types.ObjectId,
-          ref: "Product",
+          ref: "product",
           required: true,
         },
         quantity: { type: Number, required: true, default: 1 },

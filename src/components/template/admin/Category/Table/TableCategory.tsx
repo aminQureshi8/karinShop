@@ -1,16 +1,11 @@
 "use client";
-import Table from "@/components/module/Table/Table";
-import Brand from "@/types/Brand/Brand.type";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Pagination from "@/components/module/Pagination/Pagination";
-import { MdDelete } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
 import SwalFire from "@/app/utils/swal";
 import { MoreHorizontalIcon } from "lucide-react";
 import Modal from "@/components/module/Modal/Modal";
 import { Button } from "@/components/ui/button";
-
 import { useForm } from "react-hook-form";
 import CategoryType from "@/types/Category/Category.type";
 import {

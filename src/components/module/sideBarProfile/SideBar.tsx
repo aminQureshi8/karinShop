@@ -55,7 +55,7 @@ const SideBar = memo(async () => {
             </Link>
           </div>
           <div>
-            <Link href="/admin/user">
+            <Link href="/my-account/order">
               <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <BsBasket size={20} />
                 <span className="text-sm">سفارش ها</span>

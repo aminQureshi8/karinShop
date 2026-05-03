@@ -64,7 +64,9 @@ function Cart({
       </div>
 
       {!isInCart && (
-        <div className="flex items-center justify-between border rounded-lg p-2 border-gray-200 dark:border-gray-600 mt-5">
+        <div
+          className={`flex items-center justify-between border ${count === 0 ? " opacity-50" : ""} rounded-lg p-2 border-gray-200 dark:border-gray-600 mt-5`}
+        >
           <div
             className="cursor-pointer"
             onClick={() =>
@@ -91,7 +93,9 @@ function Cart({
         </div>
       )}
 
-      <div className="bg-gray-100 dark:bg-gray-900  rounded-lg p-2 flex items-center justify-between mt-5">
+      <div
+        className={`bg-gray-100 dark:bg-gray-900 ${count === 0 ? " opacity-50" : ""} rounded-lg p-2 flex items-center justify-between mt-5`}
+      >
         <p className="text-sm">مجموع خرید:</p>
         <p className="max-xl:text-sm">
           {totalPrice.toLocaleString("fa-IR")}{" "}
@@ -99,11 +103,17 @@ function Cart({
         </p>
       </div>
 
-      {inUserBasket !== 0 && !isInCart && (
+      {count !== 0 && inUserBasket !== 0 && !isInCart && (
         <div className="mt-5">در سبد خرید {inUserBasket}+ نفر</div>
       )}
 
-      {isInCart ? (
+      {count === 0 ? (
+        <div className="mt-5">
+          <button className="flex max-xl:text-sm items-center text-white justify-center gap-2 cursor-pointer bg-gray-500 w-full p-2 rounded-lg">
+            <p>محصول موجود نمی باشد</p>
+          </button>
+        </div>
+      ) : isInCart ? (
         <div className="mt-5">
           <button
             onClick={() => dispatch(toggleCartComputer())}

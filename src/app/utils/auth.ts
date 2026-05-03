@@ -143,13 +143,25 @@ export const authAdmin = async () => {
   }
 };
 
-export const authRouteHandler = (header : string) => {
+export const authRouteHandler = (header: string) => {
   try {
-    const { email , role } : any = verifyAccessToken(header);
-
-    console.log(role);
+    const { email, role }: any = verifyAccessToken(header);
 
     if (role !== "ADMIN") {
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const userAuthRouteHandler = (header: string) => {
+  try {
+    const { email, role }: any = verifyAccessToken(header);
+
+    if (role !== "USER") {
       return false;
     }
 

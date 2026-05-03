@@ -66,6 +66,14 @@ export default function SwiperProduct({ product }: any) {
           />
         </Link>
 
+        {
+          product.count === 0 && <div className=" absolute left-0">
+            <div className="bg-gray-500 text-xs p-2 rounded-xl">
+              <p>ناموجود</p>
+            </div>
+          </div>
+        }
+
         <div className="absolute right-0 top-0">
           <div className="flex items-center gap-2">
             <div
