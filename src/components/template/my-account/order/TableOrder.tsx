@@ -71,10 +71,7 @@ export default function TableOrder({ id }: { id: string }) {
                           alt=""
                           className="rounded-md object-cover shrink-0"
                         />
-                        <p
-                          className="text-xs truncate"
-                          title={p.product.title} 
-                        >
+                        <p className="text-xs truncate" title={p.product.title}>
                           {p.product.title}
                         </p>
                       </div>
@@ -92,7 +89,23 @@ export default function TableOrder({ id }: { id: string }) {
                   ))}
                 </TableCell>
                 <TableCell>
-                  <p>{cat.status}</p>
+                  {cat.status === "pending" && (
+                    <span className="px-3 py-1 rounded-full text-xs font-bold  text-yellow-700">
+                      در انتظار بررسی
+                    </span>
+                  )}
+
+                  {cat.status === "accepted" && (
+                    <span className="px-3 py-1 rounded-full text-xs font-bold  text-green-700">
+                      تایید شده
+                    </span>
+                  )}
+
+                  {cat.status === "rejected" && (
+                    <span className="px-3 py-1 rounded-full text-xs font-bold  text-red-700">
+                      رد شده
+                    </span>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
