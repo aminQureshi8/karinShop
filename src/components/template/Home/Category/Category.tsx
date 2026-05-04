@@ -17,7 +17,8 @@ export default async function Category() {
   return (
     <div className="mt-12">
       <TopCategory
-        title="دسته بندی های محبوب"
+       title="دسته بندی های"
+       titleColor="محبوب"
         des="جدیدترین و بروزترین دسته بندی ها"
         icon={<BiCategory size={22} />}
       />

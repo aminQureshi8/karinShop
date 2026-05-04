@@ -1,16 +1,24 @@
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { TopCategoryProps } from "@/types/TopCategory";
 
-export default function TopCategory({ title, des, icon }: TopCategoryProps) {
+export default function TopCategory({
+  title,
+  des,
+  icon,
+  titleColor,
+}: TopCategoryProps) {
   return (
-    <div className="font-danaMed flex items-start md:items-center justify-between">
+    <div className=" flex items-start md:items-center justify-between">
       <div className="flex items-start max-md:justify-center w-full gap-3">
-        <div className="shadow-md p-2 rounded-xl shrink-0 max-md:hidden">
+        <div className="shadow-xl bg-white dark:bg-gray-700 p-2 rounded-xl shrink-0 max-md:hidden">
           {icon}
         </div>
 
         <div className="flex flex-col gap-2">
-          <p className="text-xl max-md:text-sm">{title}</p>
+          <p className="text-xl max-md:text-sm flex items-center gap-1 font-morabbaReg font-semibold">
+            <span className="">{title}</span>
+            <span className="text-blue-500! font-danaMed">{titleColor}</span>
+          </p>
           <p className="text-xs">{des}</p>
 
           <div className="flex justify-center">
@@ -22,7 +30,7 @@ export default function TopCategory({ title, des, icon }: TopCategoryProps) {
         </div>
       </div>
 
-      <button className="hidden md:flex shadow-xl items-center px-3 text-nowrap py-2 text-xs rounded-full gap-2 bg-blue-500 text-white">
+      <button className="hidden md:flex shadow-xl items-center px-3 text-nowrap py-2 text-xs rounded-xl cursor-pointer gap-2 bg-blue-500 text-white">
         <span>مشاهده همه</span>
         <IoIosArrowRoundBack size={19} />
       </button>

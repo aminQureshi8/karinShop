@@ -9,6 +9,7 @@ export default function PopPro() {
       <TopCategory
         title="جدید ترین محصولات"
         des="جدیدترین و بروزترین محصولات"
+        titleColor="j"
         icon={<CiMobile3 size={22} />}
       />
       <SwiperProductContainer />

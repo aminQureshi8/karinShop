@@ -25,12 +25,11 @@ export default async function NewProduct() {
     .sort({ createdAt: -1 })
     .lean();
 
-  console.log("products --->", products);
-
   return (
     <div className="mt-12">
       <TopCategory
-        title="جدید ترین محصولات"
+        title="جدید ترین"
+        titleColor="محصولات"
         des="جدیدترین و بروزترین محصولات"
         icon={<CiMobile3 size={22} />}
       />
