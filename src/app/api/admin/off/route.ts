@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
     const option = req.nextUrl.searchParams.get("option");
     const products = req.nextUrl.searchParams.get("products");
     const { dateTime, percent } = await req.json();
-
     if (option === "all") {
       await offModel.deleteMany({});
       const off = await offModel.create({
@@ -20,6 +19,21 @@ export async function POST(req: NextRequest) {
       });
       await productModel.updateMany(
         {},
+        { $set: { off: off._id, campaion: JSON.parse(percent) } },
+      );
+    }
+
+    if (option === "many") {
+      const getProducts = products?.split("|");
+
+      const off = await offModel.create({
+        dateTime,
+        percent: JSON.parse(percent),
+        type: "many",
+      });
+
+      await productModel.updateMany(
+        { _id: { $in: getProducts } },
         {
           $set: {
             off: off._id,
@@ -28,27 +42,6 @@ export async function POST(req: NextRequest) {
         },
       );
     }
-
-    if (option === "many") {
-      const getProducts = products?.split("|");
-      await offModel.create({ dateTime, percent, type: "many" });
-      await productModel.updateMany(
-        { _id: { $in: getProducts } },
-        {
-          $set: {
-            campaion: JSON.parse(percent),
-          },
-        },
-      );
-    }
-
-    // const splitProducts = products?.split("|");
-
-    // await offModel.create({
-    //   code,
-    //   products: splitProducts,
-    //   percent,
-    // });
 
     return NextResponse.json({ dateTime, percent, option, products });
   } catch (error) {

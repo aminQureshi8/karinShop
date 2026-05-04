@@ -46,7 +46,7 @@ export default function SidebarLinks() {
       <div>
         <Link href="/admin/user">
           <div
-            className={`flex items-center ${pathname === "/my-account" ? "bg-gray-200/80 dark:bg-gray-900 text-blue-500 " : "hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500"} gap-3 py-2 pr-2 transition-all  rounded-lg`}
+            className={`flex items-center ${pathname === "/my-account/noti" ? "bg-gray-200/80 dark:bg-gray-900 text-blue-500 " : "hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500"} gap-3 py-2 pr-2 transition-all  rounded-lg`}
           >
             <IoNotifications size={20} />
             <span className="text-sm">پیام ها</span>

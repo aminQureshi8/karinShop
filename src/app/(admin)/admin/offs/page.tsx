@@ -1,4 +1,3 @@
-
 import FormOff from "@/components/template/admin/Off/FormOff";
 import db from "@/config/db";
 import productModel from "@/models/product";
@@ -10,9 +9,6 @@ export default async function page() {
     .find({}, "slug price mainImage campaion")
     .limit(2)
     .lean();
-
-    console.log(products);
-    
 
   const totalProducts = await productModel.countDocuments({});
   const totalPages = Math.ceil(totalProducts / 2);

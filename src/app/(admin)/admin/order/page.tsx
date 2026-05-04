@@ -1,9 +1,10 @@
 import OrderT from "@/components/template/admin/Order/OrderT";
-import OrderTable from "@/components/template/admin/Order/OrderTable";
 import db from "@/config/db";
 import orderModel from "@/models/order";
 import "@/models/order";
 import "@/models/product";
+import "@/models/user";
+
 
 export default async function page() {
   await db();

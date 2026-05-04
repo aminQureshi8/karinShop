@@ -17,7 +17,7 @@ export default function SwiperProduct({ product }: any) {
     state.cart.some((item) => item.id === product._id),
   );
   const isInWhish = useSelector((state: RootState) =>
-    state.whish.some((item) => item._id === product._id),
+    state.whish.some((item : any) => item._id === product._id),
   );
 
   const offPrice = product.off?.percent

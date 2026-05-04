@@ -4,7 +4,7 @@ const order = new Schema(
   {
     address: { type: String, required: true },
     phone: { type: String, required: true },
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: Schema.Types.ObjectId, ref: "user", required: true },
     products: [
       {
         product: {
