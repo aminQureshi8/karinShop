@@ -2,6 +2,7 @@ import MenuMobileJSX from "@/components/module/MenuMobile/MenuMobileJSX";
 import Navbar from "@/components/module/Navbar/Navbar";
 import SideBarMemo from "./SideBarMemo";
 import ListMenuContainer from "@/components/module/ListMenu/ListMenuContainer";
+import CartNavbar from "@/components/module/CartNavbar/CartNavbar";
 
 export default function RootLayout({
   children,
@@ -13,6 +14,7 @@ export default function RootLayout({
       <Navbar />
       <ListMenuContainer />
       <MenuMobileJSX />
+      <CartNavbar />
 
       <div className="container mx-auto font-danaMed">
         <div className="grid grid-cols-12 gap-5  mt-5">

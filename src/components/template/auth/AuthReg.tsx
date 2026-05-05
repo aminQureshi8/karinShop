@@ -37,8 +37,14 @@ export default function AuthReg() {
         <div className="flex justify-end pl-3">
           <ThemeChange />
         </div>
-        <Link href="/" className="text-center text-lg font-semibold mb-4">
-          کارین شاپ
+        <Link href="/" className=" text-3xl font-morabbaReg">
+          <div className="flex justify-center gap-1">
+            <span className="text-blue-500">کارین</span>
+            <span>شاپ</span>
+          </div>
+          <p className="text-sm text-center mt-1 dark:text-gray-400">
+            خرید موبایل و لپ تاپ
+          </p>
         </Link>
         <p className="pr-8 mb-4">ورود | ثبت نام</p>
 

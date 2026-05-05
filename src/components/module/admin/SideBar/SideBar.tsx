@@ -52,15 +52,15 @@ const SideBar = memo(() => {
               className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg cursor-pointer"
             >
               <BsBasket size={20} />
-              <Link href="/admin/product" className="flex items-center justify-between w-full pl-3">
-
+              <Link
+                href="/admin/product"
+                className="flex items-center justify-between w-full pl-3"
+              >
                 <span className="text-sm">محصولات</span>
                 <MdKeyboardArrowDown
                   className={` transition-all ${isOpen && "rotate-180"}`}
                 />
-
               </Link>
-
             </div>
             {isOpen && (
               <div className="flex flex-col gap-2 mt-2 mr-8">
@@ -113,11 +113,19 @@ const SideBar = memo(() => {
               </div>
             </Link>
           </div>
-            <div>
+          <div>
             <Link href="/admin/comment">
               <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
                 <BiComment size={20} />
                 <span className="text-sm">کامنت ها</span>
+              </div>
+            </Link>
+          </div>
+            <div>
+            <Link href="/admin/blog">
+              <div className="flex items-center gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-blue-500 rounded-lg">
+                <BiComment size={20} />
+                <span className="text-sm">مقالات</span>
               </div>
             </Link>
           </div>
