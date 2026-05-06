@@ -4,7 +4,12 @@ const blog = new mongoose.Schema(
   {
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
-    category: { type: String, required: true },
+    category: {
+      type: mongoose.Types.ObjectId,
+      ref: "category",
+      required: true,
+    },
+    
     author: { type: String, default: "نامشخص" },
     coverImage: { type: String, required: true },
     excerpt: { type: String },

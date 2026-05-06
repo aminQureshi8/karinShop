@@ -1,16 +1,19 @@
-import TopCategory from '@/components/module/Home/TopCategory/TopCategory'
-import React from 'react'
-import { CiMobile3 } from 'react-icons/ci'
+import TopCategory from "@/components/module/Home/TopCategory/TopCategory";
+import { FaCertificate } from "react-icons/fa";
+import SwiperBlogs from "../SwiperBlogs/SwiperBlogs";
+import blogModel from "@/models/blog";
 
-export default function Blog() {
+export default async function Blog() {
+  const blogs = await blogModel.find({}).lean();
   return (
-     <div className="mt-12">
+    <div className="mt-12">
       <TopCategory
-        title="جدید ترین محصولات"
-        des="جدیدترین و بروزترین محصولات"
-        icon={<CiMobile3 size={22} />}
+        title="محبوب ترین"
+        des="جدید ترین و بروز ترین مقالات"
+        icon={<FaCertificate size={22} />}
+        titleColor="مقالات"
       />
-      {/* <SwiperProductContainer /> */}
+      <SwiperBlogs blogs={blogs} />
     </div>
-  )
+  );
 }
