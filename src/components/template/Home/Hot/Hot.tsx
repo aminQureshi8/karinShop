@@ -1,4 +1,3 @@
-import React from "react";
 import { FaFire } from "react-icons/fa6";
 import HotSwiperContainer from "./HotSwiper/HotSwiperContainer";
 
@@ -11,7 +10,7 @@ export default function Hot() {
           <h2>داغ ترین چند ساعت گذشته</h2>
         </div>
         <div className="mt-5">
-            <HotSwiperContainer/>
+          <HotSwiperContainer />
         </div>
       </div>
     </div>

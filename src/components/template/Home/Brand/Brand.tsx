@@ -3,6 +3,7 @@ import { CiMobile3 } from "react-icons/ci";
 import BrandSwiper from "./BrandSwiper";
 import db from "@/config/db";
 import { getBrands } from "@/lib/getBrands";
+import { BadgeInfo } from "lucide-react";
 
 export default async function Brand() {
   await db();
@@ -10,9 +11,10 @@ export default async function Brand() {
   return (
     <div className="mt-12">
       <TopCategory
-        title="جدید ترین محصولات"
-        des="جدیدترین و بروزترین محصولات"
-        icon={<CiMobile3 size={22} />}
+        title="محبوب ترین"
+        des="جدیدترین و بروزترین برندها"
+        titleColor="برند ها"
+        icon={<BadgeInfo size={22} />}
       />
       <BrandSwiper brands={JSON.parse(JSON.stringify((brands)))} />
     </div>

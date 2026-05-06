@@ -5,7 +5,7 @@ import SwiperSlideBrand from "@/components/module/Home/SwiperSlideBrand/SwiperSl
 
 export default function BrandSwiper({ brands }: { brands: any }) {
   return (
-    <div className="w-full  overflow-hidden mt-5 mb-5">
+    <div className="w-full overflow-hidden mt-5 mb-5">
       <Swiper
         slidesPerView={4}
         spaceBetween={20}
@@ -17,7 +17,7 @@ export default function BrandSwiper({ brands }: { brands: any }) {
           1024: { slidesPerView: 4, spaceBetween: 20 },
           1280: { slidesPerView: 5, spaceBetween: 20 },
         }}
-        className="mySwiper !h-[210px]"
+        className="mySwiper !h-[100px]"
       >
         {brands.map((brand: any) => (
           <SwiperSlide key={brand._id}>
