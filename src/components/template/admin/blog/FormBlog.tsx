@@ -4,29 +4,29 @@ import Editor from "../Product/Editor/Editor";
 import { Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
 
-export default function FormBlog() {
-  const [isDirty, setIsDirty] = useState(false);
+export default function FormBlog({ category }: { category: any }) {
+  const [subCategory, setSubCategory] = useState([]);
 
   useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (isDirty) {
-        event.preventDefault();
-        event.returnValue = "";
-      }
-    };
+    getSubCate();
+  }, []);
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+  const handleCategoryChange = async (id: string) => {
+    getSubCate(id);
+  };
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [isDirty]);
+  const getSubCate = async (id?: string) => {
+    const categoryId = id || "69ec838c8a5e1fb9766975b1";
+    const res = await fetch(`/api/category/subCategory?cat=${categoryId}`);
+    const data = await res.json();
+    setSubCategory(data);
+  };
 
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
     setValue,
     reset,
   } = useForm<IFormInput>({
@@ -56,21 +56,27 @@ export default function FormBlog() {
           </div>
           <div>
             <label className="text-sm" htmlFor="">
-              عنوان
+              دسته بندی
             </label>
-            <input
-              type="text"
+            <select
+              onChange={(e) => handleCategoryChange(e.target.value)}
               className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
+            >
+              {category.map((cat) => (
+                <option value={cat._id}>{cat.title}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label className="text-sm" htmlFor="">
-              عنوان
+              زیر دسته بندی
             </label>
-            <input
-              type="text"
-              className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
+            <select className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+              <option>زیر دسته بندی را انتخاب کنید</option>
+              {subCategory.map((cat) => (
+                <option value={cat._id}>{cat.title}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label className="text-sm" htmlFor="">

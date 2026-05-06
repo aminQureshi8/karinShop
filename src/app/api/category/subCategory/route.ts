@@ -50,7 +50,11 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   await db();
 
-  const subCategories = await subCategoryModel.find({}, "title").lean();
+  const category = req.nextUrl.searchParams.get("cat");
+
+  const subCategories = await subCategoryModel
+    .find({ category }, "title")
+    .lean();
 
   return NextResponse.json(subCategories);
 }
