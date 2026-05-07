@@ -4,12 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import blogModel from "@/models/blog";
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-//   api_key: process.env.CLOUDINARY_API_KEY!,
-//   api_secret: process.env.CLOUDINARY_API_SECRET!,
-// });
-
 const s3Client = new S3Client({
   region: "default",
   endpoint: "https://s3.ir-thr-at1.arvanstorage.ir",
@@ -59,9 +53,8 @@ export async function POST(req: NextRequest) {
       coverImage: imageUrl,
     });
 
-    return NextResponse.json({message : "create"})
+    return NextResponse.json({ message: "create" });
   } catch (error) {
-    return NextResponse.json({message : error.message})
-
+    return NextResponse.json({ message: error.message });
   }
 }

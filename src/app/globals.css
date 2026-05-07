@@ -17,6 +17,15 @@
   font-feature-settings: "ss02";
 }
 
+@layer components {
+  .blog-content strong {
+    @apply text-blue-300!;
+  }
+  .blog-content {
+    @apply leading-10 max-sm:text-sm;
+  }
+}
+
 @utility container {
   padding-inline: 8px;
   margin-inline: auto;

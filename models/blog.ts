@@ -9,7 +9,7 @@ const blog = new mongoose.Schema(
       ref: "category",
       required: true,
     },
-    
+
     author: { type: String, default: "نامشخص" },
     coverImage: { type: String, required: true },
     excerpt: { type: String },
