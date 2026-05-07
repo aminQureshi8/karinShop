@@ -52,7 +52,7 @@ export default function SwiperProduct({ product }: any) {
     );
   };
 
-  console.log(product.campaion);
+
 
   return (
     <div className="bg-white shadow-xl p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed">

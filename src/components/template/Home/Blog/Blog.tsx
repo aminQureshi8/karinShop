@@ -6,9 +6,9 @@ import db from "@/config/db";
 import { connection } from "next/server";
 
 export default async function Blog() {
-  await db();
   await connection();
-  const blogs = await blogModel.find({} , "title coverImage views").lean();
+  await db();
+  const blogs = await blogModel.find({}, "title coverImage views").lean();
   return (
     <div className="mt-12">
       <TopCategory
@@ -17,7 +17,7 @@ export default async function Blog() {
         icon={<FaCertificate size={22} />}
         titleColor="مقالات"
       />
-      <SwiperBlogs blogs={blogs} />
+      <SwiperBlogs blogs={JSON.parse(JSON.stringify(blogs))} />
     </div>
   );
 }

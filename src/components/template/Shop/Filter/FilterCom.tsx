@@ -32,10 +32,6 @@ export default function FilterCom({
 }) {
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    console.log("category:", checkType);
-  }, [checkType]);
-
   const categories = [
     { id: "all", label: "همه کالاها" },
     { id: "698edaa869ad5da18d4114d1", label: "موبایل" },

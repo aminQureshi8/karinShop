@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 
 export default function SwiperSlideBrand({
   title,
@@ -8,8 +7,6 @@ export default function SwiperSlideBrand({
   title: string;
   imageUrl: string;
 }) {
-  console.log(imageUrl);
-
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl px-4">
       <Image
@@ -17,7 +14,7 @@ export default function SwiperSlideBrand({
         src={imageUrl || "/image/asus.png"}
         width={150}
         height={150}
-        className="!h-[100px]"
+        className="h-25!"
       />
     </div>
   );

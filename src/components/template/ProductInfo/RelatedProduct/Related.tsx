@@ -18,8 +18,6 @@ export default async function Related({
     .limit(6)
     .lean();
 
-  console.log("relatedProducts --> ", relatedProducts);
-
   return (
     <div>
       <SwiperRe products={relatedProducts} />

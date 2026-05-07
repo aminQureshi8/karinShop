@@ -39,11 +39,11 @@ export default function Comments({
       },
     );
 
-    console.log(res);
+  
 
     const data = await res.json();
 
-    console.log(data);
+  
 
     if (res.ok) {
       if (!data.isOk) {

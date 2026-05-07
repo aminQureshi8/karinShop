@@ -15,6 +15,8 @@ import SwiperProductSkeleton from "@/components/loading/SkeletonSwiperProduct";
 import SkeletonTopCategory from "@/components/loading/SkeletonTopCategory";
 import SkeletonOffSwiper from "@/components/loading/SkeletonOffSwiper";
 import SkeletonSwiperBanner from "@/components/loading/SkeletonSwiperBanner";
+import SkeletonSwiperBlogs from "@/components/loading/SkeletonSwiperBlogs";
+import SkeletonSwiperBrands from "@/components/loading/SkeletonSwiperBrands";
 
 function HomeCompo() {
   return (
@@ -40,11 +42,27 @@ function HomeCompo() {
       </Suspense>
       <Banner />
       <PopPro />
-      <Suspense fallback={<p>lll</p>}>
+      <Suspense
+        fallback={
+          <>
+            <SkeletonTopCategory />
+            <SkeletonSwiperBrands />
+          </>
+        }
+      >
         <Brand />
       </Suspense>
       <Hot />
-      <Blog />
+      <Suspense
+        fallback={
+          <>
+            <SkeletonTopCategory />
+            <SkeletonSwiperBlogs />
+          </>
+        }
+      >
+        <Blog />
+      </Suspense>
       <Feature />
       <Footer />
     </div>

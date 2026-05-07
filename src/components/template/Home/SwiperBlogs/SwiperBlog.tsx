@@ -31,7 +31,7 @@ export default function SwiperBlog({ title, coverImage, views, createdAt }) {
 
       <div className="border-t flex items-center justify-between pt-3 mt-3">
         <div className="text-blue-500 dark:text-sky-400">
-          <p>{new Date(createdAt).toLocaleString("fa-IR").slice(0, 9)}</p>
+          <p>{new Date(createdAt).toLocaleDateString("fa-IR")}</p>
         </div>
         <div className="flex ss02 items-center gap-1 text-gray-300">
           <p>{views}</p>
