@@ -8,28 +8,30 @@ import { BiHome } from "react-icons/bi";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import BlogContent from "@/components/template/blog/BlogContnt/BlogContent";
 import BlogCart from "@/components/template/blog/BlogCart/BlogCart";
+import getBlog from "@/app/utils/getFunc";
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const blog = await getBlog(slug);
+
+  return {
+    title: blog?.title || "مقاله",
+    description: blog?.excerpt,
+  };
+}
 
 export default async function page({ params }) {
   await connection();
   await db();
-  const { slug } = await params;
 
-  const blog = await blogModel
-    .findOne({ slug })
-    .populate("category", "title")
-    .lean();
+  const { slug } = await params;
+  const blog = await getBlog(slug);
 
   const newBlogs = await blogModel
-    .find(
-      {
-        slug: {
-          $ne: slug,
-        },
-      },
-      "title coverImage",
-    )
+    .find({ slug: { $ne: slug } }, "title coverImage slug")
     .sort({ createdAt: -1 })
-    .limit(4);
+    .limit(4)
+    .lean();
 
   return (
     <div className="container mx-auto">
@@ -58,7 +60,7 @@ export default async function page({ params }) {
           </BreadCrumbs>
         </div>
 
-        <div className="grid grid-cols-12 mt-8">
+        <div className="grid grid-cols-12 mt-8 font-danaMed gap-5">
           <div className="max-md:col-span-12 col-span-9">
             <BlogContent
               title={blog.title}
