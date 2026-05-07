@@ -6,9 +6,15 @@ import Info from "@/components/template/ProductInfo/Info/Info";
 import Related from "@/components/template/ProductInfo/RelatedProduct/Related";
 import db from "@/config/db";
 import productModel from "@/models/product";
+import { notFound } from "next/navigation";
+import mongoose from "mongoose";
 
 export default async function ProductContent({ id }: { id: string }) {
   await db();
+
+  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+    notFound();
+  }
 
   const product = await productModel
     .findById(id, { features: { $slice: 6 } })
