@@ -11,13 +11,12 @@ export default function SwiperBlog({
 }) {
   return (
     <div className="bg-white shadow-xl p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed">
-      <div className="relative group">
+      <div className="relative group w-full h-48">
         <Image
-          className="rounded-r-4xl rounded-bl-4xl rounded-l-lg"
-          width={200}
-          height={200}
           src={coverImage}
-          alt=""
+          alt={title}
+          fill
+          className="object-cover rounded-r-4xl rounded-bl-4xl rounded-l-lg"
         />
 
         <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 rounded-r-4xl rounded-bl-4xl rounded-l-lg">

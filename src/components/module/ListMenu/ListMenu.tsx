@@ -3,8 +3,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { memo } from "react";
 import Link from "next/link";
 import Ui from "./Ui";
-const ListMenu = memo( async ({ subCategories }: { subCategories: any }) => {
-
+const ListMenu = memo(async ({ subCategories }: { subCategories: any }) => {
   return (
     <div className="container mx-auto">
       <div className="bg-black max-lg:hidden text-white  dark:text-gray-300 dark:bg-slate-800 text-sm  font-danaMed rounded-full mt-5 p-5">
@@ -24,7 +23,9 @@ const ListMenu = memo( async ({ subCategories }: { subCategories: any }) => {
               فروشگاه
             </Link>
 
-            <li className="transition-all hover:text-blue-500">وبلاگ</li>
+            <Link href="/webLog" className="transition-all hover:text-blue-500">
+              وبلاگ
+            </Link>
           </ul>
           <div className="flex items-center gap-x-2">
             <IoLocationOutline size={19} />
