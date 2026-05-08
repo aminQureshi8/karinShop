@@ -1,7 +1,20 @@
-import React from "react";
 import SwiperBlog from "../../Home/SwiperBlogs/SwiperBlog";
 
-export default function ConBlogs({ blogs }) {
+export default function ConBlogs({ blogs, listType, setListType }) {
+  const listItems = [
+    {
+      id: "pop",
+      name: "محبوب ترین",
+    },
+    {
+      id: "new",
+      name: "جدید ترین",
+    },
+    {
+      id: "upd",
+      name: "بروز ترین",
+    },
+  ];
   return (
     <div>
       <div className="flex items-center gap-3 max-sm:text-xs">
@@ -9,7 +22,7 @@ export default function ConBlogs({ blogs }) {
           <p>مرتب سازی:</p>
         </div>
         <ul className="flex items-center max-sm:gap-3 gap-5 *:cursor-pointer transition-colors dark:text-gray-400 *:hover:text-blue-500">
-          {/* {listItems.map((li, index) => (
+          {listItems.map((li, index) => (
             <li
               onClick={() => setListType(li.id)}
               className={`${li.id === listType ? "text-blue-500" : ""}`}
@@ -17,7 +30,7 @@ export default function ConBlogs({ blogs }) {
             >
               {li.name}
             </li>
-          ))} */}
+          ))}
         </ul>
       </div>
       <div className="mt-5 w-full">

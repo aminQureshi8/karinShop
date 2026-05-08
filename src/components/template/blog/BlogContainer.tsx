@@ -4,10 +4,13 @@ import Link from "next/link";
 import { BiHome } from "react-icons/bi";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import BlogContent from "./BlogContnt/BlogContent";
+import IncrementView from "./IncrementView";
 
 export default function BlogContainer({ blog }) {
   return (
     <>
+      
+
       <div className="mt-8">
         <BreadCrumbs>
           <Link href="/" className="flex items-center gap-2">
@@ -36,9 +39,7 @@ export default function BlogContainer({ blog }) {
         <div className="col-span-9">
           <BlogContent title={blog.title} />
         </div>
-        <div className="col-span-3">
-          
-        </div>
+        <div className="col-span-3"></div>
       </div>
 
       <Footer />

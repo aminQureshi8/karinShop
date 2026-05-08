@@ -9,6 +9,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import BlogContent from "@/components/template/blog/BlogContnt/BlogContent";
 import BlogCart from "@/components/template/blog/BlogCart/BlogCart";
 import getBlog from "@/app/utils/getFunc";
+import IncrementView from "@/components/template/blog/IncrementView";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -36,6 +37,7 @@ export default async function page({ params }) {
   return (
     <div className="container mx-auto">
       <>
+        <IncrementView slug={blog.slug} />
         <div className="mt-8">
           <BreadCrumbs>
             <Link href="/" className="flex items-center gap-2">
