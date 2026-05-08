@@ -36,10 +36,10 @@ export default function BlogCart({ newBlogs }) {
       </div>
 
       <div className="mt-5">
-        <button className="flex items-center text-sm gap-2 bg-blue-500 text-white w-full justify-center p-2 rounded-lg cursor-pointer">
+        <Link href="/webLog" className="flex items-center text-sm gap-2 bg-blue-500 text-white w-full justify-center p-2 rounded-lg cursor-pointer">
           <span>مشاهده بیشتر</span>
           <ArrowLeftIcon size={18} />
-        </button>
+        </Link>
       </div>
     </div>
   );

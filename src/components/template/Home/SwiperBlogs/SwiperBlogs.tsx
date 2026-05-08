@@ -17,7 +17,7 @@ function SwiperBlogs({ blogs }: any) {
           1024: { slidesPerView: 3, spaceBetween: 20 },
           1280: { slidesPerView: 3.5, spaceBetween: 20 },
         }}
-        className="mySwiper !h-[410px]"
+        className="mySwiper !h-[330px]"
       >
         {blogs?.map((blog: any) => (
           <SwiperSlide key={blog._id}>

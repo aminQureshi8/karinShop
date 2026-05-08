@@ -1,19 +1,20 @@
 "use client";
 
 import { ArrowBigLeft } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function FilterBlog({
   checkType,
   setCheckType,
   setListType,
+  setCurrentPage
 }: {}) {
   const [open, setOpen] = useState(false);
 
   const categories = [
-    { id: "all", label: "همه کالاها" },
-    { id: "698edaa869ad5da18d4114d1", label: "موبایل" },
-    { id: "698f0bd7961ffa9510fae56d", label: "لب تاب" },
+    { id: "all", label: "همه دسته بندی ها" },
+    { id: "69ec838c8a5e1fb9766975b1", label: "کالای دیجیتال" },
+    { id: "69ec83d58a5e1fb9766975bb", label: "ارایشی و بهداشتی" },
   ];
 
   return (
@@ -26,6 +27,7 @@ export default function FilterBlog({
           onClick={() => {
             setCheckType("all");
             setListType("pop");
+            setCurrentPage(1)
           }}
         >
           حذف فیلترها

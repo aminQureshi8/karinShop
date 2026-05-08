@@ -7,6 +7,9 @@ export async function GET(req: NextRequest) {
     await db();
 
     const filterBlog = req.nextUrl.searchParams.get("filter");
+    const category = req.nextUrl.searchParams.get("category");
+    const page = req.nextUrl.searchParams.get("page");
+    const skip = (page - 1) * 2;
 
     const filter: any = {};
     let sortQuery: any = {};
@@ -17,10 +20,21 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    if (category !== "all") {
+      filter.category = category;
+    }
+
+    const totalBlogs = await blogModel.countDocuments({});
+    const totalPages = Math.ceil(totalBlogs / 2);
+
     const blogs = await blogModel
-      .find({}, "title coverImage views createdAt slug")
+      .find(filter, "title coverImage views createdAt slug")
+      .skip(skip)
+      .limit(2)
       .sort(sortQuery);
 
-    return NextResponse.json(blogs);
-  } catch (error) {}
+    return NextResponse.json({ blogs, totalPages });
+  } catch (error) {
+    return NextResponse.json({ message: error.message });
+  }
 }

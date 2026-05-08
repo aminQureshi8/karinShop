@@ -8,7 +8,9 @@ import { connection } from "next/server";
 export default async function Blog() {
   await connection();
   await db();
-const blogs = await blogModel.find({}, "title coverImage views slug").lean();
+  const blogs = await blogModel
+    .find({}, "title coverImage views slug createdAt")
+    .lean();
   return (
     <div className="mt-12">
       <TopCategory

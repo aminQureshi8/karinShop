@@ -25,7 +25,7 @@ function Pagination({
           key={p}
           onClick={() => setCurrentPage(p)}
           className={`px-3 py-1 ss02 rounded ${
-            p === currentPage ? "bg-orange-600 text-white" : "bg-gray-200 dark:bg-gray-700"
+            p === currentPage ? "bg-blue-600 text-white" : "bg-gray-200 dark:bg-gray-700"
           }`}
         >
           {p}
