@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     const filterBlog = req.nextUrl.searchParams.get("filter");
     const category = req.nextUrl.searchParams.get("category");
     const page = req.nextUrl.searchParams.get("page");
-    const skip = (page - 1) * 2;
+    const skip = (page - 1) * 6;
 
     const filter: any = {};
     let sortQuery: any = {};
@@ -24,13 +24,13 @@ export async function GET(req: NextRequest) {
       filter.category = category;
     }
 
-    const totalBlogs = await blogModel.countDocuments({});
-    const totalPages = Math.ceil(totalBlogs / 2);
+    const totalBlogs = await blogModel.countDocuments(filter);
+    const totalPages = Math.ceil(totalBlogs / 6);
 
     const blogs = await blogModel
       .find(filter, "title coverImage views createdAt slug")
       .skip(skip)
-      .limit(2)
+      .limit(6)
       .sort(sortQuery);
 
     return NextResponse.json({ blogs, totalPages });

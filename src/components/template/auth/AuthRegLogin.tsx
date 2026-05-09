@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-export default function AuthReg() {
+export default function AuthRegLogin() {
   const router = useRouter();
   const {
     register,
@@ -37,16 +37,13 @@ export default function AuthReg() {
         <div className="flex justify-end pl-3">
           <ThemeChange />
         </div>
-        <Link href="/" className=" text-3xl font-morabbaReg">
+        <Link href="/" className="text-3xl mb-3 font-morabbaReg">
           <div className="flex justify-center gap-1">
             <span className="text-blue-500">کارین</span>
             <span>شاپ</span>
           </div>
-          <p className="text-sm text-center mt-1 dark:text-gray-400">
-            خرید موبایل و لپ تاپ
-          </p>
         </Link>
-        <p className="pr-8 mb-4">ورود | ثبت نام</p>
+        <p className="pr-8">ورود | ثبت نام</p>
 
         <form className="px-8" onSubmit={handleSubmit(onSubmit)}>
           <label className="text-xs text-gray-400">

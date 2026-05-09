@@ -2,7 +2,10 @@ export default function SkeletonSwiperBlogs() {
   return (
     <div className="grid grid-cols-3 gap-5 mb-8">
       {Array.from({ length: 3 }).map((_, i) => (
-        <div className="bg-white shadow-xl p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed animate-pulse">
+        <div
+          key={i}
+          className="bg-white shadow-xl p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed animate-pulse"
+        >
           <div className="relative">
             <div className="w-full h-50 bg-gray-300 dark:bg-gray-700 rounded-r-4xl rounded-bl-4xl rounded-l-lg"></div>
           </div>

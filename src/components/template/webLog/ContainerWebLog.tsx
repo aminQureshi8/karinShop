@@ -12,14 +12,22 @@ export default function ContainerWebLog() {
   const [listType, setListType] = useState("pop");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getAndFilterBlogs = async () => {
-    const res = await fetch(
-      `/api/blog/filter?filter=${listType}&category=${checkType}&page=${currentPage}`,
-    );
-    const data = await res.json();
-    setBlogs(data.blogs);
-    setTotalPages(data.totalPages);
+    try {
+      const res = await fetch(
+        `/api/blog/filter?filter=${listType}&category=${checkType}&page=${currentPage}`,
+      );
+      const data = await res.json();
+      setBlogs(data.blogs);
+      setTotalPages(data.totalPages);
+
+      console.log(data);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -39,16 +47,20 @@ export default function ContainerWebLog() {
         </div>
       </div>
       <div className="max-sm:col-span-12 max-sm:row-start-1 col-span-9">
+        
         <ConBlogs
           blogs={JSON.parse(JSON.stringify(blogs))}
           listType={listType}
           setListType={setListType}
+          isLoading={isLoading}
         />
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-        />
+        {totalPages !== 0 && !(totalPages === 1) && (
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+          />
+        )}
       </div>
     </div>
   );

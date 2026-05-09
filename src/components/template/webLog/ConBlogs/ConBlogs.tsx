@@ -1,6 +1,7 @@
+import SkeletonSwiperBlogs from "@/components/loading/SkeletonSwiperBlogs";
 import SwiperBlog from "../../Home/SwiperBlogs/SwiperBlog";
 
-export default function ConBlogs({ blogs, listType, setListType }) {
+export default function ConBlogs({ blogs, listType, setListType, isLoading }) {
   const listItems = [
     {
       id: "pop",
@@ -34,7 +35,9 @@ export default function ConBlogs({ blogs, listType, setListType }) {
         </ul>
       </div>
       <div className="mt-5 w-full">
-        {blogs.length === 0 ? (
+        {isLoading ? (
+          <SkeletonSwiperBlogs />
+        ) : blogs.length === 0 ? (
           <div className="flex items-center justify-center mt-10">
             <p>محصولی یافت نشد</p>
           </div>
