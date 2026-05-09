@@ -45,7 +45,7 @@ export default async function UserNavbar() {
           </div>
         </div>
       ) : (
-        <Link href="/register/auth">
+        <Link href="/regLogin/auth">
           <button className="border-2 cursor-pointer text-sm px-3 flex items-center gap-x-1 border-gray-200 dark:border-gray-700 rounded-full p-2">
             <RiUserLine />
             ورود / ثبت نام

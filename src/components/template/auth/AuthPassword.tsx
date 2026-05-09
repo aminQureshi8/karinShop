@@ -2,11 +2,17 @@
 
 import ThemeChange from "@/components/module/Navbar/Buttons/ThemeChange";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
-export default function AuthRegLogin() {
+export default function AuthPassword() {
   const router = useRouter();
+  const params = useSearchParams();
+  const identifier = params.get("identifier"); 
+
+  const [serverError, setServerError] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -15,27 +21,26 @@ export default function AuthRegLogin() {
   } = useForm({ mode: "all" });
 
   const onSubmit = async (data: any) => {
-    const { identifier } = data;
+    const { password } = data;
 
-    const res = await fetch("/api/auth/check-user", {
+    const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ identifier }),
+      body: JSON.stringify({ identifier, password }),
     });
 
     const result = await res.json();
 
-    console.log(result);
-
-    if (result.action === "login") {
-      router.push(`/regLogin/password?identifier=${identifier}`);
-      reset();
-    } else if (result.action === "register") {
-      router.push(`/regLogin/otp?identifier=${identifier}`);
-      reset();
+    if (!res.ok) {
+      setServerError(result.error || "خطایی رخ داده است");
+      return;
     }
+
+   
+    reset();
+    router.push("/dashboard");
   };
 
   return (
@@ -44,43 +49,54 @@ export default function AuthRegLogin() {
         <div className="flex justify-end pl-3">
           <ThemeChange />
         </div>
+
         <Link href="/" className="text-3xl mb-3 font-morabbaReg">
           <div className="flex justify-center gap-1">
             <span className="text-blue-500">کارین</span>
             <span>شاپ</span>
           </div>
         </Link>
-        <p className="pr-8">ورود | ثبت نام</p>
+
+        <p className="pr-8">رمز عبور خود را وارد کنید</p>
 
         <form className="px-8" onSubmit={handleSubmit(onSubmit)}>
           <label className="text-xs text-gray-400">
-            لطفا شماره موبایل یا ایمیل خود را وارد کنید
+            لطفا رمز عبور خود را وارد کنید.
           </label>
+
           <input
-            type="text"
+            type="password"
             autoFocus
-            {...register("identifier", {
-              required: "این فیلد الزامی است",
-              pattern: {
-                value:
-                  /^(?:[^\s@]+@[^\s@]+\.[^\s@]{2,}|(?:\+98|0)?9(?:0|1|2|3)\d{8})$/,
-                message: "ایمیل یا شماره موبایل معتبر وارد کنید",
+            {...register("password", {
+              required: "رمز عبور الزامی است",
+              minLength: {
+                value: 6,
+                message: "رمز عبور حداقل باید ۶ حرف باشد",
               },
             })}
             className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
           />
-          {errors.identifier && (
+
+          
+          {errors.password && (
             <span className="text-red-500 text-xs mt-2 block">
-              {errors.identifier.message as string}
+              {errors.password.message as string}
+            </span>
+          )}
+
+         
+          {serverError && (
+            <span className="text-red-500 text-xs mt-2 block text-center">
+              {serverError}
             </span>
           )}
 
           <button
             type="submit"
-            disabled={errors.identifier ? true : false}
+            disabled={!!errors.password}
             className="bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-400 cursor-pointer text-white w-full rounded-lg py-2 mt-5 "
           >
-            ورود
+            تایید
           </button>
         </form>
 

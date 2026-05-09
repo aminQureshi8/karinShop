@@ -60,7 +60,7 @@ export default function AuthOtp() {
       });
 
       if (res.ok) {
-        router.push("/");
+        router.push(`/regLogin/create-password?identifier=${identifier}`);
         reset();
       }
     } catch (error) {

@@ -28,46 +28,46 @@ export async function POST(req: NextRequest) {
           $or: [{ email: identifier }, { phone: identifier }],
         });
 
-        if (!user) {
-          user = await userModel.create({
-            email: identifier.includes("@") ? identifier : undefined,
-            phone:
-              identifier.startsWith("+98") || identifier.startsWith("09")
-                ? identifier
-                : undefined,
-            role,
-          });
-        }
+      // if (!user) {
+      //     user = await userModel.create({
+      //       email: identifier.includes("@") ? identifier : undefined,
+      //       phone:
+      //         identifier.startsWith("+98") || identifier.startsWith("09")
+      //           ? identifier
+      //           : undefined,
+      //       role,
+      //     });
+      //   }
 
-        const accessToken = generateAccessToken({
-          email: user.email,
-          phone: user.phone,
-          role: user.role,
-        });
+        // const accessToken = generateAccessToken({
+        //   email: user.email,
+        //   phone: user.phone,
+        //   role: user.role,
+        // });
 
-        const refreshToken = generateRefreshToken({
-          email: user.email,
-          phone: user.phone,
-        });
+        // const refreshToken = generateRefreshToken({
+        //   email: user.email,
+        //   phone: user.phone,
+        // });
 
-        user.refreshToken = refreshToken;
-        await user.save();
+        // user.refreshToken = refreshToken;
+        // await user.save();
 
-        const headers = new Headers();
-        headers.append(
-          "Set-Cookie",
-          `token=${accessToken};path=/;httpOnly=true`,
-        );
-        headers.append(
-          "Set-Cookie",
-          `refresh-token=${refreshToken};path=/;httpOnly=true`,
-        );
+        // const headers = new Headers();
+        // headers.append(
+        //   "Set-Cookie",
+        //   `token=${accessToken};path=/;httpOnly=true`,
+        // );
+        // headers.append(
+        //   "Set-Cookie",
+        //   `refresh-token=${refreshToken};path=/;httpOnly=true`,
+        // );
 
         await otpModel.deleteOne({ _id: isOtpExist._id });
 
         return NextResponse.json(
           { message: "OTP is valid" },
-          { status: 200, headers },
+          { status: 200 },
         );
       } else {
         return NextResponse.json(
