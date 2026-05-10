@@ -45,54 +45,56 @@ export default function AuthRegLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center font-danaMed">
-      <div className="rounded-xl w-96 bg-white shadow-2xl dark:bg-slate-800 flex flex-col justify-center py-5">
-        <div className="flex justify-end pl-3">
-          <ThemeChange />
-        </div>
-        <Link href="/" className="text-3xl mb-3 font-morabbaReg">
-          <div className="flex justify-center gap-1">
-            <span className="text-blue-500">کارین</span>
-            <span>شاپ</span>
+    <div className="container mx-auto">
+      <div className="min-h-screen flex items-center justify-center font-danaMed">
+        <div className="rounded-xl w-96 bg-white shadow-2xl dark:bg-slate-800 flex flex-col justify-center py-5">
+          <div className="flex justify-end pl-3">
+            <ThemeChange />
           </div>
-        </Link>
-        <p className="pr-8">ورود | ثبت نام</p>
+          <Link href="/" className="text-3xl mb-3 font-morabbaReg">
+            <div className="flex justify-center gap-1">
+              <span className="text-blue-500">کارین</span>
+              <span>شاپ</span>
+            </div>
+          </Link>
+          <p className="pr-8">ورود | ثبت نام</p>
 
-        <form className="px-8" onSubmit={handleSubmit(onSubmit)}>
-          <label className="text-xs text-gray-400">
-            لطفا شماره موبایل یا ایمیل خود را وارد کنید
-          </label>
-          <input
-            type="text"
-            autoFocus
-            {...register("identifier", {
-              required: "این فیلد الزامی است",
-              pattern: {
-                value:
-                  /^(?:[^\s@]+@[^\s@]+\.[^\s@]{2,}|(?:\+98|0)?9(?:0|1|2|3)\d{8})$/,
-                message: "ایمیل یا شماره موبایل معتبر وارد کنید",
-              },
-            })}
-            className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-          />
-          {errors.identifier && (
-            <span className="text-red-500 text-xs mt-2 block">
-              {errors.identifier.message as string}
-            </span>
-          )}
+          <form className="px-8" onSubmit={handleSubmit(onSubmit)}>
+            <label className="text-xs text-gray-400">
+              لطفا شماره موبایل یا ایمیل خود را وارد کنید
+            </label>
+            <input
+              type="text"
+              autoFocus
+              {...register("identifier", {
+                required: "این فیلد الزامی است",
+                pattern: {
+                  value:
+                    /^(?:[^\s@]+@[^\s@]+\.[^\s@]{2,}|(?:\+98|0)?9(?:0|1|2|3)\d{8})$/,
+                  message: "ایمیل یا شماره موبایل معتبر وارد کنید",
+                },
+              })}
+              className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+            {errors.identifier && (
+              <span className="text-red-500 text-xs mt-2 block">
+                {errors.identifier.message as string}
+              </span>
+            )}
 
-          <button
-            type="submit"
-            disabled={errors.identifier ? true : false}
-            className="bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-400 cursor-pointer text-white w-full rounded-lg py-2 mt-5 "
-          >
-            ورود
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={errors.identifier ? true : false}
+              className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed text-white w-full rounded-xl py-2.5 mt-4 font-bold transition-all shadow-lg shadow-blue-200 dark:shadow-none active:scale-[0.98]"
+            >
+              ورود
+            </button>
+          </form>
 
-        <p className="text-center text-xs text-gray-400 mt-10">
-          ورود شما به معنای پذیرش قوانین سایت است
-        </p>
+          <p className="text-center text-xs text-gray-400 mt-10">
+            ورود شما به معنای پذیرش قوانین سایت است
+          </p>
+        </div>
       </div>
     </div>
   );
