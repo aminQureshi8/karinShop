@@ -59,7 +59,7 @@ export default async function ProductContent({ id }: { id: string }) {
             breadCrumbs={product.breadCrumbs}
             images={product?.imageUrls}
             colors={product.colors}
-            features={JSON.parse(JSON.stringify(product.features))}
+            features={product.features}
             id={product._id.toString()}
             price={product.price}
             title={product.title}

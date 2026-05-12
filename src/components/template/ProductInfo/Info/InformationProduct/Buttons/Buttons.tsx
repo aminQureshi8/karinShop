@@ -6,7 +6,7 @@ import { toggleWhish } from "@/app/redux/slices/Whish/Whish";
 import { RxCross2 } from "react-icons/rx";
 import { SlBasket } from "react-icons/sl";
 import { toggleCart } from "@/app/redux/slices/Cart/Cart";
-export default function Buttons({
+function Buttons({
   price,
   title,
   id,
@@ -19,8 +19,6 @@ export default function Buttons({
   imageUrls: string;
   mainCount: number;
 }) {
-  console.log(price, title, id, imageUrls, mainCount);
-
   const dispatch = useDispatch();
 
   const isInWhish = useSelector((state: RootState) =>
@@ -30,8 +28,6 @@ export default function Buttons({
   const isInCart = useSelector((state: RootState) =>
     state.cart.some((item) => item.id === id),
   );
-
-  console.log(isInWhish);
 
   return (
     <div className="flex items-center max-sm:gap-1 gap-2 *:cursor-pointer">
@@ -93,3 +89,5 @@ export default function Buttons({
     </div>
   );
 }
+
+export default Buttons;

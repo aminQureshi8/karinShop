@@ -17,7 +17,7 @@ export default function SwiperProduct({ product }: any) {
     state.cart.some((item) => item.id === product._id),
   );
   const isInWhish = useSelector((state: RootState) =>
-    state.whish.some((item : any) => item._id === product._id),
+    state.whish.some((item: any) => item._id === product._id),
   );
 
   const offPrice = product.off?.percent
@@ -52,10 +52,8 @@ export default function SwiperProduct({ product }: any) {
     );
   };
 
-
-
   return (
-    <div className="bg-white shadow-xl p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed">
+    <div className="bg-white shadow-[0_4px_16px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgb(0,0,0,0.12)] dark:shadow-[0_4px_16px_rgb(0,0,0,0.3)] dark:hover:shadow-[0_8px_24px_rgb(0,0,0,0.4)] dark:hover:shadow-[0_20px_60px_rgb(0,0,0,0.5)] p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed">
       <div className="relative flex justify-center">
         <Link href={`/productInfo/${product._id}`}>
           <Image
@@ -66,13 +64,13 @@ export default function SwiperProduct({ product }: any) {
           />
         </Link>
 
-        {
-          product.count === 0 && <div className=" absolute left-0">
+        {product.count === 0 && (
+          <div className=" absolute left-0">
             <div className="bg-gray-500 text-xs p-2 rounded-xl">
               <p>ناموجود</p>
             </div>
           </div>
-        }
+        )}
 
         <div className="absolute right-0 top-0">
           <div className="flex items-center gap-2">

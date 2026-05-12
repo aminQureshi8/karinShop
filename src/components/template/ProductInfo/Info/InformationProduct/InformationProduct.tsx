@@ -1,8 +1,8 @@
-import Providers from "@/app/redux/Providers";
+import { memo } from "react";
 import Buttons from "./Buttons/Buttons";
 import ColorPick from "./Color/ColorPick";
 
-export default function InformationProduct({
+function InformationProduct({
   colors,
   features,
   price,
@@ -24,13 +24,13 @@ export default function InformationProduct({
           ))}
         </div>
         <div>
-            <Buttons
-              price={price}
-              title={title}
-              id={id}
-              imageUrls={imageUrls}
-              mainCount={mainCount}
-            />
+          <Buttons
+            price={price}
+            title={title}
+            id={id}
+            imageUrls={imageUrls}
+            mainCount={mainCount}
+          />
         </div>
       </div>
 
@@ -63,3 +63,5 @@ export default function InformationProduct({
     </div>
   );
 }
+
+export default memo(InformationProduct);

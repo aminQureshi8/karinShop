@@ -27,14 +27,6 @@ export default function AuthRegLogin() {
 
     const result = await res.json();
 
-    if (result.action === "login") {
-      router.push(`/regLogin/password?identifier=${identifier}`);
-      reset();
-    } else if (result.action === "register") {
-      router.push(`/regLogin/otp?identifier=${identifier}`);
-      reset();
-    }
-
     const otpRes = await fetch("/api/auth/otp", {
       method: "POST",
       headers: {
@@ -42,6 +34,16 @@ export default function AuthRegLogin() {
       },
       body: JSON.stringify({ identifier }),
     });
+
+    console.log(otpRes);
+
+    if (result.action === "login") {
+      router.push(`/regLogin/otp?identifier=${identifier}`);
+      reset();
+    } else if (result.action === "register") {
+      router.push(`/regLogin/otp?identifier=${identifier}`);
+      reset();
+    }
   };
 
   return (

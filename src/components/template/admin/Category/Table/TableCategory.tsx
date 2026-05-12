@@ -40,8 +40,6 @@ export default function TableCategory({
   categories,
   getCategories,
   totalPageState,
-  setCategoryState,
-  intialCategory,
 }: TableCategoryProps) {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isOpen, setIsOpen] = useState(false);

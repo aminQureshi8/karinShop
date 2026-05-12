@@ -4,8 +4,9 @@ import Image from "next/image";
 import { memo, useState } from "react";
 import ModalSwiper from "../ModalSwiper/ModalSwiper";
 
-const Gallery = memo(({ images, maimImage }: any) => {
+const Gallery = ({ images, maimImage }: any) => {
   const [isOpen, setIsOpen] = useState(false);
+  console.log("gallery render");
 
   return (
     <div>
@@ -39,6 +40,6 @@ const Gallery = memo(({ images, maimImage }: any) => {
       }
     </div>
   );
-});
+};
 
-export default Gallery;
+export default memo(Gallery);

@@ -9,7 +9,7 @@ import { useState } from "react";
 export default function AuthPassword() {
   const router = useRouter();
   const params = useSearchParams();
-  const identifier = params.get("identifier"); 
+  const identifier = params.get("identifier");
 
   const [serverError, setServerError] = useState("");
 
@@ -38,71 +38,72 @@ export default function AuthPassword() {
       return;
     }
 
-   
+    console.log(result);
+
     reset();
-    router.push("/dashboard");
+    router.push("/");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center font-danaMed">
-      <div className="rounded-xl w-96 bg-white shadow-2xl dark:bg-slate-800 flex flex-col justify-center py-5">
-        <div className="flex justify-end pl-3">
-          <ThemeChange />
-        </div>
-
-        <Link href="/" className="text-3xl mb-3 font-morabbaReg">
-          <div className="flex justify-center gap-1">
-            <span className="text-blue-500">کارین</span>
-            <span>شاپ</span>
+    <div className="container mx-auto">
+      <div className="min-h-screen flex items-center justify-center font-danaMed">
+        <div className="rounded-xl w-96 bg-white shadow-2xl dark:bg-slate-800 flex flex-col justify-center py-5">
+          <div className="flex justify-end pl-3">
+            <ThemeChange />
           </div>
-        </Link>
 
-        <p className="pr-8">رمز عبور خود را وارد کنید</p>
+          <Link href="/" className="text-3xl mb-3 font-morabbaReg">
+            <div className="flex justify-center gap-1">
+              <span className="text-blue-500">کارین</span>
+              <span>شاپ</span>
+            </div>
+          </Link>
 
-        <form className="px-8" onSubmit={handleSubmit(onSubmit)}>
-          <label className="text-xs text-gray-400">
-            لطفا رمز عبور خود را وارد کنید.
-          </label>
+          <p className="pr-8">رمز عبور خود را وارد کنید</p>
 
-          <input
-            type="password"
-            autoFocus
-            {...register("password", {
-              required: "رمز عبور الزامی است",
-              minLength: {
-                value: 6,
-                message: "رمز عبور حداقل باید ۶ حرف باشد",
-              },
-            })}
-            className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-          />
+          <form className="px-8" onSubmit={handleSubmit(onSubmit)}>
+            <label className="text-xs text-gray-400">
+              لطفا رمز عبور خود را وارد کنید.
+            </label>
 
-          
-          {errors.password && (
-            <span className="text-red-500 text-xs mt-2 block">
-              {errors.password.message as string}
-            </span>
-          )}
+            <input
+              type="password"
+              autoFocus
+              {...register("password", {
+                required: "رمز عبور الزامی است",
+                minLength: {
+                  value: 6,
+                  message: "رمز عبور حداقل باید ۶ حرف باشد",
+                },
+              })}
+              className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
 
-         
-          {serverError && (
-            <span className="text-red-500 text-xs mt-2 block text-center">
-              {serverError}
-            </span>
-          )}
+            {errors.password && (
+              <span className="text-red-500 text-xs mt-2 block">
+                {errors.password.message as string}
+              </span>
+            )}
 
-          <button
-            type="submit"
-            disabled={!!errors.password}
-            className="bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-400 cursor-pointer text-white w-full rounded-lg py-2 mt-5 "
-          >
-            تایید
-          </button>
-        </form>
+            {serverError && (
+              <span className="text-red-500 text-xs mt-2 block text-center">
+                {serverError}
+              </span>
+            )}
 
-        <p className="text-center text-xs text-gray-400 mt-10">
-          ورود شما به معنای پذیرش قوانین سایت است
-        </p>
+            <button
+              type="submit"
+              disabled={!!errors.password}
+              className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed text-white w-full rounded-xl py-2.5 mt-4 font-bold transition-all shadow-lg shadow-blue-200 dark:shadow-none active:scale-[0.98]"
+            >
+              تایید
+            </button>
+          </form>
+
+          <p className="text-center text-xs text-gray-400 mt-10">
+            ورود شما به معنای پذیرش قوانین سایت است
+          </p>
+        </div>
       </div>
     </div>
   );

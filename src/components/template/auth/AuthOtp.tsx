@@ -59,9 +59,13 @@ export default function AuthOtp() {
         body: JSON.stringify({ otpCode, identifier }),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+      reset({ otp: Array(6).fill("") });
+
+      if (data.action === "login") {
+        router.push(`/regLogin/password?identifier=${identifier}`);
+      } else if (data.action === "register") {
         router.push(`/regLogin/create-password?identifier=${identifier}`);
-        reset();
       }
     } catch (error) {
     } finally {
@@ -100,7 +104,7 @@ export default function AuthOtp() {
           <button
             type="submit"
             disabled={otpValues.join("").length !== 6}
-            className="bg-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed text-white w-full rounded-lg py-2"
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed text-white w-full rounded-xl py-3.5 mt-4 font-bold transition-all shadow-lg shadow-blue-200 dark:shadow-none active:scale-[0.98]"
           >
             {isLoading ? <BeatLoader size={8} color="white" /> : "تایید"}
           </button>

@@ -6,7 +6,7 @@ import SwiperBlog from "./SwiperBlog";
 
 function SwiperBlogs({ blogs }: any) {
   return (
-    <div className="w-full overflow-hidden mt-5 mb-5">
+    <div className="w-full overflow-hidden mt-5">
       <Swiper
         slidesPerView={4.5}
         spaceBetween={20}
@@ -17,7 +17,7 @@ function SwiperBlogs({ blogs }: any) {
           1024: { slidesPerView: 3, spaceBetween: 20 },
           1280: { slidesPerView: 3.5, spaceBetween: 20 },
         }}
-        className="mySwiper !h-[330px]"
+        className="mySwiper h-82.5! overflow-visible!"
       >
         {blogs?.map((blog: any) => (
           <SwiperSlide key={blog._id}>
