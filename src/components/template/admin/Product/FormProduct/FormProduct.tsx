@@ -157,9 +157,9 @@ export default function FormProduct({
   return (
     <div className="font-danaMed">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-3 items-center gap-5">
-          <div>
-            <label>نام محصول</label>
+        <div className="grid grid-cols-12 items-center gap-5">
+          <div className="max-sm:col-span-12 col-span-4">
+            <label className="text-sm">نام محصول</label>
             <input
               type="text"
               {...register("title", { required: "این فیلد الزامی است" })}
@@ -168,7 +168,7 @@ export default function FormProduct({
             />
           </div>
 
-          <div>
+          <div className="max-sm:col-span-12 col-span-4">
             <label className="text-sm">اسلاگ محصول</label>
             <input
               type="text"
@@ -178,7 +178,7 @@ export default function FormProduct({
             />
           </div>
 
-          <div>
+          <div className="max-sm:col-span-12 col-span-4">
             <label className="text-sm">دسته بندی محصول</label>
             <select
               {...register("category", {
@@ -196,7 +196,7 @@ export default function FormProduct({
           </div>
 
           {subCategories.length > 0 && (
-            <div>
+            <div className="max-sm:col-span-12 col-span-4">
               <label className="text-sm">زیرمجموعه</label>
               <select
                 {...register("subCategory", {
@@ -230,7 +230,7 @@ export default function FormProduct({
             />
           )}
 
-          <div>
+          <div className="max-sm:col-span-12 col-span-4">
             <label className="text-sm">برند محصول</label>
             <select
               {...register("brand", { required: "برند الزامی است" })}
@@ -245,7 +245,7 @@ export default function FormProduct({
             </select>
           </div>
 
-          <div className="relative">
+          <div className="relative max-sm:col-span-12 col-span-4">
             <label className="text-sm">قیمت محصول</label>
             <input
               type="text"
@@ -281,7 +281,7 @@ export default function FormProduct({
             </div>
           </div>
 
-          <div>
+          <div className="max-sm:col-span-12 col-span-4">
             <ColorSelector
               register={register}
               setValue={setValue}
@@ -289,7 +289,7 @@ export default function FormProduct({
             />
           </div>
 
-          <div>
+          <div className="max-sm:col-span-12 col-span-4">
             <label className="text-sm">تعداد محصول</label>
             <input
               type="text"
@@ -299,7 +299,7 @@ export default function FormProduct({
             />
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col max-sm:col-span-12 col-span-4">
             <label className="text-sm">عکس کاور محصول (mainImage)</label>
             <input
               type="file"
@@ -312,7 +312,7 @@ export default function FormProduct({
             />
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col max-sm:col-span-12 col-span-4">
             <label className="text-sm" htmlFor="">
               عکس‌های محصول
             </label>
@@ -362,7 +362,6 @@ export default function FormProduct({
                     const newFiles = Array.from(files);
                     const prevFiles = field.value || [];
 
-                    // ترکیب + مرتب‌سازی واقعی
                     const mergedFiles = [...prevFiles, ...newFiles].sort(
                       (a, b) => a.lastModified - b.lastModified,
                     );
@@ -391,7 +390,7 @@ export default function FormProduct({
 
           <Tag register={register} errors={errors} setValue={setValue} />
 
-          <div className="col-span-3">
+          <div className="max-sm:col-span-12 col-span-3">
             {imagePreviews.length > 0 && (
               <div className="mt-4 grid grid-cols-3 gap-3">
                 {imagePreviews.map((src, index) => (
@@ -411,7 +410,7 @@ export default function FormProduct({
             )}
           </div>
 
-          <div className="col-span-3">
+          <div className="max-sm:col-span-12 col-span-3">
             <label className="text-sm" htmlFor="description">
               توضیحات محصول
             </label>
@@ -436,7 +435,7 @@ export default function FormProduct({
 
         <button
           type="submit"
-          className="mt-6 px-6 py-2 rounded-lg bg-blue-600 text-white"
+          className="mt-6 px-6 text-sm py-2 rounded-lg bg-blue-600 text-white"
         >
           {isLoading ? <BeatLoader color="white" size={9} /> : "ثبت محصول"}
         </button>

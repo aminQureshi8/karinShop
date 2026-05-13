@@ -24,7 +24,7 @@ function Tag({ register, setValue, errors }: any) {
   };
 
   return (
-    <div className="flex flex-col font-danaMed text-sm">
+    <div className="flex flex-col font-danaMed text-sm max-sm:col-span-12 col-span-4">
       <label>تگ ها</label>
       <div className="relative mt-2">
         <input

@@ -37,6 +37,10 @@ export default function MenuMobileClient({ categories, isUser, user }: Props) {
 
   useEffect(() => {
     dispatch(closeMenu());
+  }, []);
+
+  useEffect(() => {
+    dispatch(closeMenu());
   }, [router]);
 
   return (

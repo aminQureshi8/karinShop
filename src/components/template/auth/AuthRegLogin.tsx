@@ -47,24 +47,29 @@ export default function AuthRegLogin() {
   };
 
   return (
-    <div className="container mx-auto">
-      <div className="min-h-screen flex items-center justify-center font-danaMed">
-        <div className="rounded-xl w-96 bg-white shadow-[0_4px_16px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgb(0,0,0,0.12)] dark:shadow-[0_4px_16px_rgb(0,0,0,0.3)] dark:hover:shadow-[0_8px_24px_rgb(0,0,0,0.4)] dark:hover:shadow-[0_20px_60px_rgb(0,0,0,0.5)] dark:bg-slate-800 flex flex-col justify-center py-5">
+    <div className=" font-danaMed bg-gradient-to-br from-blue-100 via-white to-cyan-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
+      <div className="container mx-auto min-h-screen flex items-center justify-center">
+        <div className="rounded-2xl w-96 border border-white/20 bg-white/30 dark:bg-slate-800/30 backdrop-blur-xl shadow-[0_8px_32px_rgba(31,38,135,0.2)] hover:shadow-[0_8px_40px_rgba(31,38,135,0.3)] transition-all duration-300 flex flex-col justify-center py-5">
           <div className="flex justify-end pl-3">
             <ThemeChange />
           </div>
+
           <Link href="/" className="text-3xl mb-3 font-morabbaReg">
             <div className="flex justify-center gap-1">
               <span className="text-blue-500">کارین</span>
-              <span>شاپ</span>
+              <span className="dark:text-white">شاپ</span>
             </div>
           </Link>
-          <p className="pr-8">ورود | ثبت نام</p>
+
+          <p className="pr-8 text-gray-700 dark:text-gray-200">
+            ورود | ثبت نام
+          </p>
 
           <form className="px-8" onSubmit={handleSubmit(onSubmit)}>
-            <label className="text-xs text-gray-400">
+            <label className="text-xs text-gray-600 dark:text-gray-300">
               لطفا شماره موبایل یا ایمیل خود را وارد کنید
             </label>
+
             <input
               type="text"
               autoFocus
@@ -76,8 +81,9 @@ export default function AuthRegLogin() {
                   message: "ایمیل یا شماره موبایل معتبر وارد کنید",
                 },
               })}
-              className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="bg-white/40 dark:bg-black/30 backdrop-blur-md text-sm mt-2 w-full rounded-xl p-3 border border-white/30 dark:border-white/10 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-400/30 transition-all"
             />
+
             {errors.identifier && (
               <span className="text-red-500 text-xs mt-2 block">
                 {errors.identifier.message as string}
@@ -87,13 +93,13 @@ export default function AuthRegLogin() {
             <button
               type="submit"
               disabled={errors.identifier ? true : false}
-              className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:dark:bg-blue-400 disabled:cursor-not-allowed text-white w-full rounded-xl py-2.5 mt-4 font-bold transition-all shadow-lg shadow-blue-200 dark:shadow-none active:scale-[0.98]"
+              className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white w-full rounded-xl py-2.5 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 active:scale-[0.98]"
             >
               ورود
             </button>
           </form>
 
-          <p className="text-center text-xs text-gray-400 mt-10">
+          <p className="text-center text-xs text-gray-600 dark:text-gray-300 mt-10 px-5 leading-6">
             ورود شما به معنای پذیرش قوانین سایت است
           </p>
         </div>
