@@ -49,7 +49,7 @@ export default function AuthRegLogin() {
   return (
     <div className="container mx-auto">
       <div className="min-h-screen flex items-center justify-center font-danaMed">
-        <div className="rounded-xl w-96 bg-white shadow-2xl dark:bg-slate-800 flex flex-col justify-center py-5">
+        <div className="rounded-xl w-96 bg-white shadow-[0_4px_16px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgb(0,0,0,0.12)] dark:shadow-[0_4px_16px_rgb(0,0,0,0.3)] dark:hover:shadow-[0_8px_24px_rgb(0,0,0,0.4)] dark:hover:shadow-[0_20px_60px_rgb(0,0,0,0.5)] dark:bg-slate-800 flex flex-col justify-center py-5">
           <div className="flex justify-end pl-3">
             <ThemeChange />
           </div>
@@ -87,7 +87,7 @@ export default function AuthRegLogin() {
             <button
               type="submit"
               disabled={errors.identifier ? true : false}
-              className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed text-white w-full rounded-xl py-2.5 mt-4 font-bold transition-all shadow-lg shadow-blue-200 dark:shadow-none active:scale-[0.98]"
+              className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:dark:bg-blue-400 disabled:cursor-not-allowed text-white w-full rounded-xl py-2.5 mt-4 font-bold transition-all shadow-lg shadow-blue-200 dark:shadow-none active:scale-[0.98]"
             >
               ورود
             </button>
