@@ -1,8 +1,8 @@
 export default function LapTopFilter({ register, errors, control }: any) {
   return (
-    <div className="col-span-3">
+    <div className="col-span-12">
       <div className="p-6 bg-green-50 dark:bg-blue-950 lg:col-span-3 font-danaMed rounded-xl border border-blue-200">
-        <h3 className="text-lg font-danaBold mb-4 text-white">مشخصات لب تاب</h3>
+        <h3 className="text-lg font-danaBold mb-4 dark:text-white">مشخصات لب تاب</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="flex flex-col">

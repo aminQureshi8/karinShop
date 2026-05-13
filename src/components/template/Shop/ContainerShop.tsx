@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import ConProducts from "./ConProducts/ConProducts";
 import FilterCom from "./Filter/FilterCom";
 
-export default function ContainerShop({ products }: { products: any }) {
-  const [productState, setProductState] = useState([...products]);
+export default function ContainerShop() {
+  const [productState, setProductState] = useState([]);
   const [inStock, setInStock] = useState(false);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(350000);

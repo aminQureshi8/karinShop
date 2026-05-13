@@ -1,4 +1,3 @@
-import Providers from "@/app/redux/Providers";
 import SwiperProduct from "../../Home/SwiperProduct/SwiperProduct";
 
 export default function ConProducts({

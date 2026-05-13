@@ -390,7 +390,7 @@ export default function FormProduct({
 
           <Tag register={register} errors={errors} setValue={setValue} />
 
-          <div className="max-sm:col-span-12 col-span-3">
+          <div className="max-sm:col-span-12 col-span-12">
             {imagePreviews.length > 0 && (
               <div className="mt-4 grid grid-cols-3 gap-3">
                 {imagePreviews.map((src, index) => (
@@ -410,7 +410,7 @@ export default function FormProduct({
             )}
           </div>
 
-          <div className="max-sm:col-span-12 col-span-3">
+          <div className="col-span-12">
             <label className="text-sm" htmlFor="description">
               توضیحات محصول
             </label>
