@@ -21,7 +21,7 @@ export default function CartOrder({ isUserLogin }: { isUserLogin: boolean }) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+    <div className="bg-white dark:bg-gray-800 rounded-lg p-3 font-danaMed">
       <div className="flex items-center justify-between">
         <div>مبلغ نهایی:</div>
         <div className="flex items-center gap-1">

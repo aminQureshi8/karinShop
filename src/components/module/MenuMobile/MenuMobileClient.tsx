@@ -117,10 +117,10 @@ export default function MenuMobileClient({ categories, isUser, user }: Props) {
                 <p>علاقه مندی ها</p>
               </li>
 
-              <li className="flex items-center gap-x-2">
+              <Link href="/order" className="flex items-center gap-x-2">
                 <IoCartOutline size={19} />
                 <p>سبد خرید</p>
-              </li>
+              </Link>
             </ul>
           </div>
 

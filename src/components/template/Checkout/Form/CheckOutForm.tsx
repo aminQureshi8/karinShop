@@ -64,9 +64,6 @@ export default function CheckOutForm({
         body: JSON.stringify(orderData),
       });
 
-      const result = await res.json();
-      console.log(result);
-
       if (res.ok) {
         router.push("/payment/success");
       }
