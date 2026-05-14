@@ -20,7 +20,7 @@ import SkeletonSwiperBrands from "@/components/loading/SkeletonSwiperBrands";
 
 function HomeCompo() {
   return (
-    <div className="container mx-auto mt-12">
+    <div className="container mx-auto max-sm:mt-6 mt-12">
       <Suspense fallback={<SkeletonSwiperBanner />}>
         <SwiperBanner />
       </Suspense>

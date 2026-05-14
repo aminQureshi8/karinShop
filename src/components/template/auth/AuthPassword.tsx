@@ -55,7 +55,7 @@ export default function AuthPassword() {
   };
 
   return (
-    <div className="font-danaMed bg-gradient-to-br from-blue-100 via-white to-cyan-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 px-4">
+    <div className="font-danaMed bg-gradient-to-br from-blue-100 via-white to-cyan-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
       <div className="container mx-auto min-h-screen flex items-center justify-center">
         <div className="rounded-3xl w-96 border border-white/20 bg-white/40 dark:bg-slate-800/30 backdrop-blur-2xl shadow-[0_8px_32px_rgba(31,38,135,0.2)] flex flex-col justify-center py-5 transition-all duration-300">
           <div className="flex justify-end pl-3">
@@ -91,7 +91,7 @@ export default function AuthPassword() {
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-all"
+                className="absolute left-3 top-8 -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-all"
               >
                 {showConfirmPassword ? (
                   <EyeClosed size={18} />

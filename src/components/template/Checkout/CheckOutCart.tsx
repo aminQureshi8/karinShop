@@ -22,7 +22,7 @@ export default function CheckOutCart({ post, isLoading }) {
   const finalPrice = totalPrice + post.price;
 
   return (
-    <div className="bg-white  dark:bg-gray-800 rounded-lg p-3 mt-22 shadow-md">
+    <div className="bg-white dark:bg-gray-800 rounded-lg p-3 sm:mt-22 shadow-md font-danaMed">
       <div className="flex items-center justify-between">
         <div>
           <p>قیمت کالاها</p>

@@ -78,7 +78,7 @@ export default function CheckOutForm({
     <div>
       <div className="mt-8 bg-white shadow-md dark:bg-gray-800 p-3 rounded-xl">
         <form onSubmit={handleSubmit(orderSubmit)} id="checkout-form">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid max-sm:grid-cols-1 grid-cols-2 gap-3">
             <div>
               <input
                 type="text"
@@ -161,7 +161,7 @@ export default function CheckOutForm({
               )}
             </div>
 
-            <div className="col-span-2">
+            <div className="sm:col-span-2">
               <input
                 type="text"
                 placeholder="آدرس*"
@@ -221,7 +221,7 @@ export default function CheckOutForm({
         </form>
       </div>
 
-      <div className="mt-5 bg-white shadow-md dark:bg-gray-800 p-3 rounded-xl">
+      <div className="mt-5 bg-white shadow-md dark:bg-gray-800 p-3 max-sm:text-sm rounded-xl">
         <div className="flex items-center gap-2">
           <Truck />
           <h2>نوع ارسال</h2>

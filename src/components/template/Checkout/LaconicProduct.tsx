@@ -9,7 +9,7 @@ export default function LaconicProduct() {
     <div className="mt-8 bg-white shadow-md dark:bg-gray-800 p-3 rounded-xl">
       <h2>خلاصه سفارش</h2>
 
-      <div className="grid grid-cols-4 gap-3 mt-5">
+      <div className="grid max-sm:grid-cols-2 max-sm:text-sm grid-cols-4 gap-3 mt-5">
         {cart.map((item, index) => (
           <div key={index}>
             <div>
