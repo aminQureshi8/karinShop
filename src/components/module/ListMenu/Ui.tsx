@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import SubCate from "./SubCate";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import SubCategoryType from "@/types/subCategories.type";
 
 export default function Ui({ subCategories }: { subCategories: any }) {
   const [brandState, setBrandState] = useState([]);
@@ -47,7 +48,7 @@ export default function Ui({ subCategories }: { subCategories: any }) {
         <div className="p-5 grid grid-cols-3 gap-5 h-full">
           <div className="bg-gray-100 text-black dark:text-white dark:bg-black !h-full rounded-xl p-3">
             <ul className="flex flex-col">
-              {subCategories.map((sub: any) => (
+              {subCategories.map((sub: SubCategoryType) => (
                 <SubCate
                   key={sub._id}
                   {...sub}

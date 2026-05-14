@@ -1,3 +1,4 @@
+import BlogType from "@/types/blog.type";
 import { ArrowLeft, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,9 +9,9 @@ export default function SwiperBlog({
   views,
   createdAt,
   slug,
-}) {
+}: BlogType) {
   return (
-    <div className="bg-white p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed  shadow-[0_4px_16px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgb(0,0,0,0.12)] dark:shadow-[0_4px_16px_rgb(0,0,0,0.3)] dark:hover:shadow-[0_8px_24px_rgb(0,0,0,0.4)] dark:hover:shadow-[0_20px_60px_rgb(0,0,0,0.5)] transition-shadow duration-300">
+    <div className="bg-white p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed  shadow-[0_4px_16px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgb(0,0,0,0.12)] dark:shadow-[0_4px_16px_rgb(0,0,0,0.3)] dark:hover:shadow-[0_20px_60px_rgb(0,0,0,0.5)] transition-shadow duration-300">
       <div className="relative group w-full h-48">
         <Image
           src={coverImage}

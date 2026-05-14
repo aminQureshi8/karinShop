@@ -1,4 +1,3 @@
-import { IoIosArrowRoundBack } from "react-icons/io";
 import { TopCategoryProps } from "@/types/TopCategory";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
