@@ -1,8 +1,9 @@
 "use client";
 import { RootState } from "@/app/redux/store";
 import { useSelector } from "react-redux";
+import { BeatLoader } from "react-spinners";
 
-export default function CheckOutCart({ post }) {
+export default function CheckOutCart({ post, isLoading }) {
   const carts = useSelector((state: RootState) => state.cart);
 
   const totalPrice = carts.reduce((pre: number, con: any) => {
@@ -57,7 +58,7 @@ export default function CheckOutCart({ post }) {
           form="checkout-form"
           className="bg-blue-500 text-sm text-white mt-5 w-full p-2 rounded-lg cursor-pointer"
         >
-          تایید و تکمیل سفارش
+          {isLoading ? <BeatLoader size={10} color="white" /> : "پرداخت"}
         </button>
       </div>
     </div>

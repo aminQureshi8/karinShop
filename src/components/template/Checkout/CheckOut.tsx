@@ -4,7 +4,7 @@ import LaconicProduct from "./LaconicProduct";
 import Link from "next/link";
 import { BiHome } from "react-icons/bi";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-export default function CheckOut({ id, post, setPost }: { id: string }) {
+export default function CheckOut({ id, post, setPost , setIsLoading }: { id: string }) {
   return (
     <div className="mt-8">
       <BreadCrumbs>
@@ -28,7 +28,7 @@ export default function CheckOut({ id, post, setPost }: { id: string }) {
           <p>ادرس و زمان ارسال</p>
         </div>
       </BreadCrumbs>
-      <CheckOutForm id={id} post={post} setPost={setPost} />
+      <CheckOutForm id={id} post={post} setPost={setPost} setIsLoading={setIsLoading} />
       <LaconicProduct />
     </div>
   );

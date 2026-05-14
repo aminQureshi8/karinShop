@@ -4,6 +4,7 @@ import { RootState } from "@/app/redux/store";
 import SwalFire from "@/app/utils/swal";
 import { provinces } from "@/lib/iranProvinces";
 import { Truck } from "lucide-react";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -18,8 +19,17 @@ interface FormValues {
   phone: string;
 }
 
-export default function CheckOutForm({ id, post, setPost }: { id: string }) {
+export default function CheckOutForm({
+  id,
+  post,
+  setPost,
+  setIsLoading,
+}: {
+  id: string;
+}) {
   const [province, setProvince] = useState("");
+
+  const router = useRouter();
 
   const {
     register,
@@ -34,6 +44,7 @@ export default function CheckOutForm({ id, post, setPost }: { id: string }) {
   console.log("cart -->", cart);
 
   const orderSubmit = async (data: FormValues) => {
+    setIsLoading(true);
     const products = cart.map((c: any) => ({
       id: c.id,
       quantity: c.count,
@@ -57,9 +68,12 @@ export default function CheckOutForm({ id, post, setPost }: { id: string }) {
       console.log(result);
 
       if (res.ok) {
+        router.push("/payment/success");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
