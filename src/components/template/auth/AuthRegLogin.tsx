@@ -81,7 +81,7 @@ export default function AuthRegLogin() {
                   message: "ایمیل یا شماره موبایل معتبر وارد کنید",
                 },
               })}
-              className="bg-white/40 dark:bg-black/30 backdrop-blur-md text-sm mt-2 w-full rounded-xl p-3 border border-white/30 dark:border-white/10 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-400/30 transition-all"
+              className="bg-white/80 dark:bg-black/30 backdrop-blur-md text-sm mt-2 w-full rounded-xl p-3 border border-gray-300 dark:border-white/10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-400/30 transition-all"
             />
 
             {errors.identifier && (

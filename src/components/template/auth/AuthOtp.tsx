@@ -51,6 +51,7 @@ export default function AuthOtp() {
 
     try {
       setIsLoading(true);
+
       const res = await fetch("/api/auth/otp/verify", {
         method: "POST",
         headers: {
@@ -60,6 +61,7 @@ export default function AuthOtp() {
       });
 
       const data = await res.json();
+
       reset({ otp: Array(6).fill("") });
 
       if (data.action === "login") {
@@ -68,29 +70,53 @@ export default function AuthOtp() {
         router.push(`/regLogin/create-password?identifier=${identifier}`);
       }
     } catch (error) {
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center font-danaMed">
-      <div className="rounded-xl w-96 bg-white shadow-2xl dark:bg-slate-800 flex flex-col py-5">
+    <div className="min-h-screen flex items-center justify-center font-danaMed bg-gradient-to-br from-blue-100 via-white to-cyan-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 px-4">
+      
+      <div className="rounded-3xl w-96 border border-white/20 bg-white/40 dark:bg-slate-800/30 backdrop-blur-2xl shadow-[0_8px_32px_rgba(31,38,135,0.2)] flex flex-col py-5 transition-all duration-300">
+        
         <div className="flex justify-end pl-3">
           <ThemeChange />
         </div>
 
-        <h1 className="text-center text-lg font-semibold mb-4">کارین شاپ</h1>
-        <p className="text-center mb-6">کد ارسال شده را وارد کنید</p>
+        <h1 className="text-center text-3xl font-morabbaReg mb-2">
+          <span className="text-blue-500">کارین</span>
+          <span className="dark:text-white"> شاپ</span>
+        </h1>
+
+        <p className="text-center mb-6 text-gray-700 dark:text-gray-300">
+          کد ارسال شده را وارد کنید
+        </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="px-8" dir="ltr">
+          
           <div className="flex justify-between gap-2 mb-6">
             {Array.from({ length: 6 }).map((_, index) => (
               <input
                 key={index}
                 type="text"
                 maxLength={1}
-                className="w-12 h-12 ss02 text-center text-lg rounded-lg border-gray-300 bg-gray-100 dark:bg-black/60 border dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="
+                  w-12 h-14
+                  text-center text-xl ss02
+                  rounded-2xl
+                  bg-white/80 dark:bg-black/30
+                  backdrop-blur-md
+                  border border-gray-300 dark:border-white/10
+                  text-gray-800 dark:text-white
+                  shadow-sm
+                  focus:border-blue-500
+                  focus:ring-4
+                  focus:ring-blue-400/30
+                  outline-none
+                  transition-all
+                "
                 {...register(`otp.${index}`, { required: true })}
                 ref={(el) => {
                   inputsRef.current[index] = el;
@@ -104,13 +130,32 @@ export default function AuthOtp() {
           <button
             type="submit"
             disabled={otpValues.join("").length !== 6}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed text-white w-full rounded-xl py-3.5 mt-4 font-bold transition-all shadow-lg shadow-blue-200 dark:shadow-none active:scale-[0.98]"
+            className="
+              bg-gradient-to-r
+              from-blue-600 to-cyan-500
+              hover:from-blue-700 hover:to-cyan-600
+              disabled:from-blue-300 disabled:to-blue-300
+              disabled:cursor-not-allowed
+              text-white
+              w-full
+              rounded-2xl
+              py-3.5
+              mt-4
+              font-bold
+              transition-all
+              shadow-lg shadow-cyan-300/30
+              active:scale-[0.98]
+            "
           >
-            {isLoading ? <BeatLoader size={8} color="white" /> : "تایید"}
+            {isLoading ? (
+              <BeatLoader size={8} color="white" />
+            ) : (
+              "تایید"
+            )}
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-400 mt-10">
+        <p className="text-center text-xs text-gray-500 dark:text-gray-400 mt-10 px-5 leading-6">
           ورود شما به معنای پذیرش قوانین سایت است
         </p>
       </div>

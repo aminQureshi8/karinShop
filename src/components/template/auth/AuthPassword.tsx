@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { Eye, EyeClosed } from "lucide-react";
+import { BeatLoader } from "react-spinners";
 
 export default function AuthPassword() {
   const router = useRouter();
@@ -12,6 +14,8 @@ export default function AuthPassword() {
   const identifier = params.get("identifier");
 
   const [serverError, setServerError] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -21,33 +25,39 @@ export default function AuthPassword() {
   } = useForm({ mode: "all" });
 
   const onSubmit = async (data: any) => {
+    setIsLoading(true);
+
     const { password } = data;
 
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ identifier, password }),
-    });
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identifier, password }),
+      });
 
-    const result = await res.json();
+      const result = await res.json();
 
-    if (!res.ok) {
-      setServerError(result.error || "خطایی رخ داده است");
-      return;
+      if (!res.ok) {
+        setServerError(result.error || "خطایی رخ داده است");
+        return;
+      }
+
+      reset();
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-
-    console.log(result);
-
-    reset();
-    router.push("/");
   };
 
   return (
-    <div className="container mx-auto">
-      <div className="min-h-screen flex items-center justify-center font-danaMed">
-        <div className="rounded-xl w-96 bg-white shadow-2xl dark:bg-slate-800 flex flex-col justify-center py-5">
+    <div className="font-danaMed bg-gradient-to-br from-blue-100 via-white to-cyan-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 px-4">
+      <div className="container mx-auto min-h-screen flex items-center justify-center">
+        <div className="rounded-3xl w-96 border border-white/20 bg-white/40 dark:bg-slate-800/30 backdrop-blur-2xl shadow-[0_8px_32px_rgba(31,38,135,0.2)] flex flex-col justify-center py-5 transition-all duration-300">
           <div className="flex justify-end pl-3">
             <ThemeChange />
           </div>
@@ -55,29 +65,41 @@ export default function AuthPassword() {
           <Link href="/" className="text-3xl mb-3 font-morabbaReg">
             <div className="flex justify-center gap-1">
               <span className="text-blue-500">کارین</span>
-              <span>شاپ</span>
+              <span className="dark:text-white">شاپ</span>
             </div>
           </Link>
 
-          <p className="pr-8">رمز عبور خود را وارد کنید</p>
+          <p className="pr-8 text-gray-700 dark:text-gray-300">
+            رمز عبور خود را وارد کنید
+          </p>
 
-          <form className="px-8" onSubmit={handleSubmit(onSubmit)}>
-            <label className="text-xs text-gray-400">
-              لطفا رمز عبور خود را وارد کنید.
-            </label>
+          <form className="px-8 mt-2" onSubmit={handleSubmit(onSubmit)}>
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                autoFocus
+                {...register("password", {
+                  required: "رمز عبور الزامی است",
+                  minLength: {
+                    value: 6,
+                    message: "رمز عبور حداقل باید ۶ حرف باشد",
+                  },
+                })}
+                className="bg-white/80 dark:bg-black/30 backdrop-blur-md ss02 text-sm mt-2 w-full rounded-2xl p-3 border border-gray-300 dark:border-white/10 text-gray-800 dark:text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-400/30 transition-all"
+              />
 
-            <input
-              type="password"
-              autoFocus
-              {...register("password", {
-                required: "رمز عبور الزامی است",
-                minLength: {
-                  value: 6,
-                  message: "رمز عبور حداقل باید ۶ حرف باشد",
-                },
-              })}
-              className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-all"
+              >
+                {showConfirmPassword ? (
+                  <EyeClosed size={18} />
+                ) : (
+                  <Eye size={18} />
+                )}
+              </button>
+            </div>
 
             {errors.password && (
               <span className="text-red-500 text-xs mt-2 block">
@@ -93,14 +115,14 @@ export default function AuthPassword() {
 
             <button
               type="submit"
-              disabled={!!errors.password}
-              className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed text-white w-full rounded-xl py-2.5 mt-4 font-bold transition-all shadow-lg shadow-blue-200 dark:shadow-none active:scale-[0.98]"
+              disabled={!!errors.password || isLoading}
+              className="bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-blue-300 disabled:to-blue-300 disabled:cursor-not-allowed text-white w-full rounded-2xl py-3 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 active:scale-[0.98] flex items-center justify-center"
             >
-              تایید
+              {isLoading ? <BeatLoader size={8} color="#fff" /> : "تایید"}
             </button>
           </form>
 
-          <p className="text-center text-xs text-gray-400 mt-10">
+          <p className="text-center text-xs text-gray-500 dark:text-gray-400 mt-10 px-5 leading-6">
             ورود شما به معنای پذیرش قوانین سایت است
           </p>
         </div>
