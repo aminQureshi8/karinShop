@@ -53,7 +53,9 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <MenuMobileJSX />
+      <Suspense fallback={<></>}>
+        <MenuMobileJSX isAdmin={false} />
+      </Suspense>
       <SearchMobileMenu />
       <Navbar />
       <Suspense fallback={<MenuSkeleton />}>

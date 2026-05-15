@@ -5,7 +5,7 @@ import {
 } from "@/app/redux/slices/CartComputer/CartComputer";
 import { RootState } from "@/app/redux/store";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
@@ -13,6 +13,8 @@ import { usePathname } from "next/navigation";
 import { deCreaseCounter, inCreaseCounter } from "@/app/redux/slices/Cart/Cart";
 
 export default function CartNavbar() {
+  const [mounted, setmounted] = useState(false);
+
   const carts = useSelector((state: RootState) => state.cart);
 
   const router = usePathname();
@@ -20,8 +22,14 @@ export default function CartNavbar() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setmounted(true);
+  }, []);
+
+  useEffect(() => {
     dispatch(closeCart());
   }, [router]);
+
+  if (!mounted) return null;
 
   const addCount = (id: string) => {
     dispatch(inCreaseCounter(id));

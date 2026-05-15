@@ -9,8 +9,15 @@ import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { toggleWhish } from "@/app/redux/slices/Whish/Whish";
+import { useEffect, useState } from "react";
 
 export default function SwiperProduct({ product }: any) {
+  const [mounted, setmounted] = useState(false);
+
+  useEffect(() => {
+    setmounted(true);
+  }, []);
+
   const dispatch = useDispatch();
 
   const isInCart = useSelector((state: RootState) =>
@@ -78,12 +85,16 @@ export default function SwiperProduct({ product }: any) {
               onClick={handleCartClick}
               className={`border-2 bg-white dark:bg-gray-800 rounded-full dark:border-gray-700 p-2 cursor-pointer flex items-center justify-center transition-all duration-300
                 ${
-                  isInCart
+                  mounted && isInCart
                     ? "border-red-400 bg-red-100 dark:bg-red-800 text-red-500"
                     : "border-gray-200 hover:bg-blue-100 dark:hover:bg-blue-500"
                 }`}
             >
-              {isInCart ? <RxCross2 size={13} /> : <SlBasket size={13} />}
+              {mounted && isInCart ? (
+                <RxCross2 size={13} />
+              ) : (
+                <SlBasket size={13} />
+              )}
             </div>
 
             <div

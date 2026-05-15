@@ -54,7 +54,7 @@ const SubCate = memo(
         <p>{title}</p>
       </li>
     );
-  }
+  },
 );
 
 export default SubCate;

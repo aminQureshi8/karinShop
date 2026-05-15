@@ -3,6 +3,7 @@ import Navbar from "@/components/module/Navbar/Navbar";
 import SideBarMemo from "./SideBarMemo";
 import ListMenuContainer from "@/components/module/ListMenu/ListMenuContainer";
 import CartNavbar from "@/components/module/CartNavbar/CartNavbar";
+import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -13,7 +14,10 @@ export default function RootLayout({
     <>
       <Navbar />
       <ListMenuContainer />
-      <MenuMobileJSX />
+      <Suspense fallback={<></>}>
+        <MenuMobileJSX isAdmin={false} />
+      </Suspense>
+
       <CartNavbar />
 
       <div className="container mx-auto font-danaMed">

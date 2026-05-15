@@ -1,11 +1,26 @@
 "use client";
 import { toggleCartComputer } from "@/app/redux/slices/CartComputer/CartComputer";
 import { RootState } from "@/app/redux/store";
+import { useEffect, useState } from "react";
 import { BsBasketFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 export default function Cart() {
+  const [mounted, setMounted] = useState(false);
   const dispatch = useDispatch();
   const carts = useSelector((state: RootState) => state.cart);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <button
+        className="size-9 bg-gray-300 animate-pulse dark:bg-gray-800  rounded-full p-2 flex items-center justify-center"
+        aria-label="loading theme"
+      ></button>
+    );
+  }
 
   return (
     <div>
