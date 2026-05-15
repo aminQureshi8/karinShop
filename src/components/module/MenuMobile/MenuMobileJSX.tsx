@@ -1,3 +1,4 @@
+
 import { authUser } from "@/app/utils/auth";
 import MenuMobileClient from "./MenuMobileClient";
 import { categories } from "./data";

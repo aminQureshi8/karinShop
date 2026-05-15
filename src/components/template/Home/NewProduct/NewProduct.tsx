@@ -25,9 +25,6 @@ export default async function NewProduct() {
     .sort({ createdAt: -1 })
     .lean();
 
-    console.log(products);
-    
-
   return (
     <div className="mt-12">
       <TopCategory

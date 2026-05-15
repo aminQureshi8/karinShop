@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import { BeatLoader } from "react-spinners";
+import NProgress from "nprogress";
 
 export default function AuthPassword() {
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function AuthPassword() {
   } = useForm({ mode: "all" });
 
   const onSubmit = async (data: any) => {
+    NProgress.start();
     setIsLoading(true);
 
     const { password } = data;

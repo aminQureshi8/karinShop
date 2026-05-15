@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     const operations = products.map((item: any) => ({
       updateOne: {
         filter: { _id: item.product },
-        update: { $inc: { count: -item.quantity } },
+        update: { $inc: { count: -item.quantity, sale: item.quantity } },
       },
     }));
 
@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
 
     const findUser = await orderModel.find({ user: userId }).populate({
       path: "products.product",
-      select: "title mainImage price", 
+      select: "title mainImage price",
     });
 
     return NextResponse.json(findUser);

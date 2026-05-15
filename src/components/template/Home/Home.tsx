@@ -41,7 +41,16 @@ function HomeCompo() {
         <NewProduct />
       </Suspense>
       <Banner />
-      <PopPro />
+      <Suspense
+        fallback={
+          <>
+            <SkeletonTopCategory />
+            <SwiperProductSkeleton />
+          </>
+        }
+      >
+        <PopPro />
+      </Suspense>
       <Suspense
         fallback={
           <>

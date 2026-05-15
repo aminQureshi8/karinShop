@@ -15,8 +15,9 @@ export default function AuthOtp() {
   const identifier = searchParams.get("identifier");
 
   useEffect(() => {
+    reset({ otp: Array(6).fill("") });
     inputsRef.current[0]?.focus();
-  }, []);
+  }, [identifier]);
 
   const { register, handleSubmit, reset, setValue, watch } = useForm({
     defaultValues: {
@@ -62,8 +63,6 @@ export default function AuthOtp() {
 
       const data = await res.json();
 
-      reset({ otp: Array(6).fill("") });
-
       if (data.action === "login") {
         router.push(`/regLogin/password?identifier=${identifier}`);
       } else if (data.action === "register") {
@@ -78,9 +77,7 @@ export default function AuthOtp() {
 
   return (
     <div className="min-h-screen flex items-center justify-center font-danaMed bg-gradient-to-br from-blue-100 via-white to-cyan-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 px-4">
-      
       <div className="rounded-3xl w-96 border border-white/20 bg-white/40 dark:bg-slate-800/30 backdrop-blur-2xl shadow-[0_8px_32px_rgba(31,38,135,0.2)] flex flex-col py-5 transition-all duration-300">
-        
         <div className="flex justify-end pl-3">
           <ThemeChange />
         </div>
@@ -95,7 +92,6 @@ export default function AuthOtp() {
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="px-8" dir="ltr">
-          
           <div className="flex justify-between gap-2 mb-6">
             {Array.from({ length: 6 }).map((_, index) => (
               <input
@@ -147,11 +143,7 @@ export default function AuthOtp() {
               active:scale-[0.98]
             "
           >
-            {isLoading ? (
-              <BeatLoader size={8} color="white" />
-            ) : (
-              "تایید"
-            )}
+            {isLoading ? <BeatLoader size={8} color="white" /> : "تایید"}
           </button>
         </form>
 

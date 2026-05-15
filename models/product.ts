@@ -50,6 +50,10 @@ const product = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "off",
   },
+  sale: {
+    type: Number,
+    default: 0,
+  },
 });
 
 product.virtual("comments", {

@@ -4,7 +4,7 @@ import ThemeChange from "@/components/module/Navbar/Buttons/ThemeChange";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-
+import NProgress from "nprogress";
 export default function AuthRegLogin() {
   const router = useRouter();
   const {
@@ -15,6 +15,7 @@ export default function AuthRegLogin() {
   } = useForm({ mode: "all" });
 
   const onSubmit = async (data: any) => {
+    NProgress.start()
     const { identifier } = data;
 
     const res = await fetch("/api/auth/check-user", {
