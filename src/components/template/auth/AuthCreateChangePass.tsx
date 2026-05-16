@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Eye, EyeClosed, Check } from "lucide-react";
 import { BeatLoader } from "react-spinners";
+import NProgress from "nprogress";
 
 export default function AuthCreateChangePass() {
   const router = useRouter();
@@ -37,6 +38,7 @@ export default function AuthCreateChangePass() {
   const strengthScore = Object.values(validations).filter(Boolean).length;
 
   const onSubmit = async (data: any) => {
+    NProgress.start();
     const { password } = data;
 
     setServerError("");
@@ -49,17 +51,8 @@ export default function AuthCreateChangePass() {
         body: JSON.stringify({ identifier, password }),
       });
 
-      const result = await res.json();
-
-      if (!res.ok) {
-        setServerError(result.error || "خطایی رخ داده است");
-        return;
-      }
-
       reset();
       router.push("/");
-    } catch (error) {
-      console.log(error);
     } finally {
       setIsLoading(false);
     }

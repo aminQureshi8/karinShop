@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -8,44 +7,36 @@ export default function AuthRefresh() {
   const router = useRouter();
 
   useEffect(() => {
-    const checkTokenExpired = () => {
-      const tokenExpired = (
-        document.querySelector(
-          'meta[name="x-token-expired"]',
-        ) as HTMLMetaElement
-      )?.content;
-
-      console.log(tokenExpired);
-
-      if (tokenExpired === "true") {
-        refreshToken();
-      }
-    };
     const refreshToken = async () => {
       try {
-        const response = await fetch("/api/auth/refresh", {
+        const res = await fetch("/api/auth/refresh", {
           method: "POST",
+          
         });
 
-        console.log(response);
+        if (!res.ok) {
+          console.error("❌ Token refresh failed");
 
-        if (!response.ok) {
-          router.push("/auth");
+          if (pathname.startsWith("/admin")) {
+            router.push("/auth");
+          }
         } else {
+          console.log("✅ Token refreshed successfully");
           router.refresh();
         }
       } catch (error) {
-        router.push("/auth");
+        console.error("❌ Refresh error:", error);
+        if (pathname.startsWith("/admin")) {
+          router.push("/auth");
+        }
       }
     };
 
-    const interval = setInterval(async () => {
-      if (pathname.startsWith("/admin")) {
-        await refreshToken();
-      }
-    }, 50000);
+    // اولین بار بلافاصله refresh کن
+    refreshToken();
 
-    checkTokenExpired();
+    // هر 45 ثانیه refresh کن (قبل از 60 ثانیه انقضا)
+    const interval = setInterval(refreshToken, 45000);
 
     return () => clearInterval(interval);
   }, [pathname, router]);

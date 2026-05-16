@@ -9,6 +9,17 @@ export async function POST(req: NextRequest) {
     const allUsers = await userModel.countDocuments({});
     const role = allUsers === 0 ? "ADMIN" : "USER";
 
+    const isUserReg = await userModel.findOne({
+      $or: [{ email: identifier }, { phone: identifier }],
+    });
+
+    if (isUserReg) {
+      return NextResponse.json(
+        { message: "userLogged already" },
+        { status: 402 },
+      );
+    }
+
     const user = await userModel.create({
       email: identifier.includes("@") ? identifier : undefined,
       phone:
@@ -33,16 +44,24 @@ export async function POST(req: NextRequest) {
     user.refreshToken = refreshToken;
     await user.save();
 
-    const headers = new Headers();
-    headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true`);
-    headers.append(
-      "Set-Cookie",
-      `refresh-token=${refreshToken};path=/;httpOnly=true`,
-    );
+    const response = NextResponse.json({ message: "logged" }, { status: 201 });
 
-    return NextResponse.json(
-      { message: "User created" },
-      { status: 201, headers },
-    );
-  } catch (error) {}
+    response.cookies.set("token", accessToken, {
+      httpOnly: true,
+
+      path: "/",
+      maxAge: 60,
+    });
+
+    response.cookies.set("refresh-token", refreshToken, {
+      httpOnly: true,
+
+      path: "/",
+      maxAge: 60 * 60 * 24 * 15,
+    });
+
+    return response;
+  } catch (error) {
+    return NextResponse.json({ message: error.message });
+  }
 }

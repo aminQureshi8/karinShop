@@ -1,10 +1,12 @@
-
 import { authUser } from "@/app/utils/auth";
 import Link from "next/link";
 import { RiUserLine } from "react-icons/ri";
 import Logout from "./Logout";
 export default async function UserNavbar() {
   const { user } = await authUser();
+
+  console.log(user);
+
   const isUser = Boolean(user);
 
   return (

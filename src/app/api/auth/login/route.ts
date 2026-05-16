@@ -35,13 +35,22 @@ export async function POST(req: NextRequest) {
     user.refreshToken = refreshToken;
     await user.save();
 
-    const headers = new Headers();
-    headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true`);
-    headers.append(
-      "Set-Cookie",
-      `refresh-token=${refreshToken};path=/;httpOnly=true`,
-    );
+    const response = NextResponse.json({ message: "logged" }, { status: 201 });
 
-    return NextResponse.json({ message: "logged" }, { status: 201, headers });
+    response.cookies.set("token", accessToken, {
+      httpOnly: true,
+
+     
+      path: "/",
+      maxAge: 60,
+    });
+
+    response.cookies.set("refresh-token", refreshToken, {
+      httpOnly: true,
+     
+      path: "/",
+      maxAge: 60 * 60 * 24 * 15,
+    });
+    return response;
   } catch (error) {}
 }

@@ -42,6 +42,9 @@ export default function AuthPassword() {
 
       const result = await res.json();
 
+      console.log(result);
+      
+
       if (!res.ok) {
         setServerError(result.error || "خطایی رخ داده است");
         return;

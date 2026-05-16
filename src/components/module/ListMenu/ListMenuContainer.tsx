@@ -14,7 +14,7 @@ export default async function ListMenuContainer() {
     .lean()
     .exec();
 
-    console.log(subCategories);
+    // console.log(subCategories);
     
   return (
     <>

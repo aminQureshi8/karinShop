@@ -59,7 +59,6 @@ const refreshToken = async () => {
   response.cookies.set("token", newAccessToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
     path: "/",
     maxAge: 60,
   });
