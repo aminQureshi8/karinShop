@@ -34,7 +34,7 @@ function HomeCompo() {
         fallback={
           <>
             <SkeletonTopCategory />
-            <SwiperProductSkeleton />
+            <SwiperProductSkeleton gridDynamic={4} />
           </>
         }
       >
@@ -45,7 +45,7 @@ function HomeCompo() {
         fallback={
           <>
             <SkeletonTopCategory />
-            <SwiperProductSkeleton />
+            <SwiperProductSkeleton gridDynamic={4} />
           </>
         }
       >

@@ -1,9 +1,11 @@
+import SkeletonSwiperProduct from "@/components/loading/SkeletonSwiperProduct";
 import SwiperProduct from "../../Home/SwiperProduct/SwiperProduct";
 
 export default function ConProducts({
   products,
   listType,
   setListType,
+  isLoading,
 }: {
   products: any;
   listType: string;
@@ -47,7 +49,9 @@ export default function ConProducts({
         </ul>
       </div>
       <div className="mt-5 w-full">
-        {products.length === 0 ? (
+        {isLoading ? (
+          <SkeletonSwiperProduct gridDynamic={3} />
+        ) : products.length === 0 ? (
           <div className="flex items-center justify-center mt-10">
             <p>محصولی یافت نشد</p>
           </div>

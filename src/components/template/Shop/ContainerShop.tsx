@@ -10,16 +10,22 @@ export default function ContainerShop() {
   const [max, setMax] = useState(350000);
   const [checkType, setCheckType] = useState("all");
   const [listType, setListType] = useState("pop");
+  const [isLoading, setIsLoading] = useState(true);
 
   const minLimit = 0;
   const maxLimit = 3500000;
 
   const filterProducts = async () => {
-    const res = await fetch(
-      `/api/filterProduct?isStock=${inStock}&subCategory=${checkType}&filter=${listType}`,
-    );
-    const data = await res.json();
-    setProductState(data);
+    try {
+      const res = await fetch(
+        `/api/filterProduct?isStock=${inStock}&subCategory=${checkType}&filter=${listType}`,
+      );
+      const data = await res.json();
+      setProductState(data);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -51,6 +57,7 @@ export default function ContainerShop() {
           products={productState}
           listType={listType}
           setListType={setListType}
+          isLoading={isLoading}
         />
       </div>
     </div>
