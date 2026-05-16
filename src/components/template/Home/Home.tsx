@@ -61,7 +61,9 @@ function HomeCompo() {
       >
         <Brand />
       </Suspense>
-      <Hot />
+      <Suspense fallback={<></>}>
+        <Hot />
+      </Suspense>
       <Suspense
         fallback={
           <>

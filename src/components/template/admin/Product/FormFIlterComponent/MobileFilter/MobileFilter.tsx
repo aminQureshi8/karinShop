@@ -2,7 +2,7 @@ import React from "react";
 
 export default function MobileFilter({ register, errors, control }: any) {
   return (
-    <div className="col-span-3">
+    <div className="col-span-12">
       <div className="p-6 bg-green-50 dark:bg-green-950 lg:col-span-3 font-danaMed rounded-xl border border-green-200">
         <h3 className="text-lg font-danaBold mb-4 text-white">
           مشخصات گوشی موبایل

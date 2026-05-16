@@ -7,17 +7,12 @@ import Related from "@/components/template/ProductInfo/RelatedProduct/Related";
 import db from "@/config/db";
 import productModel from "@/models/product";
 import { notFound } from "next/navigation";
-import mongoose from "mongoose";
 
-export default async function ProductContent({ id }: { id: string }) {
+export default async function ProductContent({ slug }: { slug: string }) {
   await db();
 
-  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-    notFound();
-  }
-
   const product = await productModel
-    .findById(id, { features: { $slice: 6 } })
+    .findOne({ slug }, { features: { $slice: 6 } })
     .populate([
       {
         path: "comments",
@@ -44,6 +39,12 @@ export default async function ProductContent({ id }: { id: string }) {
       },
     ])
     .lean({ virtuals: true });
+
+  if (!product) {
+    notFound();
+  }
+
+  console.log(product);
 
   const user = await authUser();
 

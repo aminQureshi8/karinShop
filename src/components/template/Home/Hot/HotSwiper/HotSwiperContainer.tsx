@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import HotProduct from "@/components/module/Home/HotProduct/HotProduct";
 
-export default function HotSwiperContainer() {
+export default function HotSwiperContainer({ products }) {
   return (
     <div>
       <Swiper
@@ -20,32 +20,11 @@ export default function HotSwiperContainer() {
         }}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <HotProduct />
-          <HotProduct />
-          <HotProduct />
-        </SwiperSlide>
-           <SwiperSlide>
-          <HotProduct />
-          <HotProduct />
-          <HotProduct />
-        </SwiperSlide>
-           <SwiperSlide>
-          <HotProduct />
-          <HotProduct />
-          <HotProduct />
-        </SwiperSlide>
-           <SwiperSlide>
-          <HotProduct />
-          <HotProduct />
-          <HotProduct />
-        </SwiperSlide>
-           <SwiperSlide>
-          <HotProduct />
-          <HotProduct />
-          <HotProduct />
-        </SwiperSlide>
-      
+        {products.map((p) => (
+          <SwiperSlide>
+            <HotProduct {...p} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

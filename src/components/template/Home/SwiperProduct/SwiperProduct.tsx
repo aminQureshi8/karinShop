@@ -62,7 +62,7 @@ export default function SwiperProduct({ product }: any) {
   return (
     <div className="bg-white shadow-[0_4px_16px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgb(0,0,0,0.12)] dark:shadow-[0_4px_16px_rgb(0,0,0,0.3)] dark:hover:shadow-[0_8px_24px_rgb(0,0,0,0.4)] dark:hover:shadow-[0_20px_60px_rgb(0,0,0,0.5)] p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed">
       <div className="relative flex justify-center">
-        <Link href={`/productInfo/${product._id}`}>
+        <Link href={`/productInfo/${product.slug}`}>
           <Image
             width={200}
             height={200}

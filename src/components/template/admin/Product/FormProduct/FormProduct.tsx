@@ -98,6 +98,15 @@ export default function FormProduct({
     setValue("images", newFiles, { shouldValidate: true });
   };
 
+  function slugify(text: string) {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/[^\w\-]+/g, "")
+      .replace(/\-\-+/g, "-");
+  }
+
   const onSubmit = async (data: any) => {
     try {
       setIsLoading(true);
@@ -106,8 +115,10 @@ export default function FormProduct({
 
       console.log(data);
 
+      const slugRegex = slugify(data.slug);
+
       formData.append("title", data.title || "");
-      formData.append("slug", data.slug || "");
+      formData.append("slug", slugRegex || "");
       formData.append("price", rawPrice.toString());
       formData.append("category", data.category || "");
       formData.append("subCategory", data.subCategory || "");
