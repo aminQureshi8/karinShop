@@ -90,7 +90,7 @@ export default function Comments({
                 </div>
               </div>
               <div>
-                <p>{com.comment}</p>
+                <p className="text-sm leading-8">{com.comment}</p>
               </div>
               <div className="flex items-center justify-between dark:text-gray-400">
                 <div className="flex items-center gap-3 text-xs">

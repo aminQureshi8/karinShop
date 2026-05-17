@@ -11,7 +11,6 @@ export default function AuthRefresh() {
       try {
         const res = await fetch("/api/auth/refresh", {
           method: "POST",
-          
         });
 
         if (!res.ok) {
@@ -26,19 +25,23 @@ export default function AuthRefresh() {
         }
       } catch (error) {
         console.error("❌ Refresh error:", error);
+
         if (pathname.startsWith("/admin")) {
           router.push("/auth");
         }
       }
     };
 
-    // اولین بار بلافاصله refresh کن
-    refreshToken();
+    let interval: any;
 
-    // هر 45 ثانیه refresh کن (قبل از 60 ثانیه انقضا)
-    const interval = setInterval(refreshToken, 45000);
+    if (pathname.startsWith("/admin")) {
+      refreshToken();
+      interval = setInterval(refreshToken, 50000);
+    }
 
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [pathname, router]);
 
   return null;

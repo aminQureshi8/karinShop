@@ -11,7 +11,6 @@ export default function FormComment({
 }) {
   const [isOk, setIsOk] = useState<null | boolean>(null);
   const [comment, setComment] = useState("");
-  const [title, setTitle] = useState("");
 
   const addComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +20,7 @@ export default function FormComment({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, comment, isOk, user: userID, product: id }),
+      body: JSON.stringify({ comment, isOk, user: userID, product: id }),
     });
 
     if (res.ok) {
@@ -40,7 +39,6 @@ export default function FormComment({
       if (swal.isConfirmed) {
         setComment("");
         setIsOk(null);
-        setTitle("");
       }
     }
   };
@@ -53,15 +51,6 @@ export default function FormComment({
 
       <form onSubmit={addComment}>
         <div className="flex flex-col gap-4">
-          <div>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="bg-gray-100 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-              placeholder="عنوان"
-            />
-          </div>
           <div>
             <p className="text-sm">این محصول را به دیگران پیشنهاد :</p>
             <div className="flex justify-between gap-5 items-center mt-3">
