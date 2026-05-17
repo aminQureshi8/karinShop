@@ -23,7 +23,7 @@ const s3Client = new S3Client({
 export async function POST(req: NextRequest) {
   try {
     // const token = req.cookies.get("token")?.value;
-    // const isAdmin = authRouteHandler(token);
+    // const isAdmin = authRouteaHandler(token);
     // if (!isAdmin) {
     //   return NextResponse.json({ message: "Access denied" }, { status: 403 });
     // }

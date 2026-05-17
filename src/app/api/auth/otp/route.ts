@@ -8,9 +8,7 @@ export async function POST(req: NextRequest) {
 
     const { identifier } = await req.json();
 
-    const now = new Date();
-
-    const expTime = now.getTime() + 300_000; // 5 minutes in milliseconds
+    const expTime = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
 
     const code = 123456; // This should be generated and sent to the user in a real scenario
 
@@ -24,5 +22,7 @@ export async function POST(req: NextRequest) {
       { message: "OTP created successfully" },
       { status: 201 },
     );
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
 }

@@ -156,11 +156,11 @@ export const authRouteHandler = (header: string) => {
   }
 };
 
-export const userAuthRouteHandler = (header: string) => {
+export const userAuthRouteHandler = (token: string) => {
   try {
-    const { email, role }: any = verifyAccessToken(header);
+    const { email, role }: any = verifyAccessToken(token);
 
-    if (role !== "USER") {
+    if (email.length === 0) {
       return false;
     }
 

@@ -1,3 +1,4 @@
+import { userAuthRouteHandler } from "@/app/utils/auth";
 import db from "@/config/db";
 import commentModel from "@/models/comment";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,6 +9,12 @@ export async function PATCH(
 ) {
   try {
     const user = req.nextUrl.searchParams.get("user");
+    const token = req.cookies.get("token")?.value;
+
+    const isUserLoggin = userAuthRouteHandler(token);
+
+    console.log(isUserLoggin);
+
     const isLikeStr = req.nextUrl.searchParams.get("isLike");
     const isLike = isLikeStr === "true";
 
