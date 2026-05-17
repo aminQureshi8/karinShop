@@ -5,7 +5,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import NProgress from "nprogress";
+import { useState } from "react";
+import { BeatLoader } from "react-spinners";
 export default function AuthRegLogin() {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -15,7 +18,8 @@ export default function AuthRegLogin() {
   } = useForm({ mode: "all" });
 
   const onSubmit = async (data: any) => {
-    NProgress.start()
+    NProgress.start();
+    setIsLoading(true);
     const { identifier } = data;
 
     const res = await fetch("/api/auth/check-user", {
@@ -93,10 +97,10 @@ export default function AuthRegLogin() {
 
             <button
               type="submit"
-              disabled={errors.identifier ? true : false}
-              className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white w-full rounded-xl py-2.5 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 active:scale-[0.98]"
+              disabled={!!errors.identifier || isLoading}
+              className="bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-blue-300 disabled:to-blue-900 disabled:cursor-not-allowed text-white w-full rounded-2xl py-3 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 active:scale-[0.98] flex items-center justify-center"
             >
-              ورود
+              {isLoading ? <BeatLoader size={20} color="#fff" /> : "ورود"}
             </button>
           </form>
 

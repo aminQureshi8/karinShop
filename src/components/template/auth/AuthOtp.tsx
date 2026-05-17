@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import { BeatLoader } from "react-spinners";
+import NProgress from "nprogress";
 
 export default function AuthOtp() {
   const [isLoading, setIsLoading] = useState(false);
@@ -48,6 +49,7 @@ export default function AuthOtp() {
   };
 
   const onSubmit = async (data: any) => {
+    NProgress.start();
     const otpCode = data.otp.join("");
 
     try {
@@ -126,22 +128,7 @@ export default function AuthOtp() {
           <button
             type="submit"
             disabled={otpValues.join("").length !== 6}
-            className="
-              bg-gradient-to-r
-              from-blue-600 to-cyan-500
-              hover:from-blue-700 hover:to-cyan-600
-              disabled:from-blue-300 disabled:to-blue-300
-              disabled:cursor-not-allowed
-              text-white
-              w-full
-              rounded-2xl
-              py-3.5
-              mt-4
-              font-bold
-              transition-all
-              shadow-lg shadow-cyan-300/30
-              active:scale-[0.98]
-            "
+            className="bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-blue-300 disabled:to-blue-900 disabled:cursor-not-allowed text-white w-full rounded-2xl py-3 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 active:scale-[0.98] flex items-center justify-center"
           >
             {isLoading ? <BeatLoader size={8} color="white" /> : "تایید"}
           </button>
