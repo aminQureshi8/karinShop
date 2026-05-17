@@ -40,10 +40,7 @@ export async function POST(req: NextRequest) {
       { status: 201 },
     );
   } catch (error) {
-    return NextResponse.json(
-      { message: "Erorr creating subCategory" },
-      { status: 500 },
-    );
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
 
@@ -52,9 +49,15 @@ export async function GET(req: NextRequest) {
 
   const category = req.nextUrl.searchParams.get("cat");
 
+  // if (category?.length !== 0) {
   const subCategories = await subCategoryModel
     .find({ category }, "title")
     .lean();
 
   return NextResponse.json(subCategories);
+  // }
+
+  // const subCategories = await subCategoryModel.find({}, "title").lean();
+
+  // return NextResponse.json(subCategories);
 }

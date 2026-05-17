@@ -113,8 +113,6 @@ export default function FormProduct({
       const formData = new FormData();
       const features = getFeatures(data, data.subCategory);
 
-      console.log(data);
-
       const slugRegex = slugify(data.slug);
 
       formData.append("title", data.title || "");
@@ -225,7 +223,7 @@ export default function FormProduct({
             </div>
           )}
 
-          {watchedSubCategory === "69ec882d66035179b28972f6" && (
+          {watchedSubCategory === "6a08c059cb34d5b275335a40" && (
             <MobileFilter
               control={control}
               register={register}

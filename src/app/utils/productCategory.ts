@@ -1,5 +1,5 @@
 const FEATURES = {
-  "69ecb33d525492a519ced638": {
+  "6a08c059cb34d5b275335a41": {
     رم: "ramLap",
     حافظه: "storageLap",
     "اندازه صفحه نمایش": "screenSize",
@@ -17,7 +17,7 @@ const FEATURES = {
     وزن: "weight",
   },
 
-  "69ec882d66035179b28972f6": {
+  "6a08c059cb34d5b275335a40": {
     برند: "brand",
     مدل: "model",
     "حافظه داخلی": "storage",

@@ -15,7 +15,7 @@ export default function MobileFilter({ register, errors, control }: any) {
               {...register("brand", { required: "برند الزامی است" })}
               type="text"
               placeholder="Samsung / Apple / Xiaomi"
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0 dark:bg-black/60"
             />
             {errors.brand && (
               <p className="text-red-500 text-xs mt-2">
@@ -30,7 +30,7 @@ export default function MobileFilter({ register, errors, control }: any) {
               {...register("model", { required: "مدل الزامی است" })}
               type="text"
               placeholder="Galaxy S23"
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0 dark:bg-black/60"
             />
             {errors.model && (
               <p className="text-red-500 text-xs mt-2">
@@ -43,7 +43,7 @@ export default function MobileFilter({ register, errors, control }: any) {
             <label className="text-sm mb-1">حافظه داخلی (GB)</label>
             <select
               {...register("storage", { required: "حافظه داخلی الزامی است" })}
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-xs border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 dark:bg-black/60 rounded-xl px-3 py-2 text-xs border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
             >
               <option value="">انتخاب حافظه</option>
               <option value="64">64</option>
@@ -63,7 +63,7 @@ export default function MobileFilter({ register, errors, control }: any) {
             <label className="text-sm mb-1">رم (GB)</label>
             <select
               {...register("ram", { required: "رم الزامی است" })}
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-xs border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 dark:bg-black/60 rounded-xl px-3 py-2 text-xs border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
             >
               <option value="">انتخاب رم</option>
               <option value="4">4</option>
@@ -85,7 +85,7 @@ export default function MobileFilter({ register, errors, control }: any) {
               })}
               type="text"
               placeholder="6.7"
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 dark:bg-black/60 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
             />
             {errors.screenSize && (
               <p className="text-red-500 text-xs mt-2">
@@ -100,7 +100,7 @@ export default function MobileFilter({ register, errors, control }: any) {
               {...register("refreshRate", {
                 required: "نرخ بروزرسانی الزامی است",
               })}
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-xs border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 dark:bg-black/60 rounded-xl px-3 py-2 text-xs border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
             >
               <option value="">انتخاب نرخ</option>
               <option value="60">60Hz</option>
@@ -122,7 +122,7 @@ export default function MobileFilter({ register, errors, control }: any) {
               {...register("simCount", {
                 required: "تعداد سیم‌کارت الزامی است",
               })}
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-xs border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 dark:bg-black/60 rounded-xl px-3 py-2 text-xs border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
             >
               <option value="">انتخاب تعداد</option>
               <option value="1">تک سیم‌کارت</option>
@@ -143,7 +143,7 @@ export default function MobileFilter({ register, errors, control }: any) {
               })}
               type="number"
               placeholder="5000"
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0 dark:bg-black/60"
             />
             {errors.battery && (
               <p className="text-red-500 text-xs mt-2">
@@ -160,7 +160,7 @@ export default function MobileFilter({ register, errors, control }: any) {
               })}
               type="text"
               placeholder="50 + 12 + 10"
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0 dark:bg-black/60"
             />
             {errors.camera && (
               <p className="text-red-500 text-xs mt-2">
@@ -177,7 +177,7 @@ export default function MobileFilter({ register, errors, control }: any) {
               })}
               type="text"
               placeholder="Android 14 / iOS 17"
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0 dark:bg-black/60"
             />
             {errors.os && (
               <p className="text-red-500 text-xs mt-2">{errors.os.message}</p>
@@ -192,7 +192,7 @@ export default function MobileFilter({ register, errors, control }: any) {
               })}
               type="text"
               placeholder="5G / 4G / 3G"
-              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0"
+              className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0 dark:bg-black/60"
             />
             {errors.network && (
               <p className="text-red-500 text-xs mt-2">
