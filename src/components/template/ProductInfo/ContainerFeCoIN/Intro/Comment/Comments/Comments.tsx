@@ -15,7 +15,7 @@ export default function Comments({
   const [commentState, setCommentState] = useState([...comments]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(Infinity);
-  // const [isOk, setIsOk] = useState(true);
+  const [activeColor, setActiveColor] = useState("");
   const [isUserCommented, setIsUserCommented] = useState("");
 
   const getComments = async () => {
@@ -39,31 +39,44 @@ export default function Comments({
       },
     );
 
-  
-
     const data = await res.json();
 
-  
+    console.log(data);
 
-    if (res.ok) {
-      if (!data.isOk) {
-        setCommentState((pre) =>
-          pre.map((c) =>
-            c._id === id ? { ...c, dislikesCount: c.dislikesCount + 1 } : c,
-          ),
-        );
-      } else {
-        setCommentState((pre) =>
-          pre.map((c) =>
-            c._id === id ? { ...c, likesCount: c.likesCount + 1 } : c,
-          ),
-        );
-      }
-    }
+    const action = data.action;
 
-    if (res.status === 400) {
-      setIsUserCommented(data.ok ? "ok" : "not");
-    }
+    setCommentState((pre) =>
+      pre.map((c) => {
+        if (c._id !== id) return c;
+
+        switch (action) {
+          case "added-like":
+            return { ...c, likesCount: Math.max(0, c.likesCount + 1) };
+          case "removed-like":
+            return { ...c, likesCount: Math.max(0, c.likesCount - 1) };
+          case "added-dislike":
+            return { ...c, dislikesCount: c.dislikesCount + 1 };
+          case "removed-dislike":
+            return { ...c, dislikesCount: Math.max(0, c.dislikesCount - 1) };
+          case "switched-to-like":
+            return {
+              ...c,
+              likesCount: c.likesCount + 1,
+              dislikesCount: Math.max(0, c.dislikesCount - 1),
+            };
+
+          case "switched-to-dislike":
+            return {
+              ...c,
+              likesCount: Math.max(0, c.likesCount - 1),
+              dislikesCount: c.dislikesCount + 1,
+            };
+
+          default:
+            return c;
+        }
+      }),
+    );
   };
 
   return (

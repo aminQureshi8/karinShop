@@ -7,74 +7,97 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string; page: string }> },
 ) {
   try {
-    const token = req.cookies.get("token")?.value;
     const user = req.nextUrl.searchParams.get("user");
+    const isLikeStr = req.nextUrl.searchParams.get("isLike");
+    const isLike = isLikeStr === "true";
 
-    console.log(token);
-
-    if (!token || !user) {
-      return NextResponse.json({ message: "Access Denied" }, { status: 402 });
-    }
-
-    await db();
-
-    const resolvedProblems = await params;
-    const id = resolvedProblems.id;
-
-    const isLike = req.nextUrl.searchParams.get("isLike");
-
-    const isLikeBoolean = isLike === "true";
-
-    const value = 1;
-
-    const comments = await commentModel.find({ _id: id }, "likes dislikes");
-
-    if (
-      comments[0].likes.includes(user) ||
-      comments[0].dislikes.includes(user)
-    ) {
+    if (!user) {
       return NextResponse.json(
-        {
-          message: "user has commented",
-          ok: comments[0].likes.includes(user),
-          notOk: comments[0].dislikes.includes(user),
-        },
+        { message: "User is required" },
         { status: 400 },
       );
     }
 
-    if (isLike === "true") {
-      const updatedComment = await commentModel.findOneAndUpdate(
-        { _id: id },
-        {
-          $inc: {
-            likesCount: value,
-          },
-          $addToSet: {
-            likes: user,
-          },
-        },
-        { new: true, select: "dislikesCount" },
-      );
+    await db();
 
-      return NextResponse.json({ isOk: true });
-    } else {
-      const updatedComment = await commentModel.findOneAndUpdate(
-        { _id: id },
-        {
-          $inc: {
-            dislikesCount: value,
-          },
-          $addToSet: {
-            dislikes: user,
-          },
-        },
-        { new: true, select: "likesCount" },
-      );
+    const { id } = await params;
+    const comments = await commentModel.findById(
+      id,
+      "likes dislikes likesCount dislikesCount",
+    );
 
-      return NextResponse.json({ isOk: false });
+    if (!comments) {
+      return NextResponse.json(
+        { message: "Comment not found" },
+        { status: 404 },
+      );
     }
-  } catch (error) {
-    return NextResponse.json({ message: error.message });
+
+    const hasLiked = comments.likes.includes(user);
+    const hasDisliked = comments.dislikes.includes(user);
+
+    let update: any = {};
+    let message = "";
+    let action = "";
+
+    if (isLike) {
+      if (hasLiked) {
+        update = {
+          $pull: { likes: user },
+          $inc: { likesCount: -1 },
+        };
+        message = "Like removed";
+        action = "removed-like";
+      } else {
+        if (hasDisliked) {
+          update = {
+            $pull: { dislikes: user },
+            $addToSet: { likes: user },
+            $inc: { dislikesCount: -1, likesCount: 1 },
+          };
+          message = "Switched dislike to like";
+          action = "switched-to-like";
+        } else {
+          update = {
+            $addToSet: { likes: user },
+            $inc: { likesCount: 1 },
+          };
+          message = "Like added";
+          action = "added-like";
+        }
+      }
+    } else {
+      if (hasDisliked) {
+        update = {
+          $pull: { dislikes: user },
+          $inc: { dislikesCount: -1 },
+        };
+        message = "Dislike removed";
+        action = "removed-dislike";
+      } else {
+        if (hasLiked) {
+          update = {
+            $pull: { likes: user },
+            $addToSet: { dislikes: user },
+            $inc: { likesCount: -1, dislikesCount: 1 },
+          };
+          message = "Switched like to dislike";
+          action = "switched-to-dislike";
+        } else {
+          update = {
+            $addToSet: { dislikes: user },
+            $inc: { dislikesCount: 1 },
+          };
+          message = "Dislike added";
+          action = "added-dislike";
+        }
+      }
+    }
+
+    await commentModel.findByIdAndUpdate(id, update);
+
+    return NextResponse.json({ message, action });
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
