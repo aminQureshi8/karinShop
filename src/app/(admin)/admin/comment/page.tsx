@@ -1,7 +1,9 @@
-import React from 'react'
+import CommentTable from "@/components/template/admin/comment/CommentTable";
 
 export default function page() {
   return (
-    <div>page</div>
-  )
+    <div>
+      <CommentTable />
+    </div>
+  );
 }

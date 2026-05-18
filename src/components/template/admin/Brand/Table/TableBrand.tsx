@@ -4,8 +4,6 @@ import Brand from "@/types/Brand/Brand.type";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Pagination from "@/components/module/Pagination/Pagination";
-import { MdDelete } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
 import SwalFire from "@/app/utils/swal";
 import Modal from "@/components/module/Modal/Modal";
 import { useForm } from "react-hook-form";

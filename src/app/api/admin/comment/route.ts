@@ -6,7 +6,13 @@ export async function GET(req: NextRequest) {
   try {
     await db();
 
-    const comments = await commentModel.find({}).lean();
+    const comments = await commentModel
+      .find({})
+      .populate([
+        { path: "product", select: "title" },
+        { path: "user", select: "name email" },
+      ])
+      .lean();
 
     return NextResponse.json(comments);
   } catch (error) {}
