@@ -49,15 +49,15 @@ export async function GET(req: NextRequest) {
 
   const category = req.nextUrl.searchParams.get("cat");
 
-  // if (category?.length !== 0) {
-  const subCategories = await subCategoryModel
-    .find({ category }, "title")
-    .lean();
+ 
+  if (category) {
+    const subCategories = await subCategoryModel
+      .find({ category }, "title")
+      .lean();
+    return NextResponse.json(subCategories);
+  }
+
+  const subCategories = await subCategoryModel.find({}, "title").lean();
 
   return NextResponse.json(subCategories);
-  // }
-
-  // const subCategories = await subCategoryModel.find({}, "title").lean();
-
-  // return NextResponse.json(subCategories);
 }

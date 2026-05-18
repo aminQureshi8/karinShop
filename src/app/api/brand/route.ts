@@ -1,8 +1,6 @@
 import brandModel from "@/models/brand";
 import db from "@/config/db";
 import { NextRequest, NextResponse } from "next/server";
-import { authRouteHandler } from "@/app/utils/auth";
-import { v2 as cloudinary } from "cloudinary";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 // cloudinary.config({
@@ -15,9 +13,8 @@ const s3Client = new S3Client({
   region: "default",
   endpoint: "https://s3.ir-thr-at1.arvanstorage.ir",
   credentials: {
-    accessKeyId: "e69db9fc-d4a0-47f1-81e2-d556e2846ae6",
-    secretAccessKey:
-      "72400bfa4d81ade44cb80d5e89cd9ddf794dc6cd1dc314da19c4eb69fb5670c5",
+    accessKeyId: process.env.S3_ACCESSKEYID!,
+    secretAccessKey: process.env.S3_SECRETKEYID!,
   },
 });
 
@@ -98,12 +95,16 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1");
 
-    const skip = (page - 1) * 3;
+    const skip = (page - 1) * 6;
 
-    const brands = await brandModel.find().skip(skip).limit(3);
+    const brands = await brandModel
+      .find()
+      .skip(skip)
+      .limit(6)
+      .sort({ createdAt: -1 });
 
     const totalBrands = await brandModel.countDocuments({});
-    const totalPages = Math.ceil(totalBrands / 3);
+    const totalPages = Math.ceil(totalBrands / 6);
 
     return NextResponse.json({ brands, totalPages }, { status: 200 });
   } catch (error) {

@@ -68,7 +68,6 @@ const refreshToken = async () => {
 
 export const authUser = async () => {
   try {
-      
     await db();
 
     const cookieStore = await cookies();
@@ -84,8 +83,6 @@ export const authUser = async () => {
     } catch (error: any) {
       if (error.name === "TokenExpiredError") {
         const { newAccessToken, response, user } = await refreshToken();
-
-        console.log(newAccessToken);
 
         payload = verifyAccessToken(newAccessToken);
 

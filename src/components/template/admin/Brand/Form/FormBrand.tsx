@@ -86,7 +86,7 @@ export default function FormBrand({ getBrands }: { getBrands: any }) {
             )}
           </div>
           <div>
-            <label htmlFor="image">تصویر برند</label>
+            <label htmlFor="image">تصویر برند <span className="text-xs">(اختیاری)</span></label>
             <input
               type="file"
               id="image"

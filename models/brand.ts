@@ -10,7 +10,9 @@ const brand = new mongoose.Schema(
       required: true,
     },
   },
-
+  {
+    timestamps: true,
+  },
 );
 
 const brandModel = mongoose.models.brand || mongoose.model("brand", brand);

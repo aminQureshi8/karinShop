@@ -15,7 +15,7 @@ const product = new mongoose.Schema({
     ref: "subCategory",
     required: true,
   },
-  brand: { type: String, required: true },
+  brand: { type: mongoose.Schema.Types.ObjectId, ref: "brand", required: true },
   colors: [{ type: String }],
   tags: [{ type: String }],
   features: [

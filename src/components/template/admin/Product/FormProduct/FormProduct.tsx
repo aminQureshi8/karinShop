@@ -231,7 +231,7 @@ export default function FormProduct({
             />
           )}
 
-          {watchedSubCategory === "69ecb33d525492a519ced638" && (
+          {watchedSubCategory === "6a08c176cb34d5b275335acc" && (
             <LapTopFilter
               control={control}
               register={register}

@@ -3,7 +3,6 @@
 import { useCallback, useState } from "react";
 import FormBrand from "../Form/FormBrand";
 import TableBrand from "../Table/TableBrand";
-import Brand from "@/types/Brand/Brand.type";
 
 export default function BrandContainer() {
   const [brandState, setBrandState] = useState([]);

@@ -188,81 +188,85 @@ export default function TableBrand({
         </>
       </Modal>
 
-      <div className="rounded-xl border bg-white dark:bg-gray-800 shadow-sm">
-        <TableLayout>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-right font-bold">شماره</TableHead>
-              <TableHead className="text-right font-bold">
-                عکس دسته بندی
-              </TableHead>
-              <TableHead className="text-right font-bold">
-                نام دسته بندی
-              </TableHead>
-              <TableHead className="text-right font-bold">
-                تاریخ ایجاد
-              </TableHead>
+      {brands.length === 0 ? (
+        <div className="flex justify-center">برندی وجود ندارد!</div>
+      ) : (
+        <div className="rounded-xl border bg-white dark:bg-gray-800 shadow-sm">
+          <TableLayout>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-right font-bold">شماره</TableHead>
+                <TableHead className="text-right font-bold">
+                  عکس دسته بندی
+                </TableHead>
+                <TableHead className="text-right font-bold">
+                  نام دسته بندی
+                </TableHead>
+                <TableHead className="text-right font-bold">
+                  تاریخ ایجاد
+                </TableHead>
 
-              <TableHead className="text-right font-bold">عملیات</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {brands.map((cat: any, index: any) => (
-              <TableRow
-                key={cat._id}
-                className="transition-colors hover:bg-muted/40"
-              >
-                <TableCell className="font-medium ss02">
-                  {(currentPage - 1) * 3 + index + 1}
-                </TableCell>
-                <TableCell className="font-medium">
-                  <Image
-                    src={cat.imageUrl}
-                    width={100}
-                    height={100}
-                    alt="Image"
-                  />
-                </TableCell>
-                <TableCell>{cat.title}</TableCell>
-                <TableCell>
-                  {new Date(cat.createdAt).toLocaleDateString("fa-IR")}
-                </TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="size-8 cursor-pointer"
-                      >
-                        <MoreHorizontalIcon />
-                        <span className="sr-only">Open menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() => {
-                          setIsOpen(true);
-                          setEditBrandObject(cat);
-                        }}
-                      >
-                        ویرایش
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        variant="destructive"
-                        onClick={() => removeBrand(cat._id)}
-                      >
-                        حذف
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
+                <TableHead className="text-right font-bold">عملیات</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </TableLayout>
-      </div>
+            </TableHeader>
+            <TableBody>
+              {brands.map((cat: any, index: any) => (
+                <TableRow
+                  key={cat._id}
+                  className="transition-colors hover:bg-muted/40"
+                >
+                  <TableCell className="font-medium ss02">
+                    {(currentPage - 1) * 6 + index + 1}
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    <Image
+                      src={cat.imageUrl}
+                      width={100}
+                      height={100}
+                      alt="Image"
+                    />
+                  </TableCell>
+                  <TableCell>{cat.title}</TableCell>
+                  <TableCell>
+                    {new Date(cat.createdAt).toLocaleDateString("fa-IR")}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-8 cursor-pointer"
+                        >
+                          <MoreHorizontalIcon />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => {
+                            setIsOpen(true);
+                            setEditBrandObject(cat);
+                          }}
+                        >
+                          ویرایش
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          variant="destructive"
+                          onClick={() => removeBrand(cat._id)}
+                        >
+                          حذف
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </TableLayout>
+        </div>
+      )}
 
       {totalPageState > 1 && (
         <Pagination
