@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
     const expTime = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
 
-    const code = 123456; // This should be generated and sent to the user in a real scenario
+    const code = 12345; // This should be generated and sent to the user in a real scenario
 
     await otpModel.create({
       code,

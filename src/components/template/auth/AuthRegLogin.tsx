@@ -22,37 +22,42 @@ export default function AuthRegLogin() {
     setIsLoading(true);
     const { identifier } = data;
 
-    const res = await fetch("/api/auth/check-user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ identifier }),
-    });
+    try {
+      const res = await fetch("/api/auth/check-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identifier }),
+      });
 
-    const result = await res.json();
+      const result = await res.json();
 
-    const otpRes = await fetch("/api/auth/otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ identifier }),
-    });
+      const otpRes = await fetch("/api/auth/otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identifier }),
+      });
 
-    console.log(otpRes);
+      console.log(otpRes);
 
-    if (result.action === "login") {
-      router.push(`/regLogin/otp?identifier=${identifier}`);
-      reset();
-    } else if (result.action === "register") {
-      router.push(`/regLogin/otp?identifier=${identifier}`);
-      reset();
+      if (result.action === "login") {
+        router.push(`/regLogin/otp?identifier=${identifier}`);
+        reset();
+      } else if (result.action === "register") {
+        router.push(`/regLogin/otp?identifier=${identifier}`);
+        reset();
+      }
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className=" font-danaMed bg-gradient-to-br from-blue-100 via-white to-cyan-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
+    <div className="font-danaMed bg-gradient-to-br from-blue-100 via-white to-cyan-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
       <div className="container mx-auto min-h-screen flex items-center justify-center">
         <div className="rounded-2xl w-96 border border-white/20 bg-white/30 dark:bg-slate-800/30 backdrop-blur-xl shadow-[0_8px_32px_rgba(31,38,135,0.2)] hover:shadow-[0_8px_40px_rgba(31,38,135,0.3)] transition-all duration-300 flex flex-col justify-center py-5">
           <div className="flex justify-end pl-3">

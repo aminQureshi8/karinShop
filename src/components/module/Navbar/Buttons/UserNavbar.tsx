@@ -5,8 +5,6 @@ import Logout from "./Logout";
 export default async function UserNavbar() {
   const { user } = await authUser();
 
-  console.log(user);
-
   const isUser = Boolean(user);
 
   return (

@@ -1,8 +1,10 @@
 import FormBlog from "@/components/template/admin/blog/FormBlog";
 import db from "@/config/db";
 import categoryModel from "@/models/category";
+import { connection } from "next/server";
 
 export default async function page() {
+  await connection();
   await db();
   const category = await categoryModel.find({}, "title");
   return (

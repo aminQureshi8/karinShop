@@ -2,7 +2,7 @@ import AuthOtp from "@/components/template/auth/AuthOtp";
 
 export default function page() {
   return (
-    <div>
+    <div className="">
       <AuthOtp />
     </div>
   );

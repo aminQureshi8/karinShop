@@ -2,7 +2,7 @@ import db from "@/config/db";
 import userModel from "@/models/user";
 import { sign, verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { connection, NextResponse } from "next/server";
 
 export const generateAccessToken = (data: {
   email: string;
@@ -68,6 +68,7 @@ const refreshToken = async () => {
 
 export const authUser = async () => {
   try {
+      
     await db();
 
     const cookieStore = await cookies();
