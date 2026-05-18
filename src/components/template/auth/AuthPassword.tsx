@@ -49,8 +49,8 @@ export default function AuthPassword() {
         return;
       }
 
-      reset();
       router.push("/");
+      reset();
     } catch (error) {
       console.log(error);
     } finally {
@@ -120,9 +120,9 @@ export default function AuthPassword() {
             <button
               type="submit"
               disabled={!!errors.password || isLoading}
-              className="bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-blue-300 disabled:to-blue-900 disabled:cursor-not-allowed text-white w-full rounded-2xl py-3 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 active:scale-[0.98] flex items-center justify-center"
+              className="bg-linear-to-r cursor-pointer from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-blue-300 disabled:to-blue-900 disabled:cursor-not-allowed text-white w-full rounded-xl h-10 sm:h-12 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 active:scale-[0.98] flex items-center justify-center"
             >
-              {isLoading ? <BeatLoader size={20} color="#fff" /> : "تایید"}
+              {isLoading ? <BeatLoader size={6} color="white" /> : "تایید"}
             </button>
           </form>
 
