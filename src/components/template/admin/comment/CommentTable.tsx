@@ -3,7 +3,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -29,17 +28,23 @@ export default function CommentTable() {
   const getComments = async () => {
     const res = await fetch("/api/admin/comment");
     const data = await res.json();
-    console.log(data);
-    
     setComments(data);
+  };
+
+  const acceptCommentOrDeny = async (isAccept: boolean, id: string) => {
+    const res = await fetch(`/api/admin/comment/${id}?isAccept=${isAccept}`, {
+      method: "PATCH",
+    });
+
+    if (res.ok) getComments();
   };
 
   return (
     <div>
-      <div className="rounded-xl border bg-white dark:bg-gray-800 shadow-sm">
+      <div className="rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
         <TableLayout>
           <TableHeader>
-            <TableRow>
+            <TableRow className="border-b-gray-300! dark:border-gray-700!">
               <TableHead className="text-right font-bold">شماره</TableHead>
               <TableHead className="text-right font-bold">
                 نام کاربری کاربر
@@ -50,6 +55,7 @@ export default function CommentTable() {
               <TableHead className="text-right font-bold">
                 تعداد دیسلایک
               </TableHead>
+              <TableHead className="text-right font-bold">تاریخ</TableHead>
 
               <TableHead className="text-right font-bold">عملیات</TableHead>
             </TableRow>
@@ -63,12 +69,31 @@ export default function CommentTable() {
                 <TableCell className="font-medium ss02">
                   {(currentPage - 1) * 6 + index + 1}
                 </TableCell>
-                <TableCell className="font-medium"></TableCell>
-                <TableCell>{c.title}</TableCell>
+                <TableCell className="font-medium">{c.user.email}</TableCell>
                 <TableCell>
-                  {new Date(c.createdAt).toLocaleDateString("fa-IR")}
+                  <p className="text-xs truncate w-60" title={c.product.title}>
+                    {c.product.title}
+                  </p>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell>
+                  {/* {new Date(c.createdAt).toLocaleDateString("fa-IR")} */}
+                  {c.isApproved ? (
+                    <p className="text-green-500">شده</p>
+                  ) : (
+                    <p className="text-red-500">نشده</p>
+                  )}
+                </TableCell>
+                <TableCell className="font-medium ss02">
+                  {c.likesCount}
+                </TableCell>
+                <TableCell className="font-medium ss02">
+                  {c.dislikesCount}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {new Date(c.createdAt).toLocaleDateString("fa-IR")}
+                </TableCell>  
+
+                <TableCell className="text-right font-danaMed!">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
@@ -80,18 +105,37 @@ export default function CommentTable() {
                         <span className="sr-only">Open menu</span>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent
+                      align="end"
+                      className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
+                    >
                       <DropdownMenuItem
-                      // onClick={() => {
-                      //   setIsOpen(true);
-                      //   setEditBrandObject(cat);
-                      // }}
+                        // onClick={() => {
+                        //   setIsOpen(true);
+                        //   setEditBrandObject(cat);
+                        // }}
+                        className="flex justify-end cursor-pointer cursor-pointer"
                       >
-                        ویرایش
+                        تماشا
                       </DropdownMenuItem>
-                      <DropdownMenuSeparator />
+                      {c.isApproved ? (
+                        <DropdownMenuItem
+                          onClick={() => acceptCommentOrDeny(false, c._id)}
+                          className="flex justify-end cursor-pointer cursor-pointer"
+                        >
+                          عدم تایید
+                        </DropdownMenuItem>
+                      ) : (
+                        <DropdownMenuItem
+                          onClick={() => acceptCommentOrDeny(true, c._id)}
+                          className="flex justify-end  cursor-pointer"
+                        >
+                          تایید
+                        </DropdownMenuItem>
+                      )}
+
                       <DropdownMenuItem
-                        variant="destructive"
+                        className="text-red-500 border-t border-t-gray-300 dark:border-t-gray-700 flex justify-end cursor-pointer "
                         // onClick={() => removeBrand(cat._id)}
                       >
                         حذف
