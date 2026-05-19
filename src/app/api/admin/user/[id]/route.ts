@@ -1,4 +1,3 @@
-import db from "@/config/db";
 import userModel from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 

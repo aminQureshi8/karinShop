@@ -1,7 +1,7 @@
 import db from "@/config/db";
 import commentModel from "@/models/comment";
 import { NextRequest, NextResponse } from "next/server";
-
+import "@/models/product";
 export async function GET(req: NextRequest) {
   try {
     await db();
@@ -15,7 +15,9 @@ export async function GET(req: NextRequest) {
       .lean();
 
     return NextResponse.json(comments);
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({ message: error.message });
+  }
 }
 
 export async function DELETE(req: NextRequest) {

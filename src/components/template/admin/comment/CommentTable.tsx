@@ -3,6 +3,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -16,6 +17,7 @@ import TableLayout from "@/components/module/Table/Table";
 import { MoreHorizontalIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export default function CommentTable() {
   const [comments, setComments] = useState([]);
@@ -28,6 +30,8 @@ export default function CommentTable() {
   const getComments = async () => {
     const res = await fetch("/api/admin/comment");
     const data = await res.json();
+    console.log(data);
+
     setComments(data);
   };
 
@@ -39,12 +43,33 @@ export default function CommentTable() {
     if (res.ok) getComments();
   };
 
+  const banUser = async (id: string) => {
+    Swal.fire({
+      title: "علت بن کاربر:",
+      input: "text",
+      confirmButtonText: "تایید",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        console.log("f");
+      }
+    });
+  };
+
+  const showBodyComment = (comment: string) => {
+    Swal.fire({
+      title: "متن کانت",
+      text: comment,
+      confirmButtonText: "دیدم",
+    });
+  };
+
   return (
     <div>
+      <div></div>
       <div className="rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
         <TableLayout>
           <TableHeader>
-            <TableRow className="border-b-gray-300! dark:border-gray-700!">
+            <TableRow className="">
               <TableHead className="text-right font-bold">شماره</TableHead>
               <TableHead className="text-right font-bold">
                 نام کاربری کاربر
@@ -91,9 +116,8 @@ export default function CommentTable() {
                 </TableCell>
                 <TableCell className="font-medium">
                   {new Date(c.createdAt).toLocaleDateString("fa-IR")}
-                </TableCell>  
-
-                <TableCell className="text-right font-danaMed!">
+                </TableCell>
+                <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
@@ -105,38 +129,40 @@ export default function CommentTable() {
                         <span className="sr-only">Open menu</span>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      align="end"
-                      className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
-                    >
+                    <DropdownMenuContent align="end">
                       <DropdownMenuItem
-                        // onClick={() => {
-                        //   setIsOpen(true);
-                        //   setEditBrandObject(cat);
-                        // }}
-                        className="flex justify-end cursor-pointer cursor-pointer"
+                        onClick={() => showBodyComment(c.comment)}
+                        className="flex justify-end cursor-pointer"
                       >
                         تماشا
                       </DropdownMenuItem>
-                      {c.isApproved ? (
+                      {!c.isApproved ? (
                         <DropdownMenuItem
-                          onClick={() => acceptCommentOrDeny(false, c._id)}
-                          className="flex justify-end cursor-pointer cursor-pointer"
+                          onClick={() => acceptCommentOrDeny(true, c._id)}
+                          className="flex justify-end cursor-pointer"
                         >
-                          عدم تایید
+                          تایید
                         </DropdownMenuItem>
                       ) : (
                         <DropdownMenuItem
-                          onClick={() => acceptCommentOrDeny(true, c._id)}
-                          className="flex justify-end  cursor-pointer"
+                          onClick={() => acceptCommentOrDeny(false, c._id)}
+                          className="flex justify-end cursor-pointer"
                         >
-                          تایید
+                          عدم تایید
                         </DropdownMenuItem>
                       )}
 
                       <DropdownMenuItem
-                        className="text-red-500 border-t border-t-gray-300 dark:border-t-gray-700 flex justify-end cursor-pointer "
-                        // onClick={() => removeBrand(cat._id)}
+                        onClick={() => banUser(c._id)}
+                        className="flex justify-end cursor-pointer"
+                      >
+                        بن کاربر
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        variant="destructive"
+                        className="flex justify-end cursor-pointer"
+                        // onClick={() => removeCategory(cat._id)}
                       >
                         حذف
                       </DropdownMenuItem>

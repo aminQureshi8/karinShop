@@ -9,7 +9,7 @@ export async function proxy(request: NextRequest) {
 
   if (pathname.startsWith("/my-account")) {
     if (!token && !refreshToken) {
-      return NextResponse.redirect(new URL("/register/auth", request.url));
+      return NextResponse.redirect(new URL("/regLogin/Login", request.url));
     }
 
     if (token) {
@@ -28,7 +28,7 @@ export async function proxy(request: NextRequest) {
         if (refreshToken) {
           return NextResponse.next();
         }
-        return NextResponse.redirect(new URL("/register/auth", request.url));
+        return NextResponse.redirect(new URL("/regLogin/Login", request.url));
       }
     }
 
@@ -44,7 +44,7 @@ export async function proxy(request: NextRequest) {
   }
   if (pathname.startsWith("/admin")) {
     if (!token || !refreshToken) {
-      return NextResponse.redirect(new URL("/register/auth", request.url));
+      return NextResponse.redirect(new URL("/regLogin/Login", request.url));
     }
 
     if (token) {
@@ -63,7 +63,7 @@ export async function proxy(request: NextRequest) {
         if (refreshToken) {
           return NextResponse.next();
         }
-        return NextResponse.redirect(new URL("/register/auth", request.url));
+        return NextResponse.redirect(new URL("/regLogin/Login", request.url));
       }
     }
 
@@ -73,12 +73,12 @@ export async function proxy(request: NextRequest) {
         await jwtVerify(refreshToken, secret);
         return NextResponse.next();
       } catch (error) {
-        return NextResponse.redirect(new URL("/register/auth", request.url));
+        return NextResponse.redirect(new URL("/regLogin/Login", request.url));
       }
     }
   }
 
-  if (pathname.startsWith("/register/auth")) {
+  if (pathname.startsWith("/regLogin")) {
     if (token) {
       try {
         await jwtVerify(
@@ -92,5 +92,5 @@ export async function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 export const config = {
-  matcher: ["/admin/:path*", "/register/auth", "/my-account/:path*"],
+  matcher: ["/admin/:path*", "/regLogin/:path", "/my-account/:path*"],
 };
