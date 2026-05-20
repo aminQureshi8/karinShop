@@ -17,7 +17,7 @@ export default function AuthRefresh() {
           console.error("❌ Token refresh failed");
 
           if (pathname.startsWith("/admin")) {
-            router.push("/auth");
+            router.push("/regLogin/auth");
           }
         } else {
           console.log("✅ Token refreshed successfully");
@@ -27,7 +27,7 @@ export default function AuthRefresh() {
         console.error("❌ Refresh error:", error);
 
         if (pathname.startsWith("/admin")) {
-          router.push("/auth");
+          router.push("/regLogin/auth");
         }
       }
     };

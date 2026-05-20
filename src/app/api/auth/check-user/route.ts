@@ -1,4 +1,5 @@
 import db from "@/config/db";
+import banModel from "@/models/ban";
 import userModel from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -18,10 +19,22 @@ export async function POST(req: NextRequest) {
         action: "register",
       });
     }
+    const findUserinBans = await banModel.findOne({ user: userFind._id });
+
+    if (findUserinBans) {
+      return NextResponse.json(
+        { message: "Your account has been banned." },
+        { status: 403 },
+      );
+    }
 
     return NextResponse.json({
       exists: true,
       action: "login",
     });
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({
+      message: error.message,
+    });
+  }
 }

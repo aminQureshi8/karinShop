@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { BeatLoader } from "react-spinners";
 export default function AuthRegLogin() {
   const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
 
   const router = useRouter();
 
@@ -42,24 +43,31 @@ export default function AuthRegLogin() {
         body: JSON.stringify({ identifier }),
       });
 
+      if (!res.ok) {
+        setServerError("متأسفانه حساب کاربری شما مسدود شده است");
+        NProgress.done();
+        return;
+      }
+
       const result = await res.json();
+      console.log(result);
 
-      const otpRes = await fetch("/api/auth/otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ identifier }),
-      });
+      if (res.ok) {
+        const otpRes = await fetch("/api/auth/otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ identifier }),
+        });
 
-      console.log(otpRes);
-
-      if (result.action === "login") {
-        router.push(`/regLogin/otp?identifier=${identifier}`);
-        reset();
-      } else if (result.action === "register") {
-        router.push(`/regLogin/otp?identifier=${identifier}`);
-        reset();
+        if (result.action === "login") {
+          router.push(`/regLogin/otp?identifier=${identifier}`);
+          reset();
+        } else if (result.action === "register") {
+          router.push(`/regLogin/otp?identifier=${identifier}`);
+          reset();
+        }
       }
     } catch (error) {
     } finally {
@@ -107,6 +115,12 @@ export default function AuthRegLogin() {
             {errors.identifier && (
               <span className="text-red-500 text-xs mt-2 block">
                 {errors.identifier.message as string}
+              </span>
+            )}
+
+            {serverError && (
+              <span className="text-red-500 text-xs mt-2 block">
+                {serverError}
               </span>
             )}
 
