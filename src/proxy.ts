@@ -9,7 +9,7 @@ export async function proxy(request: NextRequest) {
 
   if (pathname.startsWith("/my-account")) {
     if (!token && !refreshToken) {
-      return NextResponse.redirect(new URL("/regLogin/Login", request.url));
+      return NextResponse.redirect(new URL("/regLogin/auth", request.url));
     }
 
     if (token) {
@@ -28,7 +28,7 @@ export async function proxy(request: NextRequest) {
         if (refreshToken) {
           return NextResponse.next();
         }
-        return NextResponse.redirect(new URL("/regLogin/Login", request.url));
+        return NextResponse.redirect(new URL("/regLogin/auth", request.url));
       }
     }
 
@@ -44,7 +44,7 @@ export async function proxy(request: NextRequest) {
   }
   if (pathname.startsWith("/admin")) {
     if (!token || !refreshToken) {
-      return NextResponse.redirect(new URL("/regLogin/Login", request.url));
+      return NextResponse.redirect(new URL("/regLogin/auth", request.url));
     }
 
     if (token) {
@@ -63,7 +63,7 @@ export async function proxy(request: NextRequest) {
         if (refreshToken) {
           return NextResponse.next();
         }
-        return NextResponse.redirect(new URL("/regLogin/Login", request.url));
+        return NextResponse.redirect(new URL("/regLogin/auth", request.url));
       }
     }
 
@@ -73,7 +73,7 @@ export async function proxy(request: NextRequest) {
         await jwtVerify(refreshToken, secret);
         return NextResponse.next();
       } catch (error) {
-        return NextResponse.redirect(new URL("/regLogin/Login", request.url));
+        return NextResponse.redirect(new URL("/regLogin/auth", request.url));
       }
     }
   }

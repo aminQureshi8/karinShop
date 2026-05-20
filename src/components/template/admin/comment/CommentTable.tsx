@@ -19,10 +19,13 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import SkeletonTableComments from "@/components/loading/SkeletonTableComments";
+import Pagination from "@/components/module/Pagination/Pagination";
 
 export default function CommentTable() {
   const [comments, setComments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPageState, setTotalPageState] = useState(0);
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -31,9 +34,10 @@ export default function CommentTable() {
 
   const getComments = async () => {
     try {
-      const res = await fetch("/api/admin/comment");
+      const res = await fetch(`/api/admin/comment?page=${currentPage}`);
       const data = await res.json();
-      setComments(data);
+      setComments(data.comments);
+      setTotalPageState(data.totalPage);
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -159,7 +163,7 @@ export default function CommentTable() {
                   className="transition-colors hover:bg-muted/40"
                 >
                   <TableCell className="font-medium ss02">
-                    {(currentPage - 1) * 6 + index + 1}
+                    {(currentPage - 1) * 7 + index + 1}
                   </TableCell>
                   <TableCell className="font-medium align-middle">
                     <div className="flex items-center gap-2">
@@ -264,6 +268,13 @@ export default function CommentTable() {
           </TableBody>
         </TableLayout>
       </div>
+      {totalPageState > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPageState}
+        />
+      )}
     </div>
   );
 }
