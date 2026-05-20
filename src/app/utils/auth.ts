@@ -8,6 +8,7 @@ export const generateAccessToken = (data: {
   email: string;
   role: string;
   phone: string;
+  id: string;
 }) => {
   console.log("✅ NEW ACCESS TOKEN GENERATED", Date.now());
   return sign(data, process.env.JWT_SECRET!, { expiresIn: "60s" });
@@ -52,6 +53,7 @@ const refreshToken = async () => {
   const newAccessToken = generateAccessToken({
     email: user.email ? user.email : null,
     phone: user.phone ? user.phone : null,
+    id: user.id,
     role: user.role,
   });
 
@@ -148,7 +150,7 @@ export const authRouteHandler = (header: string) => {
       return false;
     }
 
-    return true;
+    return email;
   } catch (error) {
     return false;
   }

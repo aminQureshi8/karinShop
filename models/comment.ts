@@ -25,9 +25,9 @@ const comment = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    isOk: {
+    isBan: {
       type: Boolean,
-      required: true,
+      required: false,
     },
     likesCount: {
       type: Number,

@@ -43,16 +43,54 @@ export default function CommentTable() {
     if (res.ok) getComments();
   };
 
-  const banUser = async (id: string) => {
-    Swal.fire({
+  const banUser = async (userId: string, commentId: string) => {
+    const result = await Swal.fire({
       title: "علت بن کاربر:",
       input: "text",
+      inputPlaceholder: "دلیل بن را وارد کنید",
       confirmButtonText: "تایید",
-    }).then((res) => {
-      if (res.isConfirmed) {
-        console.log("f");
-      }
+      showCancelButton: true,
+      cancelButtonText: "لغو",
+      inputValidator: (value) => {
+        if (!value?.trim()) {
+          return "لطفا دلیل بن را وارد کنید";
+        }
+        return null;
+      },
     });
+
+    if (result.isConfirmed) {
+      const banReason = result.value;
+
+      const res = await fetch(
+        `/api/admin/user/ban?id=${userId}&commentID=${commentId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ banReason }),
+        },
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        await Swal.fire({
+          icon: "success",
+          title: "موفق",
+          text: "کاربر با موفقیت بن شد",
+          confirmButtonText: "باشه",
+        });
+      } else {
+        await Swal.fire({
+          icon: "error",
+          title: "خطا",
+          text: data.message || "مشکلی در بن کردن کاربر به وجود آمد",
+          confirmButtonText: "متوجه شدم",
+        });
+      }
+    }
   };
 
   const showBodyComment = (comment: string) => {
@@ -94,7 +132,17 @@ export default function CommentTable() {
                 <TableCell className="font-medium ss02">
                   {(currentPage - 1) * 6 + index + 1}
                 </TableCell>
-                <TableCell className="font-medium">{c.user.email}</TableCell>
+                <TableCell className="font-medium align-middle">
+                  <div className="flex items-center gap-2">
+                    <span>{c.user.email}</span>
+                    {c.isBan && (
+                      <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-700 dark:bg-red-900/50 dark:text-red-300 ring-1 ring-inset ring-red-600/20">
+                        بن
+                      </span>
+                    )}
+                  </div>
+                </TableCell>
+
                 <TableCell>
                   <p className="text-xs truncate w-60" title={c.product.title}>
                     {c.product.title}
@@ -153,7 +201,7 @@ export default function CommentTable() {
                       )}
 
                       <DropdownMenuItem
-                        onClick={() => banUser(c._id)}
+                        onClick={() => banUser(c.user._id, c._id)}
                         className="flex justify-end cursor-pointer"
                       >
                         بن کاربر
