@@ -29,9 +29,6 @@ export default function TableOrder({ id }: { id: string }) {
       });
 
       const data = await res.json();
-
-      console.log(data);
-
       setOrder(data);
     };
 

@@ -12,7 +12,7 @@ export default async function Offs() {
     .find({ dateTime: { $gte: new Date() } })
     .lean();
 
-  console.log("validOffs --->  ", validOffs);
+ 
 
   if (!validOffs.length) {
     return null;

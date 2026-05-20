@@ -84,9 +84,6 @@ export default function Information({
         SwalFire("با موفقعیت ویرایش شد", "success", false, "", "باشه", "", "");
         reset();
       }
-
-      const datda = await res.json();
-      console.log(datda);
     } catch (error) {
     } finally {
       setIsLoading(false);

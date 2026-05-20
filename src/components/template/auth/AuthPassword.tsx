@@ -42,8 +42,6 @@ export default function AuthPassword() {
 
       const result = await res.json();
 
-      console.log(result);
-
       if (!res.ok) {
         setServerError(result.error || "خطایی رخ داده است");
         return;
@@ -120,7 +118,7 @@ export default function AuthPassword() {
             <button
               type="submit"
               disabled={!!errors.password || isLoading}
-              className="bg-linear-to-r cursor-pointer from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-blue-300 disabled:to-blue-900 disabled:cursor-not-allowed text-white w-full rounded-xl h-10 sm:h-12 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 active:scale-[0.98] flex items-center justify-center"
+              className="bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-300 disabled:to-slate-400 dark:disabled:from-slate-700 dark:disabled:to-slate-800 disabled:text-slate-500 dark:disabled:text-slate-400 disabled:cursor-not-allowed text-white w-full rounded-xl h-10 sm:h-12 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 dark:shadow-cyan-900/20 active:scale-[0.98] flex items-center justify-center"
             >
               {isLoading ? <BeatLoader size={6} color="white" /> : "تایید"}
             </button>

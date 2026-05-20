@@ -37,14 +37,20 @@ export default async function ProductContent({ slug }: { slug: string }) {
         path: "subCategory",
         select: "title",
       },
+      {
+        path: "brand",
+        select: "title",
+      },
     ])
     .lean({ virtuals: true });
+
+ 
 
   if (!product) {
     notFound();
   }
 
-  console.log(product);
+  
 
   const user = await authUser();
 

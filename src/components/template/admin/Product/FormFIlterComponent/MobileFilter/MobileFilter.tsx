@@ -12,7 +12,7 @@ export default function MobileFilter({ register, errors, control }: any) {
           <div className="flex flex-col">
             <label className="text-sm mb-1">برند</label>
             <input
-              {...register("brand", { required: "برند الزامی است" })}
+              {...register("brandMobile", { required: "برند الزامی است" })}
               type="text"
               placeholder="Samsung / Apple / Xiaomi"
               className="border-2 dark:border-gray-700 rounded-xl px-3 py-2 text-sm border-zinc-200 mt-2 focus:ring-2 focus:ring-green-500 outline-0 dark:bg-black/60"

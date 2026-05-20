@@ -63,7 +63,6 @@ export default function UserTable({
         method: "DELETE",
       });
 
-
       if (res.ok) {
         getUser(1);
       }
@@ -88,10 +87,6 @@ export default function UserTable({
         getUser(1);
         setIsOpen(false);
       }
-
-      const result = await res.json();
-
-      console.log(result);
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -143,7 +138,7 @@ export default function UserTable({
         </>
       </Modal>
       <div className="rounded-xl border bg-white dark:bg-gray-800 shadow-sm">
-        <TableLayout >
+        <TableLayout>
           <TableHeader>
             <TableRow>
               <TableHead className="text-right font-bold">شماره</TableHead>

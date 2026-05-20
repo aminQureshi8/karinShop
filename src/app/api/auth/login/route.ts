@@ -25,7 +25,6 @@ export async function POST(req: NextRequest) {
       email: user.email,
       phone: user.phone,
       role: user.role,
-      id: user._id
     });
 
     const refreshToken = generateRefreshToken({
@@ -41,14 +40,13 @@ export async function POST(req: NextRequest) {
     response.cookies.set("token", accessToken, {
       httpOnly: true,
 
-     
       path: "/",
       maxAge: 60,
     });
 
     response.cookies.set("refresh-token", refreshToken, {
       httpOnly: true,
-     
+
       path: "/",
       maxAge: 60 * 60 * 24 * 15,
     });

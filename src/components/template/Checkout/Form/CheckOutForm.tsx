@@ -41,8 +41,6 @@ export default function CheckOutForm({
 
   const cart = useSelector((state: RootState) => state.cart);
 
-  console.log("cart -->", cart);
-
   const orderSubmit = async (data: FormValues) => {
     setIsLoading(true);
     const products = cart.map((c: any) => ({

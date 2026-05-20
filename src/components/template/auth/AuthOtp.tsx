@@ -26,8 +26,9 @@ export default function AuthOtp() {
 
   useEffect(() => {
     reset({ otp: Array(5).fill("") });
+    inputsRef.current.forEach((inp) => inp && (inp.value = ""));
     inputsRef.current[0]?.focus();
-  }, [identifier, reset]);
+  }, [identifier]);
 
   const handleChange = (value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
@@ -66,9 +67,9 @@ export default function AuthOtp() {
       const result = await res.json();
 
       if (result.action === "login") {
-        router.push(`/regLogin/password?identifier=${identifier}`);
+        router.replace(`/regLogin/password?identifier=${identifier}`);
       } else if (result.action === "register") {
-        router.push(`/regLogin/create-password?identifier=${identifier}`);
+        router.replace(`/regLogin/create-password?identifier=${identifier}`);
       }
     } catch (error) {
       console.log(error);
@@ -103,6 +104,7 @@ export default function AuthOtp() {
                   type="text"
                   maxLength={1}
                   inputMode="numeric"
+                  autoComplete="off"
                   className="
                     w-12 h-12
                     ss02
@@ -132,7 +134,7 @@ export default function AuthOtp() {
             <button
               type="submit"
               disabled={otpValues.join("").length !== 5}
-              className="bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-blue-300 disabled:to-blue-900 disabled:cursor-not-allowed text-white w-full rounded-xl h-10 sm:h-12 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 active:scale-[0.98] flex items-center justify-center"
+              className="bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-300 disabled:to-slate-400 dark:disabled:from-slate-700 dark:disabled:to-slate-800 disabled:text-slate-500 dark:disabled:text-slate-400 disabled:cursor-not-allowed text-white w-full rounded-xl h-10 sm:h-12 mt-4 font-bold transition-all shadow-lg shadow-cyan-300/30 dark:shadow-cyan-900/20 active:scale-[0.98] flex items-center justify-center"
             >
               {isLoading ? <BeatLoader size={6} color="white" /> : "تایید"}
             </button>

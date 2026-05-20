@@ -5,7 +5,6 @@ import "@/models/order";
 import "@/models/product";
 import "@/models/user";
 
-
 export default async function page() {
   await db();
 
@@ -23,8 +22,6 @@ export default async function page() {
     ])
     .limit(3)
     .lean();
-
-  console.log(orders);
 
   const totalOrders = await orderModel.countDocuments({});
   const totalPages = Math.ceil(totalOrders / 3);

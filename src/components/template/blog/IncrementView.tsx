@@ -22,8 +22,6 @@ export default function IncrementView({ slug }: { slug: string }) {
         body: JSON.stringify({ slug }),
       });
 
-      console.log(res);
-
       if (res.ok) {
         localStorage.setItem(key, "true");
       }

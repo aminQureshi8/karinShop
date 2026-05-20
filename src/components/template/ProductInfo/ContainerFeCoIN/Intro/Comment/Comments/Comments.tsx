@@ -41,7 +41,6 @@ export default function Comments({
 
     const data = await res.json();
 
-    console.log(data);
 
     const action = data.action;
 
