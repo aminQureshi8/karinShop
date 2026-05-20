@@ -18,21 +18,26 @@ import { MoreHorizontalIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import SkeletonTableComments from "@/components/loading/SkeletonTableComments";
 
 export default function CommentTable() {
   const [comments, setComments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getComments();
   }, []);
 
   const getComments = async () => {
-    const res = await fetch("/api/admin/comment");
-    const data = await res.json();
-    console.log(data);
-
-    setComments(data);
+    try {
+      const res = await fetch("/api/admin/comment");
+      const data = await res.json();
+      setComments(data);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const acceptCommentOrDeny = async (isAccept: boolean, id: string) => {
@@ -43,7 +48,11 @@ export default function CommentTable() {
     if (res.ok) getComments();
   };
 
-  const banUser = async (userId: string, commentId: string) => {
+  const banUser = async (userId: string, commentId: string, ban: boolean) => {
+    if (!ban) {
+      banUserOperation(userId, commentId, ban, "", "آن بن");
+      return;
+    }
     const result = await Swal.fire({
       title: "علت بن کاربر:",
       input: "text",
@@ -62,34 +71,45 @@ export default function CommentTable() {
     if (result.isConfirmed) {
       const banReason = result.value;
 
-      const res = await fetch(
-        `/api/admin/user/ban?id=${userId}&commentID=${commentId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ banReason }),
+      banUserOperation(userId, commentId, ban, banReason, "بن");
+    }
+  };
+
+  const banUserOperation = async (
+    userId: string,
+    commentId: string,
+    ban: boolean,
+    banReason: string,
+    swalMessage: string,
+  ) => {
+    const res = await fetch(
+      `/api/admin/user/ban?id=${userId}&commentID=${commentId}&ban=${ban}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({ banReason }),
+      },
+    );
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (res.ok) {
-        await Swal.fire({
-          icon: "success",
-          title: "موفق",
-          text: "کاربر با موفقیت بن شد",
-          confirmButtonText: "باشه",
-        });
-      } else {
-        await Swal.fire({
-          icon: "error",
-          title: "خطا",
-          text: data.message || "مشکلی در بن کردن کاربر به وجود آمد",
-          confirmButtonText: "متوجه شدم",
-        });
-      }
+    if (res.ok) {
+      await Swal.fire({
+        icon: "success",
+        title: "موفق",
+        text: `کاربر با موفقعیت ${swalMessage} شد`,
+        confirmButtonText: "باشه",
+      });
+      getComments();
+    } else {
+      await Swal.fire({
+        icon: "error",
+        title: "خطا",
+        text: data.message || "مشکلی در بن کردن کاربر به وجود آمد",
+        confirmButtonText: "متوجه شدم",
+      });
     }
   };
 
@@ -124,101 +144,123 @@ export default function CommentTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {comments.map((c: any, index: any) => (
-              <TableRow
-                key={c._id}
-                className="transition-colors hover:bg-muted/40"
-              >
-                <TableCell className="font-medium ss02">
-                  {(currentPage - 1) * 6 + index + 1}
-                </TableCell>
-                <TableCell className="font-medium align-middle">
-                  <div className="flex items-center gap-2">
-                    <span>{c.user.email}</span>
-                    {c.isBan && (
-                      <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-700 dark:bg-red-900/50 dark:text-red-300 ring-1 ring-inset ring-red-600/20">
-                        بن
-                      </span>
-                    )}
-                  </div>
-                </TableCell>
-
-                <TableCell>
-                  <p className="text-xs truncate w-60" title={c.product.title}>
-                    {c.product.title}
-                  </p>
-                </TableCell>
-                <TableCell>
-                  {/* {new Date(c.createdAt).toLocaleDateString("fa-IR")} */}
-                  {c.isApproved ? (
-                    <p className="text-green-500">شده</p>
-                  ) : (
-                    <p className="text-red-500">نشده</p>
-                  )}
-                </TableCell>
-                <TableCell className="font-medium ss02">
-                  {c.likesCount}
-                </TableCell>
-                <TableCell className="font-medium ss02">
-                  {c.dislikesCount}
-                </TableCell>
-                <TableCell className="font-medium">
-                  {new Date(c.createdAt).toLocaleDateString("fa-IR")}
-                </TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="size-8 cursor-pointer"
-                      >
-                        <MoreHorizontalIcon />
-                        <span className="sr-only">Open menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() => showBodyComment(c.comment)}
-                        className="flex justify-end cursor-pointer"
-                      >
-                        تماشا
-                      </DropdownMenuItem>
-                      {!c.isApproved ? (
-                        <DropdownMenuItem
-                          onClick={() => acceptCommentOrDeny(true, c._id)}
-                          className="flex justify-end cursor-pointer"
-                        >
-                          تایید
-                        </DropdownMenuItem>
-                      ) : (
-                        <DropdownMenuItem
-                          onClick={() => acceptCommentOrDeny(false, c._id)}
-                          className="flex justify-end cursor-pointer"
-                        >
-                          عدم تایید
-                        </DropdownMenuItem>
-                      )}
-
-                      <DropdownMenuItem
-                        onClick={() => banUser(c.user._id, c._id)}
-                        className="flex justify-end cursor-pointer"
-                      >
-                        بن کاربر
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        variant="destructive"
-                        className="flex justify-end cursor-pointer"
-                        // onClick={() => removeCategory(cat._id)}
-                      >
-                        حذف
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+            {isLoading ? (
+              <SkeletonTableComments />
+            ) : comments.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={8} className="text-center py-6">
+                  کامنتی پیدا نشد
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              comments.map((c: any, index: any) => (
+                <TableRow
+                  key={c._id}
+                  className="transition-colors hover:bg-muted/40"
+                >
+                  <TableCell className="font-medium ss02">
+                    {(currentPage - 1) * 6 + index + 1}
+                  </TableCell>
+                  <TableCell className="font-medium align-middle">
+                    <div className="flex items-center gap-2">
+                      <span>{c.user.email}</span>
+                      {c.isBan && (
+                        <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-700 dark:bg-red-900/50 dark:text-red-300 ring-1 ring-inset ring-red-600/20">
+                          بن
+                        </span>
+                      )}
+                    </div>
+                  </TableCell>
+
+                  <TableCell>
+                    <p
+                      className="text-xs truncate w-60"
+                      title={c.product.title}
+                    >
+                      {c.product.title}
+                    </p>
+                  </TableCell>
+                  <TableCell>
+                    {/* {new Date(c.createdAt).toLocaleDateString("fa-IR")} */}
+                    {c.isApproved ? (
+                      <p className="text-green-500">شده</p>
+                    ) : (
+                      <p className="text-red-500">نشده</p>
+                    )}
+                  </TableCell>
+                  <TableCell className="font-medium ss02">
+                    {c.likesCount}
+                  </TableCell>
+                  <TableCell className="font-medium ss02">
+                    {c.dislikesCount}
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {new Date(c.createdAt).toLocaleDateString("fa-IR")}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-8 cursor-pointer"
+                        >
+                          <MoreHorizontalIcon />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => showBodyComment(c.comment)}
+                          className="flex justify-end cursor-pointer"
+                        >
+                          تماشا
+                        </DropdownMenuItem>
+                        {!c.isApproved ? (
+                          <DropdownMenuItem
+                            onClick={() => acceptCommentOrDeny(true, c._id)}
+                            className="flex justify-end cursor-pointer"
+                          >
+                            تایید
+                          </DropdownMenuItem>
+                        ) : (
+                          <DropdownMenuItem
+                            onClick={() => acceptCommentOrDeny(false, c._id)}
+                            className="flex justify-end cursor-pointer"
+                          >
+                            عدم تایید
+                          </DropdownMenuItem>
+                        )}
+                        {c.isBan ? (
+                          <DropdownMenuItem
+                            onClick={() => banUser(c.user._id, c._id, false)}
+                            className="flex justify-end cursor-pointer"
+                          >
+                            آن بن کردن کاربر
+                          </DropdownMenuItem>
+                        ) : (
+                          <DropdownMenuItem
+                            onClick={() => banUser(c.user._id, c._id, true)}
+                            className="flex justify-end cursor-pointer"
+                          >
+                            بن کاربر
+                          </DropdownMenuItem>
+                        )}
+
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          variant="destructive"
+                          className="flex justify-end cursor-pointer"
+                          // onClick={() => removeCategory(cat._id)}
+                        >
+                          حذف
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </TableLayout>
       </div>

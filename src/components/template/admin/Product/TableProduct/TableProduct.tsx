@@ -82,7 +82,11 @@ export default function TableProduct({
             {isLoading ? (
               <SkeletonTableProduct />
             ) : products.length === 0 ? (
-              <div>j</div>
+              <TableRow>
+                <TableCell colSpan={8} className="text-center py-6">
+                  محصولی پیدا نشد
+                </TableCell>
+              </TableRow>
             ) : (
               products.map((p: any, index: any) => (
                 <TableRow

@@ -11,6 +11,8 @@ export async function POST(req: NextRequest) {
 
     const id = req.nextUrl.searchParams.get("id");
     const commentID = req.nextUrl.searchParams.get("commentID");
+    const ban = req.nextUrl.searchParams.get("ban");
+
     const { banReason } = await req.json();
     const token = req.cookies.get("token")?.value;
 
@@ -24,13 +26,6 @@ export async function POST(req: NextRequest) {
     if (!id) {
       return NextResponse.json(
         { success: false, message: "User ID is required." },
-        { status: 400 },
-      );
-    }
-
-    if (!banReason?.trim()) {
-      return NextResponse.json(
-        { success: false, message: "Ban reason is required." },
         { status: 400 },
       );
     }
@@ -60,25 +55,48 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await commentModel.findByIdAndUpdate(commentID, {
-      $set: {
-        isBan: true,
-      },
-    });
+    if (ban === "true") {
+      if (!banReason?.trim()) {
+        return NextResponse.json(
+          { success: false, message: "Ban reason is required." },
+          { status: 400 },
+        );
+      }
+      await commentModel.findByIdAndUpdate(commentID, {
+        $set: {
+          isBan: true,
+        },
+      });
 
-    await banModel.create({
-      banReason: banReason.trim(),
-      user: id,
-      bannedBy: admin._id,
-    });
+      await banModel.create({
+        banReason: banReason.trim(),
+        user: id,
+        bannedBy: admin._id,
+      });
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: "User has been successfully banned.",
-      },
-      { status: 201 },
-    );
+      return NextResponse.json(
+        {
+          success: true,
+          message: "User has been successfully banned.",
+        },
+        { status: 201 },
+      );
+    } else {
+      await commentModel.findByIdAndUpdate(commentID, {
+        $set: {
+          isBan: false,
+        },
+      });
+
+      await banModel.findOneAndDelete({ user: id });
+      return NextResponse.json(
+        {
+          success: true,
+          message: "User has been unbanned successfully.",
+        },
+        { status: 200 },
+      );
+    }
   } catch (error: any) {
     return NextResponse.json(
       {
