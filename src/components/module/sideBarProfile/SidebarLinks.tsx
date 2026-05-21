@@ -5,11 +5,10 @@ import { HeartIcon, Settings2Icon } from "lucide-react";
 import { IoNotifications } from "react-icons/io5";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import LogOutBtn from "../admin/SideBar/LogOutBtn";
 
 export default function SidebarLinks() {
   const pathname = usePathname();
-
-  console.log(pathname);
 
   return (
     <div className="flex flex-col gap-5 mt-3 dark:text-gray-300">
@@ -63,6 +62,7 @@ export default function SidebarLinks() {
           </div>
         </Link>
       </div>
+      <LogOutBtn />
     </div>
   );
 }

@@ -101,7 +101,7 @@ export default function AuthCreateChangePass() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-all"
+              className="absolute left-3 top-[57%] -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-all"
             >
               {showPassword ? <EyeClosed size={18} /> : <Eye size={18} />}
             </button>
@@ -147,7 +147,7 @@ export default function AuthCreateChangePass() {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-all"
+              className="absolute left-3 top-[57%] -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-all"
             >
               {showConfirmPassword ? (
                 <EyeClosed size={18} />
