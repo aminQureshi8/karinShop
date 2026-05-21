@@ -7,17 +7,33 @@ export async function GET(req: NextRequest) {
     await db();
 
     const page = req.nextUrl.searchParams.get("page") || 1;
-    const limit = 5;
+    const limit = 10;
     const skip = (Number(page) - 1) * limit;
 
     const users = await userModel
       .find({}, "-refreshToken -__v")
       .skip(skip)
-      .limit(5);
+      .limit(10);
 
     const totalUsers = await userModel.countDocuments({});
     const totalPages = Math.ceil(totalUsers / limit);
 
     return NextResponse.json({ users, totalPages });
+  } catch (error) {}
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    await db();
+
+    const id = req.nextUrl.searchParams.get("id");
+
+    const splitIds = id?.split("|");
+
+    await userModel.deleteMany({
+      _id: { $in: splitIds },
+    });
+
+    return NextResponse.json(splitIds);
   } catch (error) {}
 }

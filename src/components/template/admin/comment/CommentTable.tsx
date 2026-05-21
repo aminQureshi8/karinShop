@@ -20,17 +20,19 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import SkeletonTableComments from "@/components/loading/SkeletonTableComments";
 import Pagination from "@/components/module/Pagination/Pagination";
+import { MdDelete } from "react-icons/md";
 
 export default function CommentTable() {
   const [comments, setComments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPageState, setTotalPageState] = useState(0);
+  const [commentClick, setCommentClick] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getComments();
-  }, []);
+  }, [currentPage]);
 
   const getComments = async () => {
     try {
@@ -125,6 +127,32 @@ export default function CommentTable() {
     });
   };
 
+  const removeMany = async () => {
+    const splitComments = commentClick.map((p) => p).join("|");
+    try {
+      const res = await fetch(`/api/admin/comment?id=${splitComments}`, {
+        method: "DELETE",
+      });
+      console.log(res);
+
+      if (res.ok) {
+        getComments();
+        setCommentClick([]);
+      }
+    } catch (error) {}
+  };
+
+  const clickComment = (id: string, check: any) => {
+    if (check) {
+      const finds = commentClick.some((p) => p === id);
+      if (!finds) {
+        setCommentClick((pre: any) => [...pre, id]);
+      }
+    } else {
+      setCommentClick((pre: any) => pre.filter((p: any) => p !== id));
+    }
+  };
+
   return (
     <div>
       <div></div>
@@ -132,6 +160,33 @@ export default function CommentTable() {
         <TableLayout>
           <TableHeader>
             <TableRow className="">
+              <TableHead className="w-[80px]">
+                <div className="relative h-6 flex items-center justify-center overflow-hidden">
+                  <span
+                    className={`absolute transition-all duration-300 ${
+                      commentClick.length === 0
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 -translate-y-4"
+                    }`}
+                  >
+                    انتخاب
+                  </span>
+
+                  <span
+                    className={`absolute transition-all duration-300 ${
+                      commentClick.length !== 0
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-4"
+                    }`}
+                  >
+                    <MdDelete
+                      onClick={removeMany}
+                      size={18}
+                      className="cursor-pointer text-red-500 hover:text-red-600"
+                    />
+                  </span>
+                </div>
+              </TableHead>
               <TableHead className="text-right font-bold">شماره</TableHead>
               <TableHead className="text-right font-bold">
                 نام کاربری کاربر
@@ -162,6 +217,13 @@ export default function CommentTable() {
                   key={c._id}
                   className="transition-colors hover:bg-muted/40"
                 >
+                  <TableCell>
+                    <input
+                      type="checkbox"
+                      checked={commentClick.includes(c._id)}
+                      onChange={(e) => clickComment(c._id, e.target.checked)}
+                    />
+                  </TableCell>
                   <TableCell className="font-medium ss02">
                     {(currentPage - 1) * 7 + index + 1}
                   </TableCell>

@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import SubCate from "./SubCate";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import SubCategoryType from "@/types/subCategories.type";
 
-export default function Ui({ subCategories }: { subCategories: any }) {
+const Ui = memo(({ subCategories }: { subCategories: any }) => {
   const [brandState, setBrandState] = useState([]);
   const [section, setSection] = useState("/mobile");
 
@@ -109,4 +109,6 @@ export default function Ui({ subCategories }: { subCategories: any }) {
       </div>
     </div>
   );
-}
+});
+
+export default Ui;

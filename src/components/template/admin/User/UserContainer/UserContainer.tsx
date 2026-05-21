@@ -10,9 +10,8 @@ export default function UserContainer({
   users: any;
   totalPages: number;
 }) {
-  const [userState, setUserState] = useState([...users]);
-  const [totalPageState, setTotalPageState] = useState(totalPages);
-  const [intialUsers, setintialUsers] = useState([...users]);
+  const [userState, setUserState] = useState([]);
+  const [totalPageState, setTotalPageState] = useState(0);
   const getUser = useCallback(async (page: number) => {
     try {
       const res = await fetch(`/api/admin/user?page=${page}`);
