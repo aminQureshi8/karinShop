@@ -17,15 +17,15 @@ export default async function Category() {
   return (
     <div className="mt-12">
       <TopCategory
-       title="دسته بندی های"
-       titleColor="محبوب"
+        title="دسته بندی های"
+        titleColor="محبوب"
         des="جدیدترین و بروزترین دسته بندی ها"
         icon={<BiCategory size={22} />}
       />
 
       <div className="grid max-sm:grid-cols-3 grid-cols-7 gap-3 mt-5">
-        {categories.map((cat) => (
-          <div key={cat._id}>
+        {categories.map((cat, index) => (
+          <div key={cat._id} className={index === 6 ? "max-sm:hidden" : ""}>
             <div className="flex justify-center">
               <Image
                 src={cat.imageUrl}
