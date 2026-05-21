@@ -1,5 +1,6 @@
 "use client";
 
+import SkeletonUserTable from "@/components/loading/SkeletonUserTable";
 import Modal from "@/components/module/Modal/Modal";
 import Pagination from "@/components/module/Pagination/Pagination";
 import TableLayout from "@/components/module/Table/Table";
@@ -31,12 +32,18 @@ export default function UserTable() {
   const [editUserObject, setEditUserObject] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [userClick, setUserClick] = useState([]);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
 
   const getUser = async () => {
-    const res = await fetch(`/api/admin/user?page=${currentPage}`);
-    const data = await res.json();
-    setUserState(data.users);
-    setTotalPageState(data.totalPages);
+    try {
+      const res = await fetch(`/api/admin/user?page=${currentPage}`);
+      const data = await res.json();
+      setUserState(data.users);
+      setTotalPageState(data.totalPages);
+    } catch (error) {
+    } finally {
+      setIsLoadingUser(false);
+    }
   };
 
   useEffect(() => {
@@ -74,8 +81,6 @@ export default function UserTable() {
         credentials: "include",
         body: formData,
       });
-
-      console.log(res);
 
       if (res.ok) {
         getUser();
@@ -163,7 +168,7 @@ export default function UserTable() {
               <TableHead className="w-[80px]">
                 <div className="relative h-6 flex items-center justify-center overflow-hidden">
                   <span
-                    className={`absolute transition-all duration-300 ${
+                    className={`absolute font-bold transition-all duration-300 ${
                       userClick.length === 0
                         ? "opacity-100 translate-y-0"
                         : "opacity-0 -translate-y-4"
@@ -199,62 +204,72 @@ export default function UserTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {userState.map((user: any, index: any) => (
-              <TableRow
-                key={user._id}
-                className="transition-colors hover:bg-muted/40"
-              >
-                <TableCell>
-                  <input
-                    type="checkbox"
-                    checked={userClick.includes(user._id)}
-                    onChange={(e) => clickUser(user._id, e.target.checked)}
-                  />
-                </TableCell>
-                <TableCell className="font-medium ss02">
-                  {(currentPage - 1) * 10 + index + 1}
-                </TableCell>
-                <TableCell className="font-medium">{user.email}</TableCell>
-                <TableCell>{user.userName}</TableCell>
-                <TableCell>{user.role}</TableCell>
-
-                <TableCell>
-                  {new Date(user.createdAt).toLocaleDateString("fa-IR")}
-                </TableCell>
-
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="size-8 cursor-pointer"
-                      >
-                        <MoreHorizontalIcon />
-                        <span className="sr-only">Open menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() => {
-                          setIsOpen(true);
-                          setEditUserObject(user);
-                        }}
-                      >
-                        ویرایش
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        variant="destructive"
-                        onClick={() => removeUser(user._id)}
-                      >
-                        حذف
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+            {isLoadingUser ? (
+              <SkeletonUserTable />
+            ) : userState.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={8} className="text-center py-6">
+                  کاربری پیدا نشد
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              userState.map((user: any, index: any) => (
+                <TableRow
+                  key={user._id}
+                  className="transition-colors hover:bg-muted/40"
+                >
+                  <TableCell>
+                    <input
+                      type="checkbox"
+                      checked={userClick.includes(user._id)}
+                      onChange={(e) => clickUser(user._id, e.target.checked)}
+                    />
+                  </TableCell>
+                  <TableCell className="font-medium ss02">
+                    {(currentPage - 1) * 10 + index + 1}
+                  </TableCell>
+                  <TableCell className="font-medium">{user.email}</TableCell>
+                  <TableCell>{user.userName}</TableCell>
+                  <TableCell>{user.role}</TableCell>
+
+                  <TableCell>
+                    {new Date(user.createdAt).toLocaleDateString("fa-IR")}
+                  </TableCell>
+
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-8 cursor-pointer"
+                        >
+                          <MoreHorizontalIcon />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => {
+                            setIsOpen(true);
+                            setEditUserObject(user);
+                          }}
+                        >
+                          ویرایش
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          variant="destructive"
+                          onClick={() => removeUser(user._id)}
+                        >
+                          حذف
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </TableLayout>
       </div>

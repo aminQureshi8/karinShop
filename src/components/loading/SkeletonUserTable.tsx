@@ -1,15 +1,10 @@
-"use client";
+import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 
-import { TableCell, TableRow } from "@/components/ui/table";
-
-export default function SkeletonTableComments({ rows = 6 }: { rows?: number }) {
+export default function SkeletonUserTable({ rows = 10 }: { rows?: number }) {
   return (
     <>
       {Array.from({ length: rows }).map((_, i) => (
         <TableRow key={i} className="animate-pulse">
-          <TableCell>
-            <div className="h-4 w-6 bg-gray-300 dark:bg-gray-600 rounded" />
-          </TableCell>
           <TableCell>
             <div className="h-4 w-6 bg-gray-300 dark:bg-gray-600 rounded" />
           </TableCell>
@@ -33,9 +28,7 @@ export default function SkeletonTableComments({ rows = 6 }: { rows?: number }) {
             <div className="h-4 w-8 bg-gray-300 dark:bg-gray-600 rounded" />
           </TableCell>
 
-          <TableCell>
-            <div className="h-4 w-8 bg-gray-300 dark:bg-gray-600 rounded" />
-          </TableCell>
+       
 
           <TableCell>
             <div className="h-4 w-24 bg-gray-300 dark:bg-gray-600 rounded" />
