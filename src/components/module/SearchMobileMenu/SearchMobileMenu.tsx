@@ -14,6 +14,7 @@ import { Product } from "@/types/Product/Product.type";
 export default function SearchMobileMenu() {
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
+  const [history, setHistory] = useState<string[]>([]);
   const router = usePathname();
   const isOpen = useSelector((state: RootState) => state.searchMobile.isOpen);
   const dispatch = useDispatch();
@@ -22,6 +23,11 @@ export default function SearchMobileMenu() {
     dispatch(closeSearch());
     setSearch("");
   }, [router]);
+
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("search") || "[]");
+    setHistory(saved);
+  }, []);
 
   useEffect(() => {
     if (!search.trim()) {
@@ -36,31 +42,27 @@ export default function SearchMobileMenu() {
     const searchProduct = async () => {
       const res = await fetch(`/api/search?query=${search}`);
       const data = await res.json();
+      console.log(data);
+      
       setProducts(data.findProducts);
     };
 
     return () => clearTimeout(timer);
   }, [search]);
 
-  const saveToHistory = (query: string) => {
-    if (!query.trim()) return;
+  const saveToHistory = (product: { title: string; slug: string }) => {
     const history = JSON.parse(localStorage.getItem("search") || "[]");
-    const updatedHistory = [
-      query,
-      ...history.filter((item: string) => item !== query),
-    ].slice(0, 5);
+
+    const filtered = history.filter((item: any) => item.slug !== product.slug);
+
+    const updatedHistory = [product, ...filtered].slice(0, 5);
+    localStorage.setItem("search", JSON.stringify(updatedHistory));
+    setHistory(updatedHistory);
   };
 
   return (
     <div
-      className={`fixed inset-0 z-50
-    bg-white/40 dark:bg-gray-900/40
-    backdrop-blur-md
-    border border-white/30 dark:border-white/10
-    text-gray-900 dark:text-white
-    transform transition-transform duration-300
-    ${isOpen ? "translate-y-0" : "-translate-y-full"}
-  `}
+      className={`fixed inset-0 z-50 bg-white/40 dark:bg-gray-900/40 backdrop-blur-md border border-white/30 dark:border-white/10 text-gray-900 dark:text-white transform transition-transform duration-300 ${isOpen ? "translate-y-0" : "-translate-y-full"}`}
     >
       <div className="p-4 font-danaMed">
         <div className="flex gap-3 items-center">
@@ -88,54 +90,50 @@ export default function SearchMobileMenu() {
         </div>
         <div className="mt-5 text-sm">
           <ul className="flex flex-col gap-5">
-            {products.length === 0 ? (
-              <li className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <CiSearch size={19} />
-                  <p>ایفون ۱۴</p>
-                </div>
-                <div>
-                  <GoArrowUpRight size={19} />
-                </div>
-              </li>
-            ) : (
-              products.map((p : Product) => (
-                <li className="flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    <CiSearch size={19} />
-                    <Link
-                      href={`/product/${p.slug}`}
-                      onClick={() => saveToHistory(p.title)}
-                      className="line-clamp-1"
+            {search.trim().length > 0
+              ? products.map((p) => (
+                  <li
+                    key={p.slug}
+                    className="flex justify-between items-center"
+                  >
+                    <div className="flex items-center gap-2">
+                      <CiSearch size={19} />
+                      <Link
+                        href={`/product/${p.slug}`}
+                        onClick={() =>
+                          saveToHistory({ title: p.title, slug: p.slug })
+                        }
+                        className="line-clamp-1"
+                      >
+                        {p.title}
+                      </Link>
+                    </div>
+                    <div>
+                      <GoArrowUpRight size={19} />
+                    </div>
+                  </li>
+                ))
+              : history.map(
+                  (item: { title: string; slug: string }, index: number) => (
+                    <li
+                      key={index}
+                      className="flex justify-between items-center"
                     >
-                      {p.title}
-                    </Link>
-                  </div>
-                  <div>
-                    <GoArrowUpRight size={19} />
-                  </div>
-                </li>
-              ))
-            )}
-
-            <li className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <CiSearch size={19} />
-                <p>ایفون ۱۴</p>
-              </div>
-              <div>
-                <GoArrowUpRight size={19} />
-              </div>
-            </li>
-            <li className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <CiSearch size={19} />
-                <p>ایفون ۱۴</p>
-              </div>
-              <div>
-                <GoArrowUpRight size={19} />
-              </div>
-            </li>
+                      <div className="flex items-center gap-2">
+                        <CiSearch size={19} />
+                        <Link
+                          href={`/product/${item.slug}`}
+                          className="line-clamp-1"
+                        >
+                          {item.title}
+                        </Link>
+                      </div>
+                      <div>
+                        <GoArrowUpRight size={19} />
+                      </div>
+                    </li>
+                  ),
+                )}
           </ul>
         </div>
         <div className="mt-5 text-sm">

@@ -10,9 +10,16 @@ export default function Search() {
   const [open, setOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState("");
   const [products, setProducts] = useState([]);
+
+  const [history, setHistory] = useState<{ title: string; slug: string }[]>([]);
+
   const router = usePathname();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    setHistory(JSON.parse(localStorage.getItem("search") || "[]"));
+  }, []);
 
   useEffect(() => {
     setOpen(false);
@@ -64,6 +71,16 @@ export default function Search() {
     return () => document.removeEventListener("keydown", handleEsc);
   }, []);
 
+  const saveToHistory = (product: { title: string; slug: string }) => {
+    const oldHistory = JSON.parse(localStorage.getItem("search") || "[]");
+    const updatedHistory = [
+      product,
+      ...oldHistory.filter((item: any) => item.slug !== product.slug),
+    ].slice(0, 5);
+    localStorage.setItem("search", JSON.stringify(updatedHistory));
+    setHistory(updatedHistory);
+  };
+
   return (
     <div ref={wrapperRef} className={`relative ${open && "z-50"}`}>
       <input
@@ -92,47 +109,55 @@ export default function Search() {
 
       <div
         onMouseDown={(e) => e.preventDefault()}
-        className={`absolute text-sm w-[300px] top-[130%] right-0 mt-2
-  bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700
-  rounded-md shadow-lg transition-all duration-300
-  ${open ? "opacity-100 visible translate-y-0 z-50" : "opacity-0 invisible translate-y-2"}
-  `}
+        className={`absolute text-sm w-[300px] top-[130%] right-0 mt-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg transition-all duration-300 ${open ? "opacity-100 visible translate-y-0 z-50" : "opacity-0 invisible translate-y-2"}`}
       >
         <div className="p-5">
-          <div className="rounded-xl p-3">
-            {products.length === 0 ? (
-              <div>
-                <ul>
-                  <li className="flex items-center justify-between cursor-pointer">
-                    <div>
+          <ul className="flex flex-col gap-4">
+            {inputValue.trim().length > 0 ? (
+              products.length > 0 ? (
+                products.map((pro: any) => (
+                  <li key={pro._id}>
+                    <Link
+                      href={`/product/${pro.slug}`}
+                      onClick={() =>
+                        saveToHistory({ title: pro.title, slug: pro.slug })
+                      }
+                      className="flex items-center justify-between group"
+                    >
                       <div className="flex items-center gap-2">
-                        <div>
-                          <FaSearch />
-                        </div>
-                        <div>ایفون ۱۴</div>
+                        <FaSearch className="text-gray-400" />
+                        <p className="line-clamp-1 w-52">{pro.title}</p>
                       </div>
-                    </div>
-                    <div>
-                      <GoArrowUpRight size={20} />
-                    </div>
+                      <GoArrowUpRight
+                        size={18}
+                        className="group-hover:text-blue-500"
+                      />
+                    </Link>
                   </li>
-                </ul>
-              </div>
+                ))
+              ) : (
+                <p className="text-gray-500">نتیجه‌ای یافت نشد</p>
+              )
             ) : (
-              <ul className="flex flex-col gap-5">
-                {products.map((pro: any) => (
+              history.map((item, index) => (
+                <li key={index}>
                   <Link
-                    href={`/product/${pro._id}`}
-                    key={pro._id}
-                    className="flex items-center gap-2 cursor-pointer"
+                    href={`/product/${item.slug}`}
+                    className="flex items-center justify-between group"
                   >
-                    <GoArrowUpLeft size={23} />
-                    <p className=" line-clamp-1">{pro.title}</p>
+                    <div className="flex items-center gap-2">
+                      <FaSearch className="text-gray-400" />
+                      <p className="line-clamp-1 w-52">{item.title}</p>
+                    </div>
+                    <GoArrowUpRight
+                      size={18}
+                      className="group-hover:text-blue-500"
+                    />
                   </Link>
-                ))}
-              </ul>
+                </li>
+              ))
             )}
-          </div>
+          </ul>
         </div>
       </div>
     </div>
