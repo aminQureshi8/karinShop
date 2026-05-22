@@ -2,13 +2,12 @@ import db from "@/config/db";
 import userModel from "@/models/user";
 import { sign, verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { connection, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const generateAccessToken = (data: {
   email: string;
   role: string;
   phone: string;
-  id: string;
 }) => {
   console.log("✅ NEW ACCESS TOKEN GENERATED", Date.now());
   return sign(data, process.env.JWT_SECRET!, { expiresIn: "60s" });

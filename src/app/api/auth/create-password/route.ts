@@ -1,7 +1,7 @@
 import { generateAccessToken, generateRefreshToken } from "@/app/utils/auth";
 import userModel from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
-
+import bcrypt from "bcrypt";
 export async function POST(req: NextRequest) {
   try {
     const { identifier, password } = await req.json();
@@ -20,6 +20,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     const user = await userModel.create({
       email: identifier.includes("@") ? identifier : undefined,
       phone:
@@ -27,7 +30,7 @@ export async function POST(req: NextRequest) {
           ? identifier
           : undefined,
       role,
-      password,
+      password: hashedPassword,
     });
 
     const accessToken = generateAccessToken({
