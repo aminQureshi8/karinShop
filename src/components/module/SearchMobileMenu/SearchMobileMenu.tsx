@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { FaGripfire } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Product } from "@/types/Product/Product.type";
 
 export default function SearchMobileMenu() {
   const [search, setSearch] = useState("");
@@ -40,6 +41,15 @@ export default function SearchMobileMenu() {
 
     return () => clearTimeout(timer);
   }, [search]);
+
+  const saveToHistory = (query: string) => {
+    if (!query.trim()) return;
+    const history = JSON.parse(localStorage.getItem("search") || "[]");
+    const updatedHistory = [
+      query,
+      ...history.filter((item: string) => item !== query),
+    ].slice(0, 5);
+  };
 
   return (
     <div
@@ -89,12 +99,13 @@ export default function SearchMobileMenu() {
                 </div>
               </li>
             ) : (
-              products.map((p) => (
+              products.map((p : Product) => (
                 <li className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <CiSearch size={19} />
                     <Link
-                      href={`/product/${p._id}`}
+                      href={`/product/${p.slug}`}
+                      onClick={() => saveToHistory(p.title)}
                       className="line-clamp-1"
                     >
                       {p.title}

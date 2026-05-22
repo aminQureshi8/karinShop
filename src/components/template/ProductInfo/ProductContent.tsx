@@ -1,12 +1,12 @@
 import { authUser } from "@/app/utils/auth";
 import Footer from "@/components/module/Footer/Footer";
-import CartWrapper from "@/components/templateproduct/Cart/CartWrapper";
-import Kh from "@/components/templateproduct/ContainerFeCoIN/Kh";
-import Info from "@/components/templateproduct/Info/Info";
-import Related from "@/components/templateproduct/RelatedProduct/Related";
 import db from "@/config/db";
 import productModel from "@/models/product";
 import { notFound } from "next/navigation";
+import Info from "./Info/Info";
+import Kh from "./ContainerFeCoIN/Kh";
+import Related from "./RelatedProduct/Related";
+import CartWrapper from "./Cart/CartWrapper";
 
 export default async function ProductContent({ slug }: { slug: string }) {
   await db();
@@ -44,13 +44,9 @@ export default async function ProductContent({ slug }: { slug: string }) {
     ])
     .lean({ virtuals: true });
 
-
-
   if (!product) {
     notFound();
   }
-
-
 
   const user = await authUser();
 

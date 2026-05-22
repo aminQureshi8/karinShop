@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import ProductContent from "../../../../components/templateproduct/ProductContent";
 import Loading from "./LoadingPage";
+import ProductContent from "@/components/template/ProductInfo/ProductContent";
 
 export default async function page({ params }) {
   const { slug } = await params;

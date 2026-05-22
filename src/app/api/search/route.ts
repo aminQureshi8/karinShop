@@ -9,13 +9,16 @@ export async function GET(req: NextRequest) {
     const query = req.nextUrl.searchParams.get("query");
 
     const findProducts = await productModel
-      .find({
-        $or: [
-          { title: { $regex: query, $options: "i" } },
-          { slug: { $regex: query, $options: "i" } },
-        ],
-      } , "title")
-      .limit(10); // برای جلوگیری از نتایج زیاد، محدود کنیم
+      .find(
+        {
+          $or: [
+            { title: { $regex: query, $options: "i" } },
+            { slug: { $regex: query, $options: "i" } },
+          ],
+        },
+        "title slug",
+      )
+      .limit(10);
 
     return NextResponse.json({ findProducts });
   } catch (error) {}
