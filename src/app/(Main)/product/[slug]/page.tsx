@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import ProductContent from "../../../../components/template/ProductInfo/ProductContent";
+import ProductContent from "../../../../components/templateproduct/ProductContent";
 import Loading from "./LoadingPage";
 
 export default async function page({ params }) {

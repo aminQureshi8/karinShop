@@ -50,7 +50,7 @@ export default function OffSwiper({ products, dateTime }: { products: any }) {
         {products.map((product) => (
           <SwiperSlide className="!w-64 !h-full">
             <div className="bg-white cursor-pointer  dark:bg-slate-800 dark:text-white rounded-xl p-3 h-full flex flex-col justify-between">
-              <Link href={`/productInfo/${product._id}`}>
+              <Link href={`/product/${product._id}`}>
                 <Image
                   width={100}
                   height={100}

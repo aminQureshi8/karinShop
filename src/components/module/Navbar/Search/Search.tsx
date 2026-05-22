@@ -122,7 +122,7 @@ export default function Search() {
               <ul className="flex flex-col gap-5">
                 {products.map((pro: any) => (
                   <Link
-                    href={`/productInfo/${pro._id}`}
+                    href={`/product/${pro._id}`}
                     key={pro._id}
                     className="flex items-center gap-2 cursor-pointer"
                   >

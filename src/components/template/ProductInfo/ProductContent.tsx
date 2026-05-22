@@ -1,9 +1,9 @@
 import { authUser } from "@/app/utils/auth";
 import Footer from "@/components/module/Footer/Footer";
-import CartWrapper from "@/components/template/ProductInfo/Cart/CartWrapper";
-import Kh from "@/components/template/ProductInfo/ContainerFeCoIN/Kh";
-import Info from "@/components/template/ProductInfo/Info/Info";
-import Related from "@/components/template/ProductInfo/RelatedProduct/Related";
+import CartWrapper from "@/components/templateproduct/Cart/CartWrapper";
+import Kh from "@/components/templateproduct/ContainerFeCoIN/Kh";
+import Info from "@/components/templateproduct/Info/Info";
+import Related from "@/components/templateproduct/RelatedProduct/Related";
 import db from "@/config/db";
 import productModel from "@/models/product";
 import { notFound } from "next/navigation";
@@ -44,13 +44,13 @@ export default async function ProductContent({ slug }: { slug: string }) {
     ])
     .lean({ virtuals: true });
 
- 
+
 
   if (!product) {
     notFound();
   }
 
-  
+
 
   const user = await authUser();
 

@@ -94,7 +94,7 @@ export default function SearchMobileMenu() {
                   <div className="flex items-center gap-2">
                     <CiSearch size={19} />
                     <Link
-                      href={`/productInfo/${p._id}`}
+                      href={`/product/${p._id}`}
                       className="line-clamp-1"
                     >
                       {p.title}

@@ -8,9 +8,10 @@ export default function HotProduct({
 }: {
   title: string;
   mainImage: string;
+  slug : string
 }) {
   return (
-    <Link href={`/productInfo/${slug}`} className="flex items-center gap-3 text-sm ">
+    <Link href={`/product/${slug}`} className="flex items-center gap-3 text-sm ">
       <div>
         <Image src={mainImage} width={100} height={100} alt={title} />
       </div>
