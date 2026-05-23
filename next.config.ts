@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   cacheComponents: true,
 
+  output: "standalone",
+
   typescript: {
     ignoreBuildErrors: true,
   },

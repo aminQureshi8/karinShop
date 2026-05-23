@@ -53,6 +53,7 @@ export default function AuthPassword() {
       console.log(error);
     } finally {
       setIsLoading(false);
+      NProgress.done();
     }
   };
 

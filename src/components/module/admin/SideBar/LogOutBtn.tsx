@@ -1,24 +1,44 @@
 "use client";
-import { LogOut } from "lucide-react";
+import { closeMenu } from "@/app/redux/slices/MenuMobile/MenuMobile";
+import { LogOut, Loader2 } from "lucide-react"; 
 import { useRouter } from "next/navigation";
-export default function LogOutBtn() {
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+export default function LogOutBtn({ isMobileMenuFea }: { isMobileMenuFea: boolean }) {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const logOut = async () => {
-    const response = await fetch("/api/auth/logOut", {
-      method: "POST",
-    });
-    if (response.ok) {
-      router.refresh();
+    setLoading(true); 
+    try {
+      const response = await fetch("/api/auth/logOut", { method: "POST" });
+      if (response.ok) {
+        if (isMobileMenuFea) {
+          dispatch(closeMenu());
+        }
+        router.push("/regLogin/auth");
+        router.refresh(); 
+      }
+    } catch (error) {
+      console.error("Logout failed", error);
+    } finally {
+      setLoading(false); 
     }
   };
 
   return (
-    <div onClick={logOut}>
-      <div className="flex items-center cursor-pointer gap-3 py-2 pr-2 transition-all hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-red-500 rounded-lg">
+    <div 
+      onClick={!loading ? logOut : undefined} 
+      className={`flex items-center gap-3 py-2 pr-2 transition-all rounded-lg ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50 hover:dark:bg-gray-900 hover:text-red-500'}`}
+    >
+      {loading ? (
+        <Loader2 size={20} className="animate-spin text-red-500" />
+      ) : (
         <LogOut size={20} className="text-red-500" />
-        <span className="text-sm text-red-500">خروج</span>
-      </div>
+      )}
+      <span className="text-sm text-red-500">{loading ? "در حال خروج..." : "خروج"}</span>
     </div>
   );
 }

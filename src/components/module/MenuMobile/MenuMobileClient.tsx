@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type { RootState } from "@/app/redux/store";
 import { closeMenu } from "@/app/redux/slices/MenuMobile/MenuMobile";
 
@@ -14,6 +14,7 @@ import { TbCategory } from "react-icons/tb";
 import { RiUserLine } from "react-icons/ri";
 
 import CategorySection from "./CategorySection";
+import LogOutBtn from "../admin/SideBar/LogOutBtn";
 
 type Category = {
   id: string;
@@ -30,18 +31,23 @@ export default function MenuMobileClient({ categories, isUser, user }: Props) {
   const [categorySection, setCategorySection] = useState<string | null>(null);
 
   const router = usePathname();
+  const routerPage = useRouter();
 
   const isOpen = useSelector((state: RootState) => state.menuMobile.isOpen);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(closeMenu());
+    closeMenuFunc();
   }, []);
 
   useEffect(() => {
-    dispatch(closeMenu());
+    closeMenuFunc();
   }, [router]);
+
+  const closeMenuFunc = () => {
+    dispatch(closeMenu());
+  };
 
   return (
     <>
@@ -98,6 +104,7 @@ export default function MenuMobileClient({ categories, isUser, user }: Props) {
                 <Link
                   href="/regLogin/auth"
                   className="flex items-center gap-x-2"
+                  onClick={closeMenuFunc}
                 >
                   <RiUserLine size={19} />
                   <p>ورود | ثبت نام</p>
@@ -121,10 +128,11 @@ export default function MenuMobileClient({ categories, isUser, user }: Props) {
                 <IoCartOutline size={19} />
                 <p>سبد خرید</p>
               </Link>
+
+              {isUser && <LogOutBtn isMobileMenuFea={true} />}
             </ul>
           </div>
 
-          {/* Category List */}
           <div
             className={`absolute min-h-screen inset-0 p-3 bg-white dark:bg-gray-800 transition-transform duration-300 ${
               categorySection === "cat" ? "translate-x-0" : "translate-x-full"
@@ -159,7 +167,6 @@ export default function MenuMobileClient({ categories, isUser, user }: Props) {
             </ul>
           </div>
 
-          {/* Dynamic Sections */}
           {categories.map((cat) => (
             <CategorySection
               key={cat.id}
