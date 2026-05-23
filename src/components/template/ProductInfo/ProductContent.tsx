@@ -44,6 +44,9 @@ export default async function ProductContent({ slug }: { slug: string }) {
     ])
     .lean({ virtuals: true });
 
+    console.log(product);
+    
+
   if (!product) {
     notFound();
   }
@@ -70,6 +73,7 @@ export default async function ProductContent({ slug }: { slug: string }) {
             maimImage={product.mainImage}
             category={product.category.title}
             subCategory={product.subCategory.title}
+            brand={product.brand.title}
           />
         </div>
         <div className="max-lg:col-span-12 col-span-3">

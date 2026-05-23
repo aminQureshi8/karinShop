@@ -18,6 +18,7 @@ const Info = memo(
     maimImage,
     category,
     subCategory,
+    brand
   }: any) => {
     return (
       <div>
@@ -40,6 +41,7 @@ const Info = memo(
                 id={id}
                 imageUrls={images[0]}
                 mainCount={mainCount}
+                brand={brand}
               />
             </div>
           </div>

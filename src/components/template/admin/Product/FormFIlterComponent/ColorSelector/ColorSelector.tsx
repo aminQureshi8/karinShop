@@ -1,39 +1,48 @@
 "use client";
 
-import { useState, MouseEvent, useEffect, memo } from "react";
+import { X } from "lucide-react";
+import React, { useEffect, useState, memo } from "react";
 import { IoIosClose } from "react-icons/io";
 
-interface FormValues {
-  colors?: string[];
+interface ColorSelectorProps {
+  register: any;
+  setValue: any;
+  errors: any;
 }
 
 const ColorSelector = memo(
-  ({
-    register,
-    setValue,
-    errors,
-  }: {
-    register: any;
-    setValue: any;
-    errors: any;
-  }) => {
-    const [color, setColor] = useState("");
+  ({ register, setValue, errors }: ColorSelectorProps) => {
+    const [color, setColor] = useState<string>("");
     const [colorArray, setColorArray] = useState<string[]>([]);
 
     useEffect(() => {
       setValue("colors", colorArray, { shouldValidate: true });
     }, [colorArray, setValue]);
 
-    const addColor = (e: MouseEvent<HTMLButtonElement>) => {
+    const addColor = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      if (color.trim() && !colorArray.includes(color.trim())) {
-        setColorArray((prev) => [...prev, color.trim()]);
+      const trimmed = color.trim();
+      if (trimmed && !colorArray.includes(trimmed)) {
+        setColorArray((prev) => [...prev, trimmed]);
         setColor("");
       }
     };
 
     const removeColor = (title: string) => {
       setColorArray((prev) => prev.filter((c) => c !== title));
+    };
+
+    const colorValidation = {
+      shouldUnregister: true,
+      pattern: {
+        value:
+          /^(#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})|[a-zA-Z\u0600-\u06FF]{2,20})$/,
+        message: "رنگ وارد شده معتبر نیست (مثلاً 'قرمز' یا '#ff0000')",
+      },
+      validate: {
+        hasAtLeastOne: () =>
+          colorArray.length > 0 || "حداقل یک رنگ باید اضافه شود",
+      },
     };
 
     return (
@@ -45,22 +54,9 @@ const ColorSelector = memo(
               type="text"
               value={color}
               placeholder="مثلاً قرمز یا #ff0000"
-              {...register("colors", {
-                shouldUnregister: true,
-
-                pattern: {
-                  value:
-                    /^(#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})|[a-zA-Z\u0600-\u06FF]{2,20})$/,
-                  message:
-                    "رنگ وارد شده معتبر نیست (مثلاً 'قرمز' یا '#ff0000')",
-                },
-                validate: {
-                  hasAtLeastOne: () =>
-                    colorArray.length > 0 || "حداقل یک رنگ باید اضافه شود",
-                },
-              })}
+              {...register("colors", colorValidation)}
               onChange={(e) => setColor(e.target.value)}
-              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="bg-gray-200 dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
 
             <button
@@ -82,7 +78,7 @@ const ColorSelector = memo(
               {colorArray.map((c, index) => (
                 <div
                   key={index}
-                  className="bg-blue-100 flex items-center text-xs px-3 py-1.5 rounded-full cursor-pointer hover:bg-blue-200 transition-colors"
+                  className="bg-blue-100 dark:bg-gray-800 dark:hover:bg-gray-900 flex items-center text-xs px-3 py-1.5 rounded-full cursor-pointer hover:bg-blue-200 transition-colors"
                   onClick={() => removeColor(c)}
                 >
                   <span className="ml-1">{c}</span>

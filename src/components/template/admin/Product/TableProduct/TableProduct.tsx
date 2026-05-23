@@ -91,7 +91,7 @@ export default function TableProduct({
               products.map((p: any, index: any) => (
                 <TableRow
                   key={p._id}
-                  className="transition-colors hover:bg-muted/40"
+                  className="transition-colors hover:bg-muted/40 ss02"
                 >
                   <TableCell className="font-medium ss02">
                     {(currentPage - 1) * 3 + index + 1}
@@ -105,7 +105,7 @@ export default function TableProduct({
                     />
                   </TableCell>
                   <TableCell>{p.title}</TableCell>
-                  <TableCell>{p.price}</TableCell>
+                  <TableCell>{p.price.toLocaleString()}</TableCell>
                   <TableCell>{p.count}</TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>

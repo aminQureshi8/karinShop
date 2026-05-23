@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch, Controller } from "react-hook-form";
 import MobileFilter from "../FormFIlterComponent/MobileFilter/MobileFilter";
 import LapTopFilter from "../FormFIlterComponent/LapTopFilter/LapTopFilter";
 import ColorSelector from "../FormFIlterComponent/ColorSelector/ColorSelector";
 import Editor from "../Editor/Editor";
 import { getFeatures } from "@/app/utils/productCategory";
 import IFormInput from "@/types/Product/Product.type";
-import { Controller } from "react-hook-form";
 import SwalFire from "@/app/utils/swal";
 import Tag from "../Tag/Tag";
 import { BeatLoader } from "react-spinners";
@@ -49,6 +48,7 @@ export default function FormProduct({
     mode: "all",
   });
 
+  // ورودی‌های مربوط به دسته‌بندی
   const watchedCategory = useWatch({
     control,
     name: "category",
@@ -68,9 +68,7 @@ export default function FormProduct({
     const fetchSubCategories = async () => {
       try {
         const res = await fetch(`/api/category/subCategory/${watchedCategory}`);
-
         if (!res.ok) return;
-
         const data = await res.json();
         setSubCategories(data?.subCategories || data || []);
       } catch (err) {
@@ -126,10 +124,10 @@ export default function FormProduct({
       formData.append("features", JSON.stringify(features));
       formData.append("brand", data.brand || "");
       formData.append("count", data.count);
-      formData.append("mainImage", mainImage);
+      formData.append("mainImage", mainImage as any);
 
       if (data.images?.length > 0) {
-        Array.from(data.images).forEach((file) => {
+        Array.from(data.images).forEach((file: any) => {
           formData.append("images", file as File);
         });
       }
@@ -175,6 +173,11 @@ export default function FormProduct({
               placeholder="مثال: iPhone 16"
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
+            {errors.title && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.title.message}
+              </p>
+            )}
           </div>
 
           <div className="max-sm:col-span-12 col-span-4">
@@ -185,6 +188,9 @@ export default function FormProduct({
               placeholder="iphone-16"
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
+            {errors.slug && (
+              <p className="text-red-500 text-xs mt-2">{errors.slug.message}</p>
+            )}
           </div>
 
           <div className="max-sm:col-span-12 col-span-4">
@@ -202,6 +208,11 @@ export default function FormProduct({
                 </option>
               ))}
             </select>
+            {errors.category && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.category.message}
+              </p>
+            )}
           </div>
 
           {subCategories.length > 0 && (
@@ -220,6 +231,11 @@ export default function FormProduct({
                   </option>
                 ))}
               </select>
+              {errors.subCategory && (
+                <p className="text-red-500 text-xs mt-2">
+                  {errors.subCategory.message}
+                </p>
+              )}
             </div>
           )}
 
@@ -230,7 +246,6 @@ export default function FormProduct({
               errors={errors}
             />
           )}
-
           {watchedSubCategory === "6a08c176cb34d5b275335acc" && (
             <LapTopFilter
               control={control}
@@ -252,6 +267,11 @@ export default function FormProduct({
                 </option>
               ))}
             </select>
+            {errors.brand && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.brand.message}
+              </p>
+            )}
           </div>
 
           <div className="relative max-sm:col-span-12 col-span-4">
@@ -284,7 +304,11 @@ export default function FormProduct({
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               placeholder="مثلاً 1,200,000"
             />
-
+            {errors.price && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.price.message}
+              </p>
+            )}
             <div className="absolute left-3 top-13 transform -translate-y-1/2 text-xs text-gray-500">
               تومان
             </div>
@@ -295,6 +319,7 @@ export default function FormProduct({
               register={register}
               setValue={setValue}
               errors={errors}
+              isAdmin={true} 
             />
           </div>
 
@@ -306,6 +331,11 @@ export default function FormProduct({
               placeholder="3"
               className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
+            {errors.count && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.count.message}
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col max-sm:col-span-12 col-span-4">
@@ -319,11 +349,16 @@ export default function FormProduct({
                 setMainImage(file);
               }}
             />
+            {errors.images && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.images.message}
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col max-sm:col-span-12 col-span-4">
             <label className="text-sm" htmlFor="">
-              عکس‌های محصول
+              تصاویر محصول
             </label>
 
             <Controller
@@ -397,29 +432,27 @@ export default function FormProduct({
             )}
           </div>
 
+          {imagePreviews.length > 0 && (
+            <div className="mt-4 grid grid-cols-3 gap-3">
+              {imagePreviews.map((src, idx) => (
+                <div
+                  key={idx}
+                  className="relative w-full h-28 rounded-lg overflow-hidden border"
+                  onClick={() => removeImage(idx)}
+                >
+                  <img
+                    src={src}
+                    alt={`preview-${idx}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+
           <Tag register={register} errors={errors} setValue={setValue} />
 
           <div className="max-sm:col-span-12 col-span-12">
-            {imagePreviews.length > 0 && (
-              <div className="mt-4 grid grid-cols-3 gap-3">
-                {imagePreviews.map((src, index) => (
-                  <div
-                    key={index}
-                    className="relative w-full h-28 rounded-lg overflow-hidden border dark:border-gray-700"
-                    onClick={() => removeImage(index)}
-                  >
-                    <img
-                      src={src}
-                      alt={`preview-${index}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="col-span-12">
             <label className="text-sm" htmlFor="description">
               توضیحات محصول
             </label>
@@ -433,7 +466,6 @@ export default function FormProduct({
                 <Editor value={field.value} onChange={field.onChange} />
               )}
             />
-
             {errors.description && (
               <p className="text-red-500 text-xs mt-2">
                 {errors.description.message}

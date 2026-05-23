@@ -34,8 +34,8 @@ export default function FilterCom({
 
   const categories = [
     { id: "all", label: "همه کالاها" },
-    { id: "69ec882d66035179b28972f6", label: "موبایل" },
-    { id: "69ecb33d525492a519ced638", label: "لب تاب" },
+    { id: "6a08c059cb34d5b275335a40", label: "موبایل" },
+    { id: "6a08c176cb34d5b275335acc", label: "لب تاب" },
   ];
 
   return (

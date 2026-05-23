@@ -61,7 +61,7 @@ function Tag({ register, setValue, errors }: any) {
           {tagArray.map((c, index) => (
             <div
               key={index}
-              className="bg-blue-100 flex items-center text-xs px-3 py-1.5 rounded-full cursor-pointer hover:bg-blue-200 transition-colors"
+              className="bg-blue-100 dark:bg-gray-800 dark:hover:bg-gray-900 flex items-center text-xs px-3 py-1.5 rounded-full cursor-pointer hover:bg-blue-200 transition-colors"
               onClick={() => removeTag(c)}
             >
               <span className="ml-1">{c}</span>
