@@ -1,6 +1,5 @@
 "use client";
 
-import { X } from "lucide-react";
 import React, { useEffect, useState, memo } from "react";
 import { IoIosClose } from "react-icons/io";
 

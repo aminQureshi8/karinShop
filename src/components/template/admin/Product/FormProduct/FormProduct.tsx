@@ -11,6 +11,7 @@ import IFormInput from "@/types/Product/Product.type";
 import SwalFire from "@/app/utils/swal";
 import Tag from "../Tag/Tag";
 import { BeatLoader } from "react-spinners";
+import ConsoleFilter from "../FormFIlterComponent/ConsoleFilter/ConsoleFilter";
 
 interface Category {
   _id: string;
@@ -257,6 +258,13 @@ export default function FormProduct({
               errors={errors}
             />
           )}
+          {watchedSubCategory === "6a133ea6f9d10c0d8ea947f5" && (
+            <ConsoleFilter
+              control={control}
+              register={register}
+              errors={errors}
+            />
+          )}
 
           <div className="max-sm:col-span-12 col-span-4">
             <label className="text-sm">برند محصول</label>
@@ -323,7 +331,6 @@ export default function FormProduct({
               register={register}
               setValue={setValue}
               errors={errors}
-              isAdmin={true}
             />
           </div>
 

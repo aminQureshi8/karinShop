@@ -60,7 +60,7 @@ export default function SwiperProduct({ product }: any) {
   };
 
   return (
-    <div className="bg-white shadow-[0_4px_16px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgb(0,0,0,0.12)] dark:shadow-[0_4px_16px_rgb(0,0,0,0.3)] dark:hover:shadow-[0_8px_24px_rgb(0,0,0,0.4)] dark:hover:shadow-[0_20px_60px_rgb(0,0,0,0.5)] p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed">
+    <div className="bg-white shadow-[0_4px_16px_rgb(0,0,0,0.08)]  dark:shadow-[0_4px_16px_rgb(0,0,0,0.3)] p-4 overflow-hidden dark:bg-slate-800 rounded-xl font-danaMed">
       <div className="relative flex justify-center">
         <Link href={`/product/${product.slug}`}>
           <Image
@@ -84,9 +84,10 @@ export default function SwiperProduct({ product }: any) {
             <div
               onClick={handleCartClick}
               className={`border-2 bg-white dark:bg-gray-800 rounded-full dark:border-gray-700 p-2 cursor-pointer flex items-center justify-center transition-all duration-300
-                ${mounted && isInCart
-                  ? "border-red-400 bg-red-100 dark:bg-red-800 text-red-500"
-                  : "border-gray-200 hover:bg-blue-100 dark:hover:bg-blue-500"
+                ${
+                  mounted && isInCart
+                    ? "border-red-400 bg-red-100 dark:bg-red-800 text-red-500"
+                    : "border-gray-200 hover:bg-blue-100 dark:hover:bg-blue-500"
                 }`}
             >
               {mounted && isInCart ? (
@@ -99,9 +100,10 @@ export default function SwiperProduct({ product }: any) {
             <div
               onClick={handleWhishClick}
               className={`border-2 bg-white dark:bg-gray-800 rounded-full dark:border-gray-700 p-2 cursor-pointer flex items-center justify-center transition-all duration-300
-                ${isInWhish
-                  ? "border-red-400 bg-red-100 dark:bg-red-800 text-red-500"
-                  : "border-gray-200 hover:bg-blue-100 dark:hover:bg-blue-500"
+                ${
+                  isInWhish
+                    ? "border-red-400 bg-red-100 dark:bg-red-800 text-red-500"
+                    : "border-gray-200 hover:bg-blue-100 dark:hover:bg-blue-500"
                 }`}
             >
               {isInWhish ? (
@@ -112,7 +114,7 @@ export default function SwiperProduct({ product }: any) {
             </div>
           </div>
         </div>
-        {product.off?.percent > 0 &&   (
+        {product.off?.percent > 0 && (
           <div className="absolute select-none top-0 z-30 -left-4 flex items-center gap-2">
             <span className="text-blue-500 text-xs font-danaMed font-bold">
               %{product.off?.percent} تخفیف
@@ -127,7 +129,9 @@ export default function SwiperProduct({ product }: any) {
 
       <div className="border-t-2 border-gray-200 dark:border-gray-700 flex gap-1 items-center justify-end pt-3">
         <del className="text-xs text-gray-500">
-          {product?.off?.percent !== 0 && product?.off !== null && product.price.toLocaleString("fa-IR")}
+          {product?.off?.percent !== 0 &&
+            product?.off !== null &&
+            product.price.toLocaleString("fa-IR")}
         </del>
         <span>{offPrice.toLocaleString("fa-IR")}</span>
         <span className="text-white bg-blue-500 rounded-full px-2 py-1 text-xs">

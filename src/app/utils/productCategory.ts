@@ -31,7 +31,7 @@ const FEATURES = {
     "نوع شبکه": "network",
   },
 
-  "694d319aa4e0ddde0a050b37": {
+  "6a133ea6f9d10c0d8ea947f5": {
     برند: "brand",
     مدل: "model",
     "حافظه داخلی": "storage",
