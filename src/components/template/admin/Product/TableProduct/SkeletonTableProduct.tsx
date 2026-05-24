@@ -16,7 +16,7 @@ export default function SkeletonTableProduct({ rows = 5 }: { rows?: number }) {
           </TableCell>
 
           <TableCell>
-            <div className="h-4 w-36 bg-gray-300 dark:bg-gray-600 rounded" />
+            <div className="h-4 w-56 bg-gray-300 dark:bg-gray-600 rounded" />
           </TableCell>
 
           <TableCell>

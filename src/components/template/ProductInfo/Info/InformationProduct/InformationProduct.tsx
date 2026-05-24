@@ -11,7 +11,7 @@ function InformationProduct({
   imageUrls,
   mainCount,
   breadCrumbs,
-  brand
+  brand,
 }: any) {
   return (
     <div>
@@ -50,10 +50,7 @@ function InformationProduct({
         <p>ویژگی</p>
 
         <div className="grid max-sm:grid-cols-2 grid-cols-3 gap-3 mt-2">
-          <div
-           
-            className={`bg-gray-100  dark:bg-black  rounded-lg p-2`}
-          >
+          <div className={`bg-gray-100  dark:bg-black  rounded-lg p-2`}>
             <p className="text-sm  text-gray-500">برند</p>
             <p className="mt-2 ss02">{brand}</p>
           </div>
@@ -64,7 +61,7 @@ function InformationProduct({
               className={`bg-gray-100 ${index === 0 && "hidden"} dark:bg-black  rounded-lg p-2`}
             >
               <p className="text-sm  text-gray-500">{feature.name}</p>
-              <p className="mt-2 ss02">{feature.value}</p>
+              <p className="mt-2 ss02 line-clamp-1">{feature.value}</p>
             </div>
           ))}
         </div>

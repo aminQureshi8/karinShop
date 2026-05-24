@@ -17,7 +17,10 @@ const product = new mongoose.Schema({
   },
   brand: { type: mongoose.Schema.Types.ObjectId, ref: "brand", required: true },
   colors: [{ type: String }],
-  tags: [{ type: String }],
+  tags: {
+    type: [String],
+    default: [],
+  },
   features: [
     {
       name: String,

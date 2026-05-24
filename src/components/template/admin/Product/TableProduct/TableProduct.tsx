@@ -104,7 +104,12 @@ export default function TableProduct({
                       alt="Image"
                     />
                   </TableCell>
-                  <TableCell>{p.title}</TableCell>
+                  <TableCell className="max-w-[200px]">
+                    <p className="truncate font-medium text-gray-700 dark:text-gray-200">
+                      {p.title}
+                    </p>
+                  </TableCell>
+
                   <TableCell>{p.price.toLocaleString()}</TableCell>
                   <TableCell>{p.count}</TableCell>
                   <TableCell className="text-right">

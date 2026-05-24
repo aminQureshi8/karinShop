@@ -2,7 +2,9 @@ export default function LapTopFilter({ register, errors, control }: any) {
   return (
     <div className="col-span-12">
       <div className="p-6 bg-green-50 dark:bg-blue-950 lg:col-span-3 font-danaMed rounded-xl border border-blue-200">
-        <h3 className="text-lg font-danaBold mb-4 dark:text-white">مشخصات لب تاب</h3>
+        <h3 className="text-lg font-danaBold mb-4 dark:text-white">
+          مشخصات لب تاب
+        </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="flex flex-col">
@@ -15,7 +17,7 @@ export default function LapTopFilter({ register, errors, control }: any) {
                   message: "رم باید یکی از مقادیر 8، 16، 32 یا 64 باشد",
                 },
               })}
-              className="border-2 dark:border-0 outline-0 transition-all bg-white dark:bg-black/60 focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
+              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             >
               <option value="">انتخاب رم</option>
               <option value={8}>8</option>
@@ -40,7 +42,7 @@ export default function LapTopFilter({ register, errors, control }: any) {
                   message: "رم باید یکی از مقادیر 8، 16، 32 یا 64 باشد",
                 },
               })}
-              className="border-2 dark:border-0 outline-0 transition-all bg-white dark:bg-black/60 focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
+              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             >
               <option value="">انتخاب حافظه</option>
               <option value={256}>256</option>
@@ -74,7 +76,7 @@ export default function LapTopFilter({ register, errors, control }: any) {
                 },
               })}
               type="text"
-              className="border-2 dark:border-0 outline-0 transition-all bg-white dark:bg-black/60 focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
+              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               placeholder="15.6"
             />
             {errors.screenSize && (
@@ -96,7 +98,7 @@ export default function LapTopFilter({ register, errors, control }: any) {
                 // },
               })}
               type="text"
-              className="border-2 dark:border-0 outline-0 transition-all bg-white dark:bg-black/60 focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
+              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               placeholder="Intel i7-13700H"
             />
             {errors.cpu && (
@@ -117,7 +119,7 @@ export default function LapTopFilter({ register, errors, control }: any) {
               })}
               type="text"
               placeholder="RTX 4060"
-              className="border-2 dark:border-0 outline-0 transition-all bg-white dark:bg-black/60 focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
+              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
             {errors.gpu && (
               <p className="text-red-500 text-xs mt-2">{errors.gpu.message}</p>
@@ -142,7 +144,7 @@ export default function LapTopFilter({ register, errors, control }: any) {
               })}
               type="text"
               placeholder="مثلاً 1.8"
-              className="border-2 dark:border-0 outline-0 transition-all bg-white dark:bg-black/60 focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
+              className="bg-gray-200 ss02 text-sm dark:bg-black/60 mt-2 w-full rounded-lg p-2 border border-transparent focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
             {errors.weight && (
               <p className="text-red-500 text-xs mt-2">

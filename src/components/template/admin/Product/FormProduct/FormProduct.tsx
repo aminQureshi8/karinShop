@@ -96,14 +96,18 @@ export default function FormProduct({
     setValue("images", newFiles, { shouldValidate: true });
   };
 
-  function slugify(text: string) {
+  const slugify = (text: string) => {
     return text
       .toLowerCase()
       .trim()
       .replace(/\s+/g, "-")
       .replace(/[^\w\-]+/g, "")
       .replace(/\-\-+/g, "-");
-  }
+  };
+
+  const toEnglishDigits = (str: string) => {
+    return str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString());
+  };
 
   const onSubmit = async (data: any) => {
     try {
@@ -123,7 +127,7 @@ export default function FormProduct({
       formData.append("tags", JSON.stringify(data.tags || []));
       formData.append("features", JSON.stringify(features));
       formData.append("brand", data.brand || "");
-      formData.append("count", data.count);
+      formData.append("count", toEnglishDigits(data.count));
       formData.append("mainImage", mainImage as any);
 
       if (data.images?.length > 0) {
@@ -319,7 +323,7 @@ export default function FormProduct({
               register={register}
               setValue={setValue}
               errors={errors}
-              isAdmin={true} 
+              isAdmin={true}
             />
           </div>
 
@@ -431,24 +435,25 @@ export default function FormProduct({
               </p>
             )}
           </div>
-
-          {imagePreviews.length > 0 && (
-            <div className="mt-4 grid grid-cols-3 gap-3">
-              {imagePreviews.map((src, idx) => (
-                <div
-                  key={idx}
-                  className="relative w-full h-28 rounded-lg overflow-hidden border"
-                  onClick={() => removeImage(idx)}
-                >
-                  <img
-                    src={src}
-                    alt={`preview-${idx}`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="col-span-12">
+            {imagePreviews.length > 0 && (
+              <div className="mt-4 grid grid-cols-3 gap-3">
+                {imagePreviews.map((src, idx) => (
+                  <div
+                    key={idx}
+                    className="relative w-full h-28 rounded-lg overflow-hidden border"
+                    onClick={() => removeImage(idx)}
+                  >
+                    <img
+                      src={src}
+                      alt={`preview-${idx}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
           <Tag register={register} errors={errors} setValue={setValue} />
 
