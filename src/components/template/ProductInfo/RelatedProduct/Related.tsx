@@ -6,8 +6,6 @@ import { normalizeTags } from "@/app/utils/getFunc";
 export default async function Related({ tags, id }: { tags: any; id: string }) {
   const tagsArray = normalizeTags(tags);
 
-  console.log("Searching for tags:", tagsArray);
-
   const relatedProducts = await productModel
     .find({
       tags: { $in: tagsArray },

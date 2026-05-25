@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     const features = formData.get("features") as string;
     const images = formData.getAll("images") as File[];
     const description = formData.get("description") as string;
-    const count = formData.get("count")
+    const count = formData.get("count");
     const mainImageFile = formData.get("mainImage") as File;
 
     const buffer = Buffer.from(await mainImageFile.arrayBuffer());
@@ -101,8 +101,8 @@ export async function POST(req: NextRequest) {
       category,
       subCategory,
       brand,
-      colors,
-      tags,
+      colors: JSON.parse(colors || "[]"),
+      tags: JSON.parse(tags || "[]"),
       features: JSON.parse(features),
       imageUrls,
       description,

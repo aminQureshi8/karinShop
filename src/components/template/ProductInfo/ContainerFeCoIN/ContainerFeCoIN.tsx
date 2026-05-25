@@ -11,6 +11,7 @@ type Props = {
   features: any;
   userID: string;
   comments: any;
+  brand: string;
 };
 
 function ContainerFeCoINComponent({
@@ -19,6 +20,7 @@ function ContainerFeCoINComponent({
   features,
   userID,
   comments,
+  brand,
 }: Props) {
   const [section, setSection] = useState("INTRO");
 
@@ -61,7 +63,7 @@ function ContainerFeCoINComponent({
 
       <div className="mt-5">
         {section === "INTRO" && <Intro description={description} />}
-        {section === "FEATU" && <Features id={id} features={features} />}
+        {section === "FEATU" && <Features id={id} features={features} brand={brand} />}
         {section === "COMME" && (
           <CommentContainer userID={userID} id={id} comments={comments} />
         )}

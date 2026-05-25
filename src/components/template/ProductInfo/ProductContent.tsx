@@ -44,8 +44,7 @@ export default async function ProductContent({ slug }: { slug: string }) {
     ])
     .lean({ virtuals: true });
 
-    console.log(product);
-    
+  console.log(product);
 
   if (!product) {
     notFound();
@@ -91,6 +90,7 @@ export default async function ProductContent({ slug }: { slug: string }) {
       </div>
       <div className="mt-10">
         <Kh
+          brand={product.brand.title}
           description={product.description.toString()}
           features={JSON.parse(JSON.stringify(product.features))}
           id={product._id.toString()}

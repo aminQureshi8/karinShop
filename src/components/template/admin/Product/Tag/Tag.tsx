@@ -20,12 +20,12 @@ function Tag({ register, setValue, errors }: any) {
     if (!t) return;
 
     if (tagArray.includes(t)) {
-      setTag(""); 
+      setTag("");
       return;
     }
 
     setTagArray((prev) => [...prev, t]);
-    setTag(""); 
+    setTag("");
   };
 
   const removeTag = (title: string) => {

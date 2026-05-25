@@ -488,7 +488,7 @@ export default function FormProduct({
 
         <button
           type="submit"
-          className="mt-6 px-6 text-sm py-2 rounded-lg bg-blue-600 text-white"
+          className="mt-6 px-6 text-sm py-2 rounded-lg cursor-pointer bg-blue-600 text-white"
         >
           {isLoading ? <BeatLoader color="white" size={9} /> : "ثبت محصول"}
         </button>

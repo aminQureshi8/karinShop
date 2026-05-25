@@ -1,6 +1,6 @@
 import ContainerFeCoIN from "./ContainerFeCoIN";
 
-export default function Kh({ description, features, id, userID, comments }) {
+export default function Kh({ description, features, id, userID, comments , brand }) {
   return (
     <div>
       <ContainerFeCoIN
@@ -9,6 +9,7 @@ export default function Kh({ description, features, id, userID, comments }) {
         id={id}
         userID={userID}
         comments={comments}
+        brand={brand}
       />
     </div>
   );
