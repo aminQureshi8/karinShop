@@ -2,11 +2,12 @@
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 import { BsBasketFill } from "react-icons/bs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { toggleCart } from "@/app/redux/slices/Cart/Cart";
 import { toggleCartComputer } from "@/app/redux/slices/CartComputer/CartComputer";
+import { usePathname } from "next/navigation";
 
 function Cart({
   price,
@@ -35,12 +36,13 @@ function Cart({
   const totalPrice = price * counter;
 
   const handleCartClick = () => {
+    const currentColor = localStorage.getItem("color") || "نامشخص";
     dispatch(
       toggleCart({
         id,
         title,
         price,
-        color: "",
+        color: currentColor,
         mainImage,
         count: counter,
         mainCount: count,
