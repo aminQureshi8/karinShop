@@ -12,8 +12,6 @@ export default async function Offs() {
     .find({ dateTime: { $gte: new Date() } })
     .lean();
 
- 
-
   if (!validOffs.length) {
     return null;
   }
