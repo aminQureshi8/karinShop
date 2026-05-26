@@ -1,3 +1,4 @@
+import SkeletonAuth from "@/components/loading/SkeletonAuth";
 import { Suspense } from "react";
 
 export default function RootLayout({
@@ -5,5 +6,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>;
+  return <Suspense fallback={<SkeletonAuth />}>{children}</Suspense>;
 }

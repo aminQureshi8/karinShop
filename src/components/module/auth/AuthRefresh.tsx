@@ -34,7 +34,7 @@ export default function AuthRefresh() {
 
     let interval: any;
 
-    if (pathname.startsWith("/admin")) {
+    if (pathname.startsWith("/admin") || pathname.startsWith("/my-accoount")) {
       refreshToken();
       interval = setInterval(refreshToken, 50000);
     }

@@ -13,9 +13,7 @@ const colorToTailwindClass: Record<string, string> = {
   "سفید": "bg-white",
   "نارنجی": "bg-orange-500",
   "بنفش": "bg-purple-500",
-
-
-  
+  "سرمه ای": "bg-blue-800",
 };
 
 function normalizeColor(s: string) {
@@ -47,7 +45,7 @@ export default function ColorPick({ colors }: any) {
           return (
             <div
               key={index}
-              className={`w-6 h-6  rounded-full border-2 ${c === colorSelect && "border-4 border-blue-300!"} border-gray-300 cursor-pointer ${cls}`}
+              className={`w-6 h-6  rounded-full border-2 ${c === colorSelect && "border-2 border-blue-300!"} border-gray-300 cursor-pointer ${cls}`}
               title={c}
               onClick={() => {
                 localStorage.setItem("color", c);

@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     await db();
     const refreshToken = req.cookies.get("refresh-token")?.value;
 
-    console.log("🔹 refreshToken:", refreshToken); // چک کن وجود داره؟
+   
 
     if (!refreshToken)
       return NextResponse.json({ error: "No token" }, { status: 401 });
@@ -17,14 +17,13 @@ export async function POST(req: NextRequest) {
       email: string;
       phone: string;
     };
-    console.log("🔹 payload:", payload); // چک کن decode شد؟
+   
 
     const user = await userModel.findOne({
       $or: [{ email: payload.email }, { phone: payload.phone }],
     });
 
-    console.log("🔹 user found:", !!user); // چک کن کاربر پیدا شد؟
-    console.log("🔹 tokens match:", user?.refreshToken === refreshToken); // چک کن توکن‌ها مطابقت دارن؟
+ 
 
     if (!user || user.refreshToken !== refreshToken) {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });
@@ -36,10 +35,7 @@ export async function POST(req: NextRequest) {
       { expiresIn: "60s" },
     );
 
-    console.log(
-      "✅ newAccessToken created:",
-      newAccessToken.substring(0, 20) + "...",
-    ); // چک کن توکن جدید ساخته شد؟
+
 
     const response = NextResponse.json({
       success: true,
@@ -53,11 +49,11 @@ export async function POST(req: NextRequest) {
       maxAge: 60,
     });
 
-    console.log("✅ Cookie set in response"); // چک کن cookie تنظیم شد؟
+    console.log("✅ Cookie set in response"); 
 
     return response;
   } catch (error) {
-    console.error("❌ Error in refresh:", error); // چک کن چه خطایی افتاده
+    console.error("❌ Error in refresh:", error); 
     return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }
 }

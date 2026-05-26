@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import { BeatLoader } from "react-spinners";
 import NProgress from "nprogress";
-
+import { signIn } from "next-auth/react";
 export default function AuthPassword() {
   const router = useRouter();
   const params = useSearchParams();
@@ -29,31 +29,19 @@ export default function AuthPassword() {
     NProgress.start();
     setIsLoading(true);
 
-    const { password } = data;
+    const res = await signIn("credentials", {
+      identifier,
+      password: data.password,
+      redirect: false,
+    });
 
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ identifier, password }),
-      });
-
-      const result = await res.json();
-
-      if (!res.ok) {
-        setServerError(result.error || "خطایی رخ داده است");
-        return;
-      }
-
-      router.push("/");
-      reset();
-    } catch (error) {
-      console.log(error);
-    } finally {
+    if (res?.error) {
+      setServerError(res.error);
       setIsLoading(false);
       NProgress.done();
+    } else {
+      router.push("/");
+      router.refresh();
     }
   };
 

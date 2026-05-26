@@ -21,10 +21,10 @@ export default function RootLayout({
       <body className="bg-gray-50 dark:bg-gray-900">
         <NextTheme>
           <NextTopLoader color="#3b82f6" height={3} showSpinner={false} />
-          <Suspense fallback={<div>loading...</div>}>
+          <Suspense fallback={<div>...</div>}>
             <AuthRefresh />
           </Suspense>
-          <Suspense fallback={<div>loading...</div>}>
+          <Suspense fallback={<div>...</div>}>
             <Providers>{children}</Providers>
           </Suspense>
           <Toaster

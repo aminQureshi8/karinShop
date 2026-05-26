@@ -89,7 +89,7 @@ export default function Search() {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onFocus={() => setOpen(true)}
-        className={`relative ${open ? "z-50" : ""}  rounded-full border-2 p-2 border-gray-200 dark:border-gray-700 pr-12 focus:outline-none focus:border-blue-500 w-full`}
+        className={`relative ${open ? "z-50 bg-white dark:bg-gray-800" : ""}  rounded-full border-2 p-2 border-gray-200 dark:border-gray-700 pr-12 focus:outline-none focus:border-blue-500 w-full`}
         placeholder="جستجو در کارین..."
       />
 

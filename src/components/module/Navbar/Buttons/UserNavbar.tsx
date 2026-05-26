@@ -3,10 +3,12 @@ import Link from "next/link";
 import { RiUserLine } from "react-icons/ri";
 import Logout from "./Logout";
 import { connection } from "next/server";
+import { getServerSession } from "next-auth";
 export default async function UserNavbar() {
   await connection();
-  const { user } = await authUser();
 
+  const session = await getServerSession();
+  const user = session?.user as any;
   const isUser = Boolean(user);
 
   return (
