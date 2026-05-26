@@ -4,8 +4,12 @@ import orderModel from "@/models/order";
 import "@/models/order";
 import "@/models/product";
 import "@/models/user";
+import { connection } from "next/server";
+
 
 export default async function page() {
+    await connection();
+  
   await db();
 
   const orders = await orderModel

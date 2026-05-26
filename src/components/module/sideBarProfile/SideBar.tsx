@@ -6,7 +6,9 @@ import userModel from "@/models/user";
 import { authUser } from "@/app/utils/auth";
 
 import SidebarLinks from "./SidebarLinks";
+import { connection } from "next/server";
 const SideBar = memo(async () => {
+  await connection();
   const user = await authUser();
 
   const findUser = await userModel.findOne(

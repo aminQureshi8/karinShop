@@ -3,8 +3,11 @@ import BrandContainer from "@/components/template/admin/Brand/BrandContainer/Bra
 import db from "@/config/db";
 
 import brandModel from "@/models/brand";
+import { connection } from "next/server";
 
 export default async function page() {
+    await connection();
+  
   await db();
 
   const brands = await brandModel.find({}, "-__v").limit(3).skip(0).lean();

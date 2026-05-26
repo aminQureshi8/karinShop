@@ -5,6 +5,7 @@ import { danaMedium, danaLight, danaBold, morabbaReg } from "./fonts";
 import { Toaster } from "react-hot-toast";
 import NextTopLoader from "nextjs-toploader";
 import Providers from "./redux/Providers";
+import { Suspense } from "react";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,8 +21,12 @@ export default function RootLayout({
       <body className="bg-gray-50 dark:bg-gray-900">
         <NextTheme>
           <NextTopLoader color="#3b82f6" height={3} showSpinner={false} />
-          <AuthRefresh />
-          <Providers>{children}</Providers>
+          <Suspense fallback={<div>loading...</div>}>
+            <AuthRefresh />
+          </Suspense>
+          <Suspense fallback={<div>loading...</div>}>
+            <Providers>{children}</Providers>
+          </Suspense>
           <Toaster
             position="top-right"
             reverseOrder={false}

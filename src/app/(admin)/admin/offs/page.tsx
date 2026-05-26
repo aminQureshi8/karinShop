@@ -1,8 +1,10 @@
 import FormOff from "@/components/template/admin/Off/FormOff";
 import db from "@/config/db";
 import productModel from "@/models/product";
+import { connection } from "next/server";
 
 export default async function page() {
+  await connection();
   await db();
 
   const products = await productModel

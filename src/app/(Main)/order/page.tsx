@@ -3,9 +3,11 @@ import BreadCrumbs from "@/components/module/BreadCrumbs/BreadCrumbs";
 import CartOrder from "@/components/template/Order/CartOrder";
 import ProductOrder from "@/components/template/Order/ProductOrder";
 import Link from "next/link";
+import { connection } from "next/server";
 import { BiHome } from "react-icons/bi";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 export default async function page() {
+  await connection()
   const user = await authUser();
 
   return (
