@@ -1,13 +1,10 @@
-import { authUser } from "@/app/utils/auth";
 import Link from "next/link";
 import { RiUserLine } from "react-icons/ri";
 import Logout from "./Logout";
-import { connection } from "next/server";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export default async function UserNavbar() {
-  await connection();
-
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   const user = session?.user as any;
   const isUser = Boolean(user);
 

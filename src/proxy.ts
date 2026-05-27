@@ -1,96 +1,35 @@
-import { NextRequest, NextResponse } from "next/server";
-import { jwtVerify } from "jose";
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
 
-export async function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+export default withAuth(
+  function proxy(req) {
+    const token = req.nextauth.token;
+    const pathname = req.nextUrl.pathname;
 
-  const token = request.cookies.get("token")?.value;
-  const refreshToken = request.cookies.get("refresh-token")?.value;
-
-  if (pathname.startsWith("/my-account")) {
-    if (!token && !refreshToken) {
-      return NextResponse.redirect(new URL("/regLogin/auth", request.url));
+    if (pathname.startsWith("/admin") && token?.role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/", req.url));
     }
 
-    if (token) {
-      try {
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-        const { payload } = await jwtVerify(token, secret);
-
-        if (pathname.startsWith("/my-account")) {
-          if (payload.role !== "USER") {
-            return NextResponse.redirect(new URL("/", request.url));
-          }
-        }
-
-        return NextResponse.next();
-      } catch (error) {
-        if (refreshToken) {
-          return NextResponse.next();
-        }
-        return NextResponse.redirect(new URL("/regLogin/auth", request.url));
-      }
+    if (
+      pathname.startsWith("/my-account") &&
+      token?.role !== "USER" &&
+      token?.role !== "ADMIN"
+    ) {
+      return NextResponse.redirect(new URL("/regLogin/auth", req.url));
     }
 
-    if (refreshToken) {
-      try {
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET_REFRESH);
-        await jwtVerify(refreshToken, secret);
-        return NextResponse.next();
-      } catch (error) {
-        return NextResponse.redirect(new URL("/register/auth", request.url));
-      }
-    }
-  }
-  if (pathname.startsWith("/admin")) {
-    if (!token || !refreshToken) {
-      return NextResponse.redirect(new URL("/regLogin/auth", request.url));
-    }
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => !!token,
+    },
+    pages: {
+      signIn: "/regLogin/auth",
+    },
+  },
+);
 
-    if (token) {
-      try {
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-        const { payload } = await jwtVerify(token, secret);
-
-        if (pathname.startsWith("/admin")) {
-          if (payload.role !== "ADMIN") {
-            return NextResponse.redirect(new URL("/", request.url));
-          }
-        }
-
-        return NextResponse.next();
-      } catch (error) {
-        if (refreshToken) {
-          return NextResponse.next();
-        }
-        return NextResponse.redirect(new URL("/regLogin/auth", request.url));
-      }
-    }
-
-    if (refreshToken) {
-      try {
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET_REFRESH);
-        await jwtVerify(refreshToken, secret);
-        return NextResponse.next();
-      } catch (error) {
-        return NextResponse.redirect(new URL("/regLogin/auth", request.url));
-      }
-    }
-  }
-
-  if (pathname.startsWith("/regLogin")) {
-    if (token) {
-      try {
-        await jwtVerify(
-          token,
-          new TextEncoder().encode(process.env.JWT_SECRET),
-        );
-        return NextResponse.redirect(new URL("/", request.url));
-      } catch (error) {}
-    }
-  }
-  return NextResponse.next();
-}
 export const config = {
-  matcher: ["/admin/:path*", "/regLogin/:path", "/my-account/:path*"],
+  matcher: ["/admin/:path*", "/my-account/:path*"],
 };

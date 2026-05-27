@@ -1,22 +1,20 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export default function Logout() {
-  const router = useRouter();
-
-  const logOut = async () => {
-    const response = await fetch("/api/auth/logOut", {
-      method: "POST",
+  const logOutHandler = async () => {
+    await signOut({
+      redirect: true,
+      callbackUrl: "/",
     });
-    if (response.ok) {
-      router.refresh();
-    }
   };
+
   return (
     <>
       <button
-        onClick={logOut}
+        onClick={logOutHandler}
+        className="w-full text-right cursor-pointer"
       >
         خروج از حساب
       </button>

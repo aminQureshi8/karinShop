@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 // cloudinary.config({
 //   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -22,11 +24,14 @@ const s3Client = new S3Client({
 });
 export async function POST(req: NextRequest) {
   try {
-    // const token = req.cookies.get("token")?.value;
-    // const isAdmin = authRouteaHandler(token);
-    // if (!isAdmin) {
-    //   return NextResponse.json({ message: "Access denied" }, { status: 403 });
-    // }
+    const session = await getServerSession(authOptions);
+
+    if (!session || session.user.role !== "ADMIN") {
+      return NextResponse.json(
+        { message: "Access denied. Admin privileges required." },
+        { status: 403 },
+      );
+    }
 
     const formData = await req.formData();
 

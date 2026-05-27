@@ -41,7 +41,7 @@ export default function FormBrand({ getBrands }: { getBrands: any }) {
 
       console.log(data);
 
-      const res = await fetch(`/api/brand?subCategory=${data.subCategory}`, {
+      const res = await fetch(`/api/admin/brand?subCategory=${data.subCategory}`, {
         method: "POST",
         credentials: "include",
         body: formData,

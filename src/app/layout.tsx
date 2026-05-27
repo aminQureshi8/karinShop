@@ -22,7 +22,7 @@ export default function RootLayout({
         <NextTheme>
           <NextTopLoader color="#3b82f6" height={3} showSpinner={false} />
           <Suspense fallback={<div>...</div>}>
-            <AuthRefresh />
+            {/* <AuthRefresh /> */}
           </Suspense>
           <Suspense fallback={<div>...</div>}>
             <Providers>{children}</Providers>

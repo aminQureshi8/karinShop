@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Eye, EyeClosed, Check } from "lucide-react";
 import { BeatLoader } from "react-spinners";
 import NProgress from "nprogress";
+import { signIn } from "next-auth/react";
 
 export default function AuthCreateChangePass() {
   const router = useRouter();
@@ -40,7 +41,6 @@ export default function AuthCreateChangePass() {
   const onSubmit = async (data: any) => {
     NProgress.start();
     const { password } = data;
-
     setServerError("");
     setIsLoading(true);
 
@@ -51,10 +51,28 @@ export default function AuthCreateChangePass() {
         body: JSON.stringify({ identifier, password }),
       });
 
-      reset();
-      router.push("/");
+      if (res.status === 201) {
+        const loginRes = await signIn("credentials", {
+          identifier,
+          password,
+          redirect: false,
+        });
+
+        if (loginRes?.error) {
+          setServerError(loginRes.error);
+        } else {
+          router.push("/");
+          router.refresh();
+        }
+      } else {
+        const result = await res.json();
+        setServerError(result.message);
+      }
+    } catch (err) {
+      setServerError("خطایی رخ داده است");
     } finally {
       setIsLoading(false);
+      NProgress.done();
     }
   };
 

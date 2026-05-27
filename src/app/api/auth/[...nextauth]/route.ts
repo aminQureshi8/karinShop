@@ -4,7 +4,7 @@ import db from "@/config/db";
 import userModel from "@/models/user";
 import bcrypt from "bcrypt";
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -13,27 +13,21 @@ const handler = NextAuth({
         password: { type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.identifier || !credentials?.password) return null;
-
         await db();
+        const user = await userModel.findOne({
+          $or: [
+            { email: credentials?.identifier },
+            { phone: credentials?.identifier },
+          ],
+        });
 
-        const user = await userModel
-          .findOne({
-            $or: [
-              { email: credentials.identifier },
-              { phone: credentials.identifier },
-            ],
-          })
-          .select("+password");
+        if (!user) return null;
 
-        if (!user) throw new Error("کاربری با این مشخصات یافت نشد");
-
-        const isPasswordMatch = await bcrypt.compare(
-          credentials.password,
+        const isValid = await bcrypt.compare(
+          credentials!.password,
           user.password,
         );
-
-        if (!isPasswordMatch) throw new Error("رمز عبور اشتباه است");
+        if (!isValid) return null;
 
         return {
           id: user._id.toString(),
@@ -43,13 +37,27 @@ const handler = NextAuth({
       },
     }),
   ],
-  session: {
-    strategy: "jwt",
+  callbacks: {
+    async jwt({ token, user }: any) {
+      if (user) {
+        token.role = user.role;
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }: any) {
+      if (token) {
+        session.user.role = token.role;
+        session.user.id = token.id;
+      }
+      return session;
+    },
   },
-  pages: {
-    signIn: "/regLogin",
+  session: {
+    strategy: "jwt" as const,
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
