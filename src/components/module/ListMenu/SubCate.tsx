@@ -28,7 +28,7 @@ const SubCate = memo(
       controllerRef.current = new AbortController();
 
       try {
-        const res = await fetch(`/api/brand/subCate?sub=${id}`, {
+        const res = await fetch(`/api/admin/brand/subCate?sub=${id}`, {
           signal: controllerRef.current.signal,
         });
 

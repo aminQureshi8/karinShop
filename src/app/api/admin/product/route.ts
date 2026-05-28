@@ -1,4 +1,3 @@
-import { authRouteHandler } from "@/app/utils/auth";
 import productModel from "@/models/product";
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";

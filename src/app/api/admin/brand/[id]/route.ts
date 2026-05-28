@@ -1,8 +1,9 @@
-import { authRouteHandler } from "@/app/utils/auth";
 import db from "@/config/db";
 import brandModel from "@/models/brand";
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -14,10 +15,13 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const token = req.cookies.get("token")?.value;
-    const isAdmin = authRouteHandler(token);
-    if (!isAdmin) {
-      return NextResponse.json({ message: "Access denied" }, { status: 403 });
+    const session = await getServerSession(authOptions);
+
+    if (!session || session.user.role !== "ADMIN") {
+      return NextResponse.json(
+        { message: "Access denied. Admin privileges required." },
+        { status: 403 },
+      );
     }
     const resolvedParams = await params;
     const id = resolvedParams.id;

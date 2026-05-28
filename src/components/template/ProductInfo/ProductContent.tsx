@@ -1,4 +1,4 @@
-import { authUser } from "@/app/utils/auth";
+
 import Footer from "@/components/module/Footer/Footer";
 import db from "@/config/db";
 import productModel from "@/models/product";
@@ -7,9 +7,13 @@ import Info from "./Info/Info";
 import Kh from "./ContainerFeCoIN/Kh";
 import Related from "./RelatedProduct/Related";
 import CartWrapper from "./Cart/CartWrapper";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function ProductContent({ slug }: { slug: string }) {
   await db();
+
+
 
   const product = await productModel
     .findOne({ slug }, { features: { $slice: 6 } })
@@ -44,13 +48,14 @@ export default async function ProductContent({ slug }: { slug: string }) {
     ])
     .lean({ virtuals: true });
 
-  console.log(product);
+  ;
 
   if (!product) {
     notFound();
   }
 
-  const user = await authUser();
+  const session = await getServerSession(authOptions);
+  const user = session?.user as any;
 
   const offPrice = product.campaion
     ? product.price - (product.price * product.campaion) / 100

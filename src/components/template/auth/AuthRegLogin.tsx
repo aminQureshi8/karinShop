@@ -50,7 +50,7 @@ export default function AuthRegLogin() {
       }
 
       const result = await res.json();
-      console.log(result);
+      ;
 
       if (res.ok) {
         const otpRes = await fetch("/api/auth/otp", {

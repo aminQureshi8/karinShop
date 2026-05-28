@@ -133,13 +133,13 @@ export default function CommentTable() {
       const res = await fetch(`/api/admin/comment?id=${splitComments}`, {
         method: "DELETE",
       });
-      console.log(res);
+      ;
 
       if (res.ok) {
         getComments();
         setCommentClick([]);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const clickComment = (id: string, check: any) => {
@@ -163,21 +163,19 @@ export default function CommentTable() {
               <TableHead className="w-[80px]">
                 <div className="relative h-6 flex items-center justify-center overflow-hidden">
                   <span
-                    className={`absolute transition-all duration-300 ${
-                      commentClick.length === 0
+                    className={`absolute transition-all duration-300 ${commentClick.length === 0
                         ? "opacity-100 translate-y-0"
                         : "opacity-0 -translate-y-4"
-                    }`}
+                      }`}
                   >
                     انتخاب
                   </span>
 
                   <span
-                    className={`absolute transition-all duration-300 ${
-                      commentClick.length !== 0
+                    className={`absolute transition-all duration-300 ${commentClick.length !== 0
                         ? "opacity-100 translate-y-0"
                         : "opacity-0 translate-y-4"
-                    }`}
+                      }`}
                   >
                     <MdDelete
                       onClick={removeMany}
@@ -317,7 +315,7 @@ export default function CommentTable() {
                         <DropdownMenuItem
                           variant="destructive"
                           className="flex justify-end cursor-pointer"
-                          // onClick={() => removeCategory(cat._id)}
+                        // onClick={() => removeCategory(cat._id)}
                         >
                           حذف
                         </DropdownMenuItem>

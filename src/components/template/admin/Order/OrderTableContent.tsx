@@ -57,13 +57,13 @@ const OrderTableContent = memo(
             method: "DELETE",
           },
         );
-        console.log(res);
+        ;
 
         if (res.ok) {
           getOrders(1);
           setOrderClick([]);
         }
-      } catch (error) {}
+      } catch (error) { }
     };
 
     const changeCondition = async (id: string, status: string) => {
@@ -73,7 +73,7 @@ const OrderTableContent = memo(
           cache: "no-store",
         });
 
-        console.log(res);
+        ;
 
         if (!res.ok) {
           throw new Error("Failed to update order status");
@@ -95,21 +95,19 @@ const OrderTableContent = memo(
                   <TableHead className="w-[80px]">
                     <div className="relative h-6 flex items-center justify-center overflow-hidden">
                       <span
-                        className={`absolute transition-all duration-300 ${
-                          orderClick.length === 0
+                        className={`absolute transition-all duration-300 ${orderClick.length === 0
                             ? "opacity-100 translate-y-0"
                             : "opacity-0 -translate-y-4"
-                        }`}
+                          }`}
                       >
                         انتخاب
                       </span>
 
                       <span
-                        className={`absolute transition-all duration-300 ${
-                          orderClick.length !== 0
+                        className={`absolute transition-all duration-300 ${orderClick.length !== 0
                             ? "opacity-100 translate-y-0"
                             : "opacity-0 translate-y-4"
-                        }`}
+                          }`}
                       >
                         <MdDelete
                           onClick={removeMany}

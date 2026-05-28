@@ -1,4 +1,3 @@
-import { authRouteHandler } from "@/app/utils/auth";
 import db from "@/config/db";
 import categoryModel from "@/models/category";
 import subCategoryModel from "@/models/subCategory";
@@ -49,7 +48,6 @@ export async function GET(req: NextRequest) {
 
   const category = req.nextUrl.searchParams.get("cat");
 
- 
   if (category) {
     const subCategories = await subCategoryModel
       .find({ category }, "title")

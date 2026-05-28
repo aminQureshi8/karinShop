@@ -42,8 +42,8 @@ export default function SearchMobileMenu() {
     const searchProduct = async () => {
       const res = await fetch(`/api/search?query=${search}`);
       const data = await res.json();
-      console.log(data);
-      
+      ;
+
       setProducts(data.findProducts);
     };
 
@@ -92,48 +92,48 @@ export default function SearchMobileMenu() {
           <ul className="flex flex-col gap-5">
             {search.trim().length > 0
               ? products.map((p) => (
+                <li
+                  key={p.slug}
+                  className="flex justify-between items-center"
+                >
+                  <div className="flex items-center gap-2">
+                    <CiSearch size={19} />
+                    <Link
+                      href={`/product/${p.slug}`}
+                      onClick={() =>
+                        saveToHistory({ title: p.title, slug: p.slug })
+                      }
+                      className="line-clamp-1"
+                    >
+                      {p.title}
+                    </Link>
+                  </div>
+                  <div>
+                    <GoArrowUpRight size={19} />
+                  </div>
+                </li>
+              ))
+              : history.map(
+                (item: { title: string; slug: string }, index: number) => (
                   <li
-                    key={p.slug}
+                    key={index}
                     className="flex justify-between items-center"
                   >
                     <div className="flex items-center gap-2">
                       <CiSearch size={19} />
                       <Link
-                        href={`/product/${p.slug}`}
-                        onClick={() =>
-                          saveToHistory({ title: p.title, slug: p.slug })
-                        }
+                        href={`/product/${item.slug}`}
                         className="line-clamp-1"
                       >
-                        {p.title}
+                        {item.title}
                       </Link>
                     </div>
                     <div>
                       <GoArrowUpRight size={19} />
                     </div>
                   </li>
-                ))
-              : history.map(
-                  (item: { title: string; slug: string }, index: number) => (
-                    <li
-                      key={index}
-                      className="flex justify-between items-center"
-                    >
-                      <div className="flex items-center gap-2">
-                        <CiSearch size={19} />
-                        <Link
-                          href={`/product/${item.slug}`}
-                          className="line-clamp-1"
-                        >
-                          {item.title}
-                        </Link>
-                      </div>
-                      <div>
-                        <GoArrowUpRight size={19} />
-                      </div>
-                    </li>
-                  ),
-                )}
+                ),
+              )}
           </ul>
         </div>
         <div className="mt-5 text-sm">

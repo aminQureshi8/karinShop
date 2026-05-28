@@ -1,4 +1,3 @@
-import { authRouteHandler } from "@/app/utils/auth";
 import db from "@/config/db";
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
@@ -25,7 +24,6 @@ export async function DELETE(
 
     await db();
     await categoryModel.findOneAndDelete({ _id: id });
-
 
     return NextResponse.json(
       { message: "Brand deleted successfully" },

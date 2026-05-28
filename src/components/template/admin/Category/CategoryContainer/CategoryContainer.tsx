@@ -1,10 +1,9 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import Brand from "@/types/Brand/Brand.type";
 import FormCategory from "../Form/FormCategory";
 import TableCategory from "../Table/TableCategory";
-import CategoryType from "@/types/Category/Category.type";
+
 
 export default function CategoryContainer() {
   const [categoryState, setCategoryState] = useState([]);

@@ -1,4 +1,3 @@
-import { authRouteHandler } from "@/app/utils/auth";
 import db from "@/config/db";
 import banModel from "@/models/ban";
 import commentModel from "@/models/comment";

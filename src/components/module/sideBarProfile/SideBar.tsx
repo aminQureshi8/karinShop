@@ -3,13 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import userModel from "@/models/user";
-import { authUser } from "@/app/utils/auth";
-
 import SidebarLinks from "./SidebarLinks";
-import { connection } from "next/server";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 const SideBar = memo(async () => {
-  await connection();
-  const user = await authUser();
+  const session = await getServerSession(authOptions);
+  const user = session?.user as any;
 
   const findUser = await userModel.findOne(
     { _id: user?.user?._id },

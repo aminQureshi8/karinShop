@@ -1,4 +1,3 @@
-import { authRouteHandler } from "@/app/utils/auth";
 import db from "@/config/db";
 import productModel from "@/models/product";
 import { NextRequest, NextResponse } from "next/server";
@@ -25,7 +24,7 @@ export async function DELETE(
       { message: "Product deleted successfully" },
       { status: 200 },
     );
-  } catch (error : any) {
+  } catch (error: any) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 500 });
     }

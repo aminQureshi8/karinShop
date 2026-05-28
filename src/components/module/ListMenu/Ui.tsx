@@ -15,10 +15,12 @@ const Ui = memo(({ subCategories }: { subCategories: any }) => {
     const firstFetch = async () => {
       try {
         const res = await fetch(
-          `/api/brand/subCate?sub=69ec882d66035179b28972f6`,
+          `/api/admin/brand/subCate?sub=6a08c059cb34d5b275335a40`,
           { signal: controller.signal },
         );
         const data = await res.json();
+        ;
+
         setBrandState(data.findsBrand);
       } catch (err) {
         if (err.name !== "AbortError") {

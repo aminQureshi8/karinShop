@@ -36,7 +36,7 @@ export default function FormCategory({ getCategories }: { getCategories: any }) 
 
       const result = await res.json();
 
-      console.log(result);
+      ;
 
       if (res.ok) {
         console.log("Brand created successfully");

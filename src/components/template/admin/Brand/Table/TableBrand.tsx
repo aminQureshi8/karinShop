@@ -73,7 +73,7 @@ export default function TableBrand({
 
     if (result.isConfirmed) {
       try {
-        const res = await fetch(`/api/brand/${id}`, {
+        const res = await fetch(`/api/admin/brand/${id}`, {
           method: "DELETE",
           credentials: "include",
         });

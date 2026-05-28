@@ -11,7 +11,7 @@ export default function ProductContainer() {
   const getProducts = async (page: number) => {
     const res = await fetch(`/api/admin/product?page=${page}`);
     const result = await res.json();
-    console.log(result);
+    ;
 
     setProductState(result.products);
     setTotalPages(result.totalPage);

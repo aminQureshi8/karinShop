@@ -1,7 +1,8 @@
-import { userAuthRouteHandler } from "@/app/utils/auth";
 import db from "@/config/db";
 import commentModel from "@/models/comment";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function PATCH(
   req: NextRequest,
@@ -9,11 +10,15 @@ export async function PATCH(
 ) {
   try {
     const user = req.nextUrl.searchParams.get("user");
-    const token = req.cookies.get("token")?.value;
 
-    const isUserLoggin = userAuthRouteHandler(token);
+    const session = await getServerSession(authOptions);
 
-    console.log(isUserLoggin);
+    if (!session || session.user.role !== "USER") {
+      return NextResponse.json(
+        { message: "Access denied. USER privileges required." },
+        { status: 403 },
+      );
+    }
 
     const isLikeStr = req.nextUrl.searchParams.get("isLike");
     const isLike = isLikeStr === "true";

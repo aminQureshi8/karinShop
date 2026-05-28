@@ -121,14 +121,14 @@ export default function OrderTable({
           method: "DELETE",
         },
       );
-      console.log(res);
+      ;
 
       if (res.ok) {
         getOrders(1);
         setOrderClick([]);
         setCurrentPage(1);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const editOrders = async (data: any) => {
@@ -275,21 +275,19 @@ export default function OrderTable({
                 <TableHead className="w-[80px]">
                   <div className="relative h-6 flex items-center justify-center overflow-hidden">
                     <span
-                      className={`absolute transition-all duration-300 ${
-                        orderClick.length === 0
+                      className={`absolute transition-all duration-300 ${orderClick.length === 0
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 -translate-y-4"
-                      }`}
+                        }`}
                     >
                       انتخاب
                     </span>
 
                     <span
-                      className={`absolute transition-all duration-300 ${
-                        orderClick.length !== 0
+                      className={`absolute transition-all duration-300 ${orderClick.length !== 0
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-4"
-                      }`}
+                        }`}
                     >
                       <MdDelete
                         onClick={removeMany}

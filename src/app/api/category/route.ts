@@ -2,7 +2,7 @@ import db from "@/config/db";
 import { NextRequest, NextResponse } from "next/server";
 
 import { v2 as cloudinary } from "cloudinary";
-import { authRouteHandler } from "@/app/utils/auth";
+
 import categoryModel from "@/models/category";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 // cloudinary.config({

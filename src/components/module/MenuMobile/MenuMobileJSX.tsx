@@ -1,12 +1,12 @@
-import { authUser } from "@/app/utils/auth";
 import MenuMobileClient from "./MenuMobileClient";
 import { categories } from "./data";
 import MenuMobileAdmin from "./MenuMobileAdmin";
-import { connection } from "next/server";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 
 export default async function MenuMobileJSX({ isAdmin }: { isAdmin: boolean }) {
-  await connection();
-  const { user } = await authUser();
+  const session = await getServerSession(authOptions);
+  const user = session?.user as any;
   const isUser = Boolean(user);
   return (
     <>

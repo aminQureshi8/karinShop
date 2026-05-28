@@ -75,7 +75,7 @@ export default function FormBlog({ category }: { category: any[] }) {
       }
 
       const result = await res.json();
-      console.log("saved blog =>", result);
+      
 
       reset();
       setMainImage(null);

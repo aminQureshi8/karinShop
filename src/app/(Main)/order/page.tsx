@@ -1,14 +1,14 @@
-import { authUser } from "@/app/utils/auth";
 import BreadCrumbs from "@/components/module/BreadCrumbs/BreadCrumbs";
 import CartOrder from "@/components/template/Order/CartOrder";
 import ProductOrder from "@/components/template/Order/ProductOrder";
 import Link from "next/link";
-import { connection } from "next/server";
 import { BiHome } from "react-icons/bi";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 export default async function page() {
-  await connection()
-  const user = await authUser();
+  const session = await getServerSession(authOptions);
+  const user = session?.user as any;
 
   return (
     <div className="container mx-auto">

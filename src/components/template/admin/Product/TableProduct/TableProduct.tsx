@@ -55,7 +55,7 @@ export default function TableProduct({
 
       const result = await res.json();
 
-      console.log(result);
+      ;
 
       if (res.ok) {
         getProducts(1);

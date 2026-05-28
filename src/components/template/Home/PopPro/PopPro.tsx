@@ -12,7 +12,7 @@ export default async function PopPro() {
     .find(
       {
         sale: {
-          $gte: 5,
+          $gte: 1,
         },
       },
       "title price mainImage slug count",
@@ -30,7 +30,7 @@ export default async function PopPro() {
         titleColor="پرفروش"
         icon={<CiMobile3 size={22} />}
       />
-      <SwiperProductContainer products={products} />
+      <SwiperProductContainer products={JSON.parse(JSON.stringify(products))} />
     </div>
   );
 }

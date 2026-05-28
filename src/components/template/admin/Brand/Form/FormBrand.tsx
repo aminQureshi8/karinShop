@@ -39,7 +39,7 @@ export default function FormBrand({ getBrands }: { getBrands: any }) {
         formData.append("image", data.image[0]);
       }
 
-      console.log(data);
+      ;
 
       const res = await fetch(`/api/admin/brand?subCategory=${data.subCategory}`, {
         method: "POST",
@@ -49,7 +49,7 @@ export default function FormBrand({ getBrands }: { getBrands: any }) {
 
       const result = await res.json();
 
-     
+
 
       if (res.ok) {
         console.log("Brand created successfully");

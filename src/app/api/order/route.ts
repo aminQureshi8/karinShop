@@ -1,4 +1,4 @@
-import { userAuthRouteHandler } from "@/app/utils/auth";
+
 import db from "@/config/db";
 import orderModel from "@/models/order";
 import productModel from "@/models/product";
@@ -50,7 +50,7 @@ export async function GET(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
     const userId = req.nextUrl.searchParams.get("id");
 
-    const isUser = userAuthRouteHandler(token);
+   
 
     const findUser = await orderModel.find({ user: userId }).populate({
       path: "products.product",

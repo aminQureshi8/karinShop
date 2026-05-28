@@ -23,7 +23,7 @@ export default function ContainerWebLog() {
       setBlogs(data.blogs);
       setTotalPages(data.totalPages);
 
-      console.log(data);
+      ;
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -47,7 +47,7 @@ export default function ContainerWebLog() {
         </div>
       </div>
       <div className="max-sm:col-span-12 max-sm:row-start-1 col-span-9">
-        
+
         <ConBlogs
           blogs={JSON.parse(JSON.stringify(blogs))}
           listType={listType}
