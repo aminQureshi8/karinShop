@@ -11,5 +11,13 @@ export async function GET(req: NextRequest) {
       .lean();
 
     return NextResponse.json(blogs);
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
+      },
+      { status: 500 },
+    );
+  }
 }

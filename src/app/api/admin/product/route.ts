@@ -1,16 +1,8 @@
 import productModel from "@/models/product";
 import { NextRequest, NextResponse } from "next/server";
-import { v2 as cloudinary } from "cloudinary";
-
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
-
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-//   api_key: process.env.CLOUDINARY_API_KEY!,
-//   api_secret: process.env.CLOUDINARY_API_SECRET!,
-// });
 
 const s3Client = new S3Client({
   region: "default",
@@ -91,10 +83,6 @@ export async function POST(req: NextRequest) {
       const imageUrl = `https://${bucketName}.s3.ir-thr-at1.arvanstorage.ir/${fileName}`;
 
       imageUrls.push(imageUrl);
-
-      // const fileName = `products/${Date.now()}-${i}.${ext}`;
-
-      // imageUrls.push(uploadRes.secure_url || "");
     }
 
     await productModel.create({

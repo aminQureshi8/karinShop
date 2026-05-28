@@ -1,7 +1,6 @@
 "use client";
 import { closeMenu } from "@/app/redux/slices/MenuMobile/MenuMobile";
 import { LogOut, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signOut } from "next-auth/react";

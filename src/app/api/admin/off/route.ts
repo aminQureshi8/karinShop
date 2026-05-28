@@ -46,7 +46,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ dateTime, percent, option, products });
   } catch (error) {
     return NextResponse.json(
-      { message: error.message || "Internal Server Error" },
+      {
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
+      },
       { status: 500 },
     );
   }
@@ -70,5 +73,13 @@ export async function GET(req: NextRequest) {
     const totalPage = Math.ceil(totalProducts / limit);
 
     return NextResponse.json({ products, totalPage });
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
+      },
+      { status: 500 },
+    );
+  }
 }

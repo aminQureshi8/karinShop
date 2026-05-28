@@ -1,4 +1,3 @@
-
 import Footer from "@/components/module/Footer/Footer";
 import db from "@/config/db";
 import productModel from "@/models/product";
@@ -12,8 +11,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function ProductContent({ slug }: { slug: string }) {
   await db();
-
-
 
   const product = await productModel
     .findOne({ slug }, { features: { $slice: 6 } })
@@ -47,8 +44,6 @@ export default async function ProductContent({ slug }: { slug: string }) {
       },
     ])
     .lean({ virtuals: true });
-
-  ;
 
   if (!product) {
     notFound();
@@ -99,7 +94,7 @@ export default async function ProductContent({ slug }: { slug: string }) {
           description={product.description.toString()}
           features={JSON.parse(JSON.stringify(product.features))}
           id={product._id.toString()}
-          userID={user.user?._id?.toString()}
+          userID={user?.id?.toString() ?? ""}
           comments={product.comments}
         />
       </div>
